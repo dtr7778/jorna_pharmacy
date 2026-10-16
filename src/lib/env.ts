@@ -9,6 +9,8 @@ export const env = createEnv({
       .default("development"),
     MAIL_USER: z.string(),
     MAIL_PASS: z.string(),
+    BETTER_AUTH_SECRET: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
   },
   clientPrefix: "VITE_",
   client: {
@@ -18,6 +20,7 @@ export const env = createEnv({
     VITE_APP_NAME: z.string(),
     VITE_SITE_URL: z.url(),
     VITE_MAIL: z.email(),
+    VITE_GOOGLE_CLIENT_ID: z.string(),
   },
   runtimeEnv: typeof window === "undefined" ? process.env : import.meta.env,
   emptyStringAsUndefined: true,
