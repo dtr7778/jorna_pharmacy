@@ -1,4 +1,6 @@
 //  @ts-check
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook"
 
 import { tanstackConfig } from "@tanstack/eslint-config"
 
@@ -16,6 +18,7 @@ export default [
     },
   },
   {
-    ignores: ["eslint.config.js", ".prettierrc", ".opencode"],
+    ignores: ["eslint.config.js", ".prettierrc", ".opencode", ".storybook"],
   },
+  ...storybook.configs["flat/recommended"],
 ]

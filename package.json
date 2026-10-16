@@ -46,7 +46,9 @@
     "db:migrate:remote": "wrangler d1 migrations apply jornapharmacy-db --remote --env production --config=\"wrangler.jsonc\"",
     "db:seed:local": "SEED_REMOTE=false WRANGLER_CONFIG_PATH=\"wrangler.seed.jsonc\" WRANGLER_PERSIST_PATH=\".wrangler/v3\" tsx ./src/db/seed/dev-seed/index.ts",
     "db:seed:remote": "SEED_REMOTE=true WRANGLER_CONFIG_PATH=\"wrangler.seed.jsonc\" tsx ./src/db/seed/prod-seed/index.ts",
-    "email:dev": "email dev --dir=\"src/mail/templates/\" --port=8088"
+    "email:dev": "email dev --dir=\"src/mail/templates/\" --port=8088",
+    "storybook:dev": "storybook dev -p 6006",
+    "storybook:build": "storybook build"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -111,6 +113,17 @@
     "vite": "^8",
     "vitest": "^5.0.4",
     "wrangler": "^4.151.0",
-    "zocker": "^3.0.0"
+    "zocker": "^3.0.0",
+    "storybook": "^10.6.2",
+    "@storybook/tanstack-react": "^10.6.2",
+    "@chromatic-com/storybook": "latest",
+    "@storybook/addon-vitest": "^10.6.2",
+    "@storybook/addon-a11y": "^10.6.2",
+    "@storybook/addon-docs": "^10.6.2",
+    "@storybook/addon-mcp": "^10.6.2",
+    "@tanstack/react-query": "latest",
+    "eslint-plugin-storybook": "^10.6.2",
+    "@vitest/browser-playwright": "5.0.4",
+    "playwright": "latest"
   }
 }
