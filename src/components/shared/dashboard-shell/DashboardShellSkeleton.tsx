@@ -1,7 +1,7 @@
-import { cn } from "@workspace/ui/lib/utils";
+import { cn } from "cn"
 
 interface DashboardShellSkeletonProps extends React.ComponentProps<"div"> {
-  header?: React.ReactNode;
+  header?: React.ReactNode
 }
 
 export function DashboardShellSkeleton({
@@ -12,7 +12,7 @@ export function DashboardShellSkeleton({
 }: DashboardShellSkeletonProps) {
   return (
     <div
-      className={cn("px-2 pt-2 pb-2 sm:px-4 sm:pt-3 sm:pb-4 w-full", className)}
+      className={cn("w-full px-2 pt-2 pb-2 sm:px-4 sm:pt-3 sm:pb-4", className)}
       aria-hidden="true"
       {...props}
     >
@@ -21,5 +21,5 @@ export function DashboardShellSkeleton({
         {children && <div className="space-y-4 md:space-y-6">{children}</div>}
       </div>
     </div>
-  );
+  )
 }

@@ -1,12 +1,12 @@
-import { cn } from "@workspace/ui/lib/utils";
+import { cn } from "cn"
 
 export function DashboardShellHeader({
   className,
   ...props
 }: React.ComponentProps<"h1">) {
   return (
-    <div className={cn("leading-normal space-y-1", className)} {...props} />
-  );
+    <div className={cn("space-y-1 leading-normal", className)} {...props} />
+  )
 }
 
 export function DashboardShellTitle({
@@ -14,8 +14,8 @@ export function DashboardShellTitle({
   ...props
 }: React.ComponentProps<"h1">) {
   return (
-    <h1 className={cn("text-lg md:text-3xl font-bold", className)} {...props} />
-  );
+    <h1 className={cn("text-lg font-bold md:text-3xl", className)} {...props} />
+  )
 }
 
 export function DashboardShellDescription({
@@ -23,6 +23,6 @@ export function DashboardShellDescription({
   ...props
 }: React.ComponentProps<"h1">) {
   return (
-    <p className={cn("text-muted-foreground text-sm", className)} {...props} />
-  );
+    <p className={cn("text-sm text-muted-foreground", className)} {...props} />
+  )
 }
