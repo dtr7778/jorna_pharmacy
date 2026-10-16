@@ -1,7 +1,7 @@
 import { createMailService } from "@/mail/createMailService.factory"
 import { env } from "./env"
 
-export function getMailService() {
+export function getMail() {
   return createMailService({
     appName: env.VITE_APP_NAME,
     authPass: env.MAIL_PASS,
