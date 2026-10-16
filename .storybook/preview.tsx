@@ -8,6 +8,9 @@ import {
   Title,
 } from "@storybook/addon-docs/blocks"
 
+// @ts-expect-error CSS is loaded by Storybook's bundler.
+import "../src/styles.css"
+
 const preview: Preview = {
   parameters: {
     controls: {
