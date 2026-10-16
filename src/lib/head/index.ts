@@ -12,6 +12,6 @@ export const { globalHead, head } = buildHead({
   description: SITE_DESCRIPTION,
   themeColor: THEME_COLOR,
   robots: "noindex, nofollow",
-  social: false,
+  social: true,
   stylesheets: [appCss],
 })
