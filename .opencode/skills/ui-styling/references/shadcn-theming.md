@@ -16,17 +16,15 @@ npm install next-themes
 
 ```tsx
 // components/theme-provider.tsx
-"use client";
+import * as React from "react"
 
-import * as React from "react";
-
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { ThemeProvider as NextThemesProvider } from "next-themes"
 
 export function ThemeProvider({
   children,
   ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }
 ```
 
@@ -34,7 +32,7 @@ export function ThemeProvider({
 
 ```tsx
 // app/layout.tsx
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider"
 
 export default function RootLayout({ children }) {
   return (
@@ -50,20 +48,20 @@ export default function RootLayout({ children }) {
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 **4. Theme toggle component:**
 
 ```tsx
-import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 
 export function ThemeToggle() {
-  const { setTheme, theme } = useTheme();
+  const { setTheme, theme } = useTheme()
 
   return (
     <Button
@@ -71,11 +69,11 @@ export function ThemeToggle() {
       size="icon"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+      <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
       <span className="sr-only">Toggle theme</span>
     </Button>
-  );
+  )
 }
 ```
 
@@ -86,8 +84,8 @@ Use similar approach with next-themes or implement custom solution:
 ```javascript
 // Store preference
 function toggleDarkMode() {
-  const isDark = document.documentElement.classList.toggle("dark");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
+  const isDark = document.documentElement.classList.toggle("dark")
+  localStorage.setItem("theme", isDark ? "dark" : "light")
 }
 
 // Initialize on load
@@ -96,7 +94,7 @@ if (
   (!("theme" in localStorage) &&
     window.matchMedia("(prefers-color-scheme: dark)").matches)
 ) {
-  document.documentElement.classList.add("dark");
+  document.documentElement.classList.add("dark")
 }
 ```
 
@@ -204,7 +202,7 @@ export default {
       },
     },
   },
-};
+}
 ```
 
 ## Color Customization
@@ -227,7 +225,7 @@ Change colors by modifying CSS variables in `globals.css`:
 
 ### Method 2: Theme Generator
 
-Use shadcn/ui theme generator: https://ui.shadcn.com/themes
+Use shadcn/ui theme generator: <https://ui.shadcn.com/themes>
 
 Select base color, generate theme, copy CSS variables.
 
@@ -269,7 +267,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground",
-        destructive: "bg-destructive text-destructive-foreground",
+        destructive: "text-destructive-foreground bg-destructive",
         outline: "border border-input bg-background",
         // Add custom variant
         gradient: "bg-gradient-to-r from-purple-500 to-pink-500 text-white",
@@ -287,7 +285,7 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-);
+)
 ```
 
 Usage:
@@ -316,7 +314,7 @@ const Card = React.forwardRef<
     )}
     {...props}
   />
-));
+))
 ```
 
 ### Override with className
@@ -324,7 +322,7 @@ const Card = React.forwardRef<
 Pass additional classes to override:
 
 ```tsx
-<Card className="border-2 border-purple-500 shadow-2xl hover:scale-105 transition-transform">
+<Card className="border-2 border-purple-500 shadow-2xl transition-transform hover:scale-105">
   Custom styled card
 </Card>
 ```
@@ -374,7 +372,7 @@ Control border radius globally:
 Components use radius variable:
 
 ```tsx
-className = "rounded-lg"; /* Uses var(--radius) */
+className = "rounded-lg" /* Uses var(--radius) */
 ```
 
 ## Best Practices
