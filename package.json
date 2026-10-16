@@ -29,7 +29,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "deploy": "CLOUDFLARE_ENV=production pnpm run build && wrangler deploy",
+    "cf-typegen": "wrangler types --config=\"wrangler.jsonc\" --env-file=\".env.local\""
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -48,6 +50,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.64.0",
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
     "@rolldown/plugin-babel": "^0.2.4",
@@ -78,6 +81,7 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "^6.0.2",
     "vite": "^8",
-    "vitest": "^5.0.4"
+    "vitest": "^5.0.4",
+    "wrangler": "^4.151.0"
   }
 }
