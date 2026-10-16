@@ -1,13 +1,20 @@
-import { createRouter as createTanStackRouter } from "@tanstack/react-router"
+import {
+  createRouter as createTanStackRouter,
+  ErrorComponent,
+} from "@tanstack/react-router"
 import { routeTree } from "./routeTree.gen"
+import { createQueryClient } from "./lib/tanstack-query/query-client.orpc"
 
 export function getRouter() {
   const router = createTanStackRouter({
     routeTree,
-
     scrollRestoration: true,
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
+    defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
+    context: {
+      queryClient: createQueryClient(),
+    },
   })
 
   return router
