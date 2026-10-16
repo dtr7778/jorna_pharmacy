@@ -7,7 +7,7 @@ import babelPlugin from "@rolldown/plugin-babel"
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
-  server: { port: 3000, forwardConsole: true },
+  server: { port: 3000 },
   preview: { port: 4173 },
   plugins: [
     devtools(),
