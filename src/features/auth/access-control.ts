@@ -13,7 +13,7 @@ export const systemRoles = {
     user: ["get", "update"],
     session: ["list", "revoke"],
   }),
-  [RoleEnumSchema.enum.SUPPORT_AGENT]: systemAc.newRole({
+  [RoleEnumSchema.enum.EMPLOYEE]: systemAc.newRole({
     user: [
       "create",
       "list",

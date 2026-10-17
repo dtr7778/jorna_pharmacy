@@ -1,17 +1,19 @@
-export const ROLES = ["USER", "SUPPORT_AGENT", "ADMIN", "SUPER_ADMIN"] as const
+export const ROLES = ["USER", "EMPLOYEE", "ADMIN", "SUPER_ADMIN"] as const
 
 export const PERMISSION_LEVEL = ["system", "self"] as const
 export const RESOURCE_TYPE = [
   "user",
   "role_permission",
-  "invitation",
-  "lead",
-  "lead_mail",
-  "task",
-  "contact",
-  "lead_company",
-  "lead_company_employee",
-  "site_audit",
+  "report",
+  "purchase",
+  "purchase_return",
+  "vendor",
+  "vendor_payment",
+  "customer",
+  "customer_payment",
+  "sale",
+  "sale_return",
+  "salary",
 ] as const
 export const ACTION_TYPE = [
   "create",

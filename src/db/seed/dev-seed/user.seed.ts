@@ -37,7 +37,7 @@ const DEFAULT_USERS: Array<{
   {
     name: "Support Agent",
     email: "support.agent@mail.com",
-    role: RoleEnumSchema.enum.SUPPORT_AGENT,
+    role: RoleEnumSchema.enum.EMPLOYEE,
     seed: "superagent",
   },
   {
