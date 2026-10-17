@@ -6,7 +6,7 @@
     {
       "binding": "DB",
       "database_name": "jornapharmacy-db-local",
-      "database_id": "cd4e4ad3-e040-4ec9-816c-3a7035119e64",
+      "database_id": "72e49fcf-fb60-4b94-9ffd-7bc51ff35dd5",
       "migrations_dir": "migrations",
       "remote": false,
     },
@@ -17,7 +17,7 @@
         {
           "binding": "DB",
           "database_name": "jornapharmacy-db",
-          "database_id": "1f360b0b-7f49-48f7-8b0b-ad5d5a2cc2e7",
+          "database_id": "920c8e10-32b5-479d-8682-3b9a64b2b75a",
           "migrations_dir": "migrations",
           "remote": true,
         },
