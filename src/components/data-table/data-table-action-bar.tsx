@@ -1,21 +1,21 @@
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect } from "react";
 
-import type { Table } from "@tanstack/react-table"
-import { Loader, X } from "lucide-react"
-import { AnimatePresence, motion } from "motion/react"
+import type { Table } from "@tanstack/react-table";
+import { cn } from "cn";
+import { Loader, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 
-import { Button } from "../ui/button"
-import { Portal } from "../ui/portal"
-import { Separator } from "../ui/separator"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
-import { cn } from "cn"
+import { Button } from "../ui/button";
+import { Portal } from "../ui/portal";
+import { Separator } from "../ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface DataTableActionBarProps<TData> extends React.ComponentProps<
   typeof motion.div
 > {
-  table: Table<TData>
-  visible?: boolean
-  portalContainer?: Element | DocumentFragment | null
+  table: Table<TData>;
+  visible?: boolean;
+  portalContainer?: Element | DocumentFragment | null;
 }
 
 function DataTableActionBar<TData>({
@@ -26,23 +26,23 @@ function DataTableActionBar<TData>({
   className,
   ...props
 }: DataTableActionBarProps<TData>) {
-  "use no memo"
+  "use no memo";
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        table.toggleAllRowsSelected(false)
+        table.toggleAllRowsSelected(false);
       }
     }
 
-    window.addEventListener("keydown", onKeyDown)
-    return () => window.removeEventListener("keydown", onKeyDown)
-  }, [table])
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [table]);
 
-  const portalContainer = portalContainerProp ?? globalThis.document.body
+  const portalContainer = portalContainerProp ?? globalThis.document.body;
 
   const visible =
-    visibleProp ?? table.getFilteredSelectedRowModel().rows.length > 0
+    visibleProp ?? table.getFilteredSelectedRowModel().rows.length > 0;
 
   return (
     <Portal container={portalContainer} className="pointer-events-none">
@@ -66,14 +66,14 @@ function DataTableActionBar<TData>({
         )}
       </AnimatePresence>
     </Portal>
-  )
+  );
 }
 
 interface DataTableActionBarActionProps extends React.ComponentProps<
   typeof Button
 > {
-  tooltip?: string
-  isPending?: boolean
+  tooltip?: string;
+  isPending?: boolean;
 }
 
 function DataTableActionBarAction({
@@ -85,7 +85,7 @@ function DataTableActionBarAction({
   children,
   ...props
 }: DataTableActionBarActionProps) {
-  "use no memo"
+  "use no memo";
   const trigger = (
     <Button
       variant="secondary"
@@ -99,9 +99,9 @@ function DataTableActionBarAction({
     >
       {isPending ? <Loader className="animate-spin" /> : children}
     </Button>
-  )
+  );
 
-  if (!tooltip) return trigger
+  if (!tooltip) return trigger;
 
   return (
     <Tooltip>
@@ -113,20 +113,20 @@ function DataTableActionBarAction({
         <p>{tooltip}</p>
       </TooltipContent>
     </Tooltip>
-  )
+  );
 }
 
 interface DataTableActionBarSelectionProps<TData> {
-  table: Table<TData>
+  table: Table<TData>;
 }
 
 function DataTableActionBarSelection<TData>({
   table,
 }: DataTableActionBarSelectionProps<TData>) {
-  "use no memo"
+  "use no memo";
   const onClearSelection = useCallback(() => {
-    table.toggleAllRowsSelected(false)
-  }, [table])
+    table.toggleAllRowsSelected(false);
+  }, [table]);
 
   return (
     <div className="flex h-7 items-center justify-center rounded-md border pr-1 pl-2.5">
@@ -160,11 +160,11 @@ function DataTableActionBarSelection<TData>({
         </TooltipContent>
       </Tooltip>
     </div>
-  )
+  );
 }
 
 export {
   DataTableActionBar,
   DataTableActionBarAction,
   DataTableActionBarSelection,
-}
+};

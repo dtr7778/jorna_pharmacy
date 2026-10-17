@@ -2,12 +2,13 @@ import {
   adminClient,
   inferAdditionalFields,
   oneTapClient,
-} from "better-auth/client/plugins"
-import { createAuthClient } from "better-auth/react"
+} from "better-auth/client/plugins";
+import { createAuthClient } from "better-auth/react";
 
-import { systemAc, systemRoles } from "./access-control"
-import type { AuthType } from "./auth.server"
-import { env } from "@/lib/env"
+import { env } from "@/lib/env";
+
+import { systemAc, systemRoles } from "./access-control";
+import type { AuthType } from "./auth.server";
 
 export const authClient = createAuthClient({
   baseURL: env.VITE_SITE_URL,
@@ -24,4 +25,4 @@ export const authClient = createAuthClient({
       context: "signin",
     }),
   ],
-})
+});

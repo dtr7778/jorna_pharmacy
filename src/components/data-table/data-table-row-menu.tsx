@@ -1,19 +1,19 @@
-import { EllipsisVertical } from "lucide-react"
+import { cn } from "cn";
+import { EllipsisVertical } from "lucide-react";
 
-import { Button } from "../ui/button"
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
-import { cn } from "cn"
+} from "../ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface DataTableRowMenuProps extends React.PropsWithChildren {
   contentProps?: Omit<
     React.ComponentProps<typeof DropdownMenuContent>,
     "children"
-  >
+  >;
 }
 
 export default function DataTableRowMenu({
@@ -43,5 +43,5 @@ export default function DataTableRowMenu({
         {children}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

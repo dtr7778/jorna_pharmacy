@@ -1,6 +1,6 @@
-import { useCallback, useId, useMemo } from "react"
+import { useCallback, useId, useMemo } from "react";
 
-import { Asterisk } from "lucide-react"
+import { Asterisk } from "lucide-react";
 import {
   type Control,
   Controller,
@@ -8,21 +8,21 @@ import {
   type ControllerRenderProps,
   type FieldValues,
   type Path,
-} from "react-hook-form"
+} from "react-hook-form";
 
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field"
-import { PasswordInput } from "../ui/password-input"
+import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
+import { PasswordInput } from "../ui/password-input";
 
 interface PasswordInputFieldProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"input"> {
-  name: Path<TFieldValues>
-  control: Control<TFieldValues>
-  label?: string
-  description?: string
-  requiredField?: boolean
-  onValueChange?: (value: string) => void
-  valueModifier?: (value: string) => string
+  name: Path<TFieldValues>;
+  control: Control<TFieldValues>;
+  label?: string;
+  description?: string;
+  requiredField?: boolean;
+  onValueChange?: (value: string) => void;
+  valueModifier?: (value: string) => string;
 }
 
 function PasswordInputField<TFieldValues extends FieldValues>({
@@ -36,7 +36,7 @@ function PasswordInputField<TFieldValues extends FieldValues>({
   valueModifier,
   ...props
 }: PasswordInputFieldProps<TFieldValues>) {
-  const fieldId = useId()
+  const fieldId = useId();
   return (
     <Controller
       name={name}
@@ -72,17 +72,17 @@ function PasswordInputField<TFieldValues extends FieldValues>({
         </Field>
       )}
     />
-  )
+  );
 }
 
 interface PasswordInputFieldRenderProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"input"> {
-  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>
-  fieldState: ControllerFieldState
-  id: string
-  onValueChange?: (value: string) => void
-  valueModifier?: (value: string) => string
+  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>;
+  fieldState: ControllerFieldState;
+  id: string;
+  onValueChange?: (value: string) => void;
+  valueModifier?: (value: string) => string;
 }
 
 function PasswordInputFieldRender<TFieldValues extends FieldValues>({
@@ -97,20 +97,20 @@ function PasswordInputFieldRender<TFieldValues extends FieldValues>({
   const filedValue = useMemo(
     () => (valueModifier ? valueModifier(field.value) : field.value),
     [field, valueModifier]
-  )
+  );
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      event.preventDefault()
-      event.stopPropagation()
+      event.preventDefault();
+      event.stopPropagation();
 
-      const value = event.target.value
+      const value = event.target.value;
 
-      field.onChange(value)
-      onValueChange?.(value)
+      field.onChange(value);
+      onValueChange?.(value);
     },
     [field, onValueChange]
-  )
+  );
 
   return (
     <PasswordInput
@@ -122,7 +122,7 @@ function PasswordInputFieldRender<TFieldValues extends FieldValues>({
       aria-invalid={fieldState.invalid}
       disabled={disabled}
     />
-  )
+  );
 }
 
-export { PasswordInputField }
+export { PasswordInputField };

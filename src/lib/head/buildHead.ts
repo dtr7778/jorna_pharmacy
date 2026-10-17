@@ -1,34 +1,34 @@
-import { buildOgMeta } from "./og"
-import { buildFaviconLinks } from "./favicon"
+import { buildFaviconLinks } from "./favicon";
+import { buildOgMeta } from "./og";
 
 export interface BuildHeadConfig {
-  appName: string
-  siteUrl: string
-  defaultTitle: string
-  titleTemplate: string
-  description: string
-  themeColor: string
-  robots?: string
-  stylesheets?: ReadonlyArray<string>
-  ogImagePath?: string
-  social?: boolean
+  appName: string;
+  siteUrl: string;
+  defaultTitle: string;
+  titleTemplate: string;
+  description: string;
+  themeColor: string;
+  robots?: string;
+  stylesheets?: ReadonlyArray<string>;
+  ogImagePath?: string;
+  social?: boolean;
 }
 
 export type HeadPageOptions = {
-  pathname: string
-  description?: string
+  pathname: string;
+  description?: string;
 } & (
   | { title: string; titleByTemplate?: never }
   | { titleByTemplate: string; title?: never }
-)
+);
 
 export interface HeadResult {
-  meta: Array<Record<string, string>>
-  links: Array<Record<string, string>>
+  meta: Array<Record<string, string>>;
+  links: Array<Record<string, string>>;
 }
 
 const GOOGLEBOT_DEFAULT =
-  "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+  "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1";
 
 export function buildHead(config: BuildHeadConfig) {
   const {
@@ -42,18 +42,18 @@ export function buildHead(config: BuildHeadConfig) {
     stylesheets = [],
     ogImagePath = "/opengraph-image.jpeg",
     social = true,
-  } = config
+  } = config;
 
   if (!titleTemplate.includes("%s")) {
-    throw new Error('buildHead: titleTemplate must contain "%s"')
+    throw new Error('buildHead: titleTemplate must contain "%s"');
   }
 
-  const baseUrl = siteUrl.replace(/\/$/, "")
-  const ogImage = `${baseUrl}${ogImagePath}`
-  const googlebot = robots.includes("noindex") ? robots : GOOGLEBOT_DEFAULT
+  const baseUrl = siteUrl.replace(/\/$/, "");
+  const ogImage = `${baseUrl}${ogImagePath}`;
+  const googlebot = robots.includes("noindex") ? robots : GOOGLEBOT_DEFAULT;
 
   const canonicalUrl = (pathname: string) =>
-    pathname === "/" ? baseUrl : `${baseUrl}${pathname}`
+    pathname === "/" ? baseUrl : `${baseUrl}${pathname}`;
 
   const buildMeta = (
     title: string,
@@ -75,7 +75,7 @@ export function buildHead(config: BuildHeadConfig) {
         name: "apple-mobile-web-app-status-bar-style",
         content: "black-translucent",
       },
-    ]
+    ];
 
     if (social) {
       meta.push(
@@ -86,11 +86,11 @@ export function buildHead(config: BuildHeadConfig) {
           url: url ?? baseUrl,
           imageUrl: ogImage,
         })
-      )
+      );
     }
 
-    return meta
-  }
+    return meta;
+  };
 
   const buildLinks = (
     url: string | undefined
@@ -98,26 +98,26 @@ export function buildHead(config: BuildHeadConfig) {
     ...stylesheets.map((href) => ({ rel: "stylesheet", href })),
     ...buildFaviconLinks(),
     ...(url ? [{ rel: "canonical", href: url }] : []),
-  ]
+  ];
 
   const globalHead = (): HeadResult => ({
     meta: buildMeta(defaultTitle, description, undefined),
     links: buildLinks(undefined),
-  })
+  });
 
   const head = (options: HeadPageOptions): HeadResult => {
     const title =
       options.titleByTemplate === undefined
         ? options.title
-        : titleTemplate.replace("%s", () => options.titleByTemplate)
-    const pageDescription = options.description ?? description
-    const url = canonicalUrl(options.pathname)
+        : titleTemplate.replace("%s", () => options.titleByTemplate);
+    const pageDescription = options.description ?? description;
+    const url = canonicalUrl(options.pathname);
 
     return {
       meta: buildMeta(title, pageDescription, url),
       links: buildLinks(url),
-    }
-  }
+    };
+  };
 
-  return { globalHead, head }
+  return { globalHead, head };
 }

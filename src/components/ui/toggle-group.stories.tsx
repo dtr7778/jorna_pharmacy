@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
-import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from "lucide-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from "lucide-react";
 
-import { ToggleGroup, ToggleGroupItem } from "./toggle-group"
+import { ToggleGroup, ToggleGroupItem } from "./toggle-group";
 
 const meta = {
   title: "UI/ToggleGroup",
@@ -27,10 +27,10 @@ const meta = {
       control: { type: "number", min: 0, max: 8 },
     },
   },
-} satisfies Meta<typeof ToggleGroup>
+} satisfies Meta<typeof ToggleGroup>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -49,7 +49,7 @@ export const Default: Story = {
       </ToggleGroupItem>
     </ToggleGroup>
   ),
-}
+};
 
 export const Outline: Story = {
   args: {
@@ -69,7 +69,7 @@ export const Outline: Story = {
       </ToggleGroupItem>
     </ToggleGroup>
   ),
-}
+};
 
 export const Attached: Story = {
   args: {
@@ -90,7 +90,7 @@ export const Attached: Story = {
       </ToggleGroupItem>
     </ToggleGroup>
   ),
-}
+};
 
 export const Vertical: Story = {
   args: {
@@ -110,4 +110,4 @@ export const Vertical: Story = {
       </ToggleGroupItem>
     </ToggleGroup>
   ),
-}
+};

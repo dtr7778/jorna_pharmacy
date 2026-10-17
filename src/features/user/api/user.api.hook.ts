@@ -1,11 +1,12 @@
-import { orpcTQClient } from "@/server/orpc"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import toast from "react-hot-toast"
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
-import type { IApiHookInput } from "@/types"
-import { formatOrpcError } from "@/utils/formatOrpcError"
-import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext"
-import type { ProfileUpdateContractType } from "./user.contract"
+import { orpcTQClient } from "@/server/orpc";
+import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext";
+import type { IApiHookInput } from "@/types";
+import { formatOrpcError } from "@/utils/formatOrpcError";
+
+import type { ProfileUpdateContractType } from "./user.contract";
 
 export function useRoleUpdate<TFieldNames>({
   onRequestStart,
@@ -13,39 +14,39 @@ export function useRoleUpdate<TFieldNames>({
   onError,
   onValidationErrors,
 }: IApiHookInput<TFieldNames> = {}) {
-  const toastId = "update_role_toast_message"
-  const queryClient = useQueryClient()
+  const toastId = "update_role_toast_message";
+  const queryClient = useQueryClient();
 
   return useMutation(
     orpcTQClient.user.updateRole.mutationOptions({
       onMutate: () => {
-        toast.loading("Updating...", { id: toastId })
-        onRequestStart?.()
+        toast.loading("Updating...", { id: toastId });
+        onRequestStart?.();
       },
       onSuccess: async ({ message }) => {
-        toast.success(message, { id: toastId })
+        toast.success(message, { id: toastId });
         await queryClient.invalidateQueries({
           queryKey: orpcTQClient.user.list.queryKey({
             input: {},
           }),
           exact: false,
-        })
-        onSuccess?.(message)
+        });
+        onSuccess?.(message);
       },
       onError: (error) => {
         const { message, type, fieldErrors } =
-          formatOrpcError<TFieldNames>(error)
+          formatOrpcError<TFieldNames>(error);
 
         if (type === "validation") {
-          onValidationErrors?.(fieldErrors ?? [])
+          onValidationErrors?.(fieldErrors ?? []);
         }
 
-        toast.error(message, { id: toastId })
+        toast.error(message, { id: toastId });
 
-        onError?.(message)
+        onError?.(message);
       },
     })
-  )
+  );
 }
 
 export function useProfileUpdate<TFieldNames>({
@@ -55,12 +56,12 @@ export function useProfileUpdate<TFieldNames>({
   onError,
   onValidationErrors,
 }: IApiHookInput<TFieldNames>) {
-  const toastId = "profile_update_toast_message"
-  const addUserData = useAuthStore((state) => state.addUserData)
+  const toastId = "profile_update_toast_message";
+  const addUserData = useAuthStore((state) => state.addUserData);
 
   const { mutateAsync: updateProfile } = useMutation(
     orpcTQClient.user.updateProfile.mutationOptions()
-  )
+  );
 
   return useMutation<
     ProfileUpdateContractType["output"],
@@ -69,35 +70,36 @@ export function useProfileUpdate<TFieldNames>({
   >({
     mutationKey: ["profile-update"],
     mutationFn: async (input) => {
-      return updateProfile(input)
+      return updateProfile(input);
     },
     onMutate: () => {
-      toast.loading("Updating...", { id: toastId })
-      onRequestStart?.()
+      toast.loading("Updating...", { id: toastId });
+      onRequestStart?.();
     },
     onSuccess: async ({ message, data }) => {
       addUserData({
         ...data,
         image: data.image,
         name: data.name,
-      })
+      });
 
-      toast.success(message, { id: toastId })
-      onSuccess?.(message)
+      toast.success(message, { id: toastId });
+      onSuccess?.(message);
     },
     onError: (error) => {
-      const { message, type, fieldErrors } = formatOrpcError<TFieldNames>(error)
+      const { message, type, fieldErrors } =
+        formatOrpcError<TFieldNames>(error);
 
       if (type === "validation") {
-        onValidationErrors?.(fieldErrors ?? [])
+        onValidationErrors?.(fieldErrors ?? []);
       }
 
-      toast.error(message, { id: toastId })
+      toast.error(message, { id: toastId });
 
-      onError?.(message)
+      onError?.(message);
     },
     onSettled: () => {
-      onRequestEnd?.()
+      onRequestEnd?.();
     },
-  })
+  });
 }

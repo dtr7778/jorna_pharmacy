@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { SearchIcon } from "lucide-react";
 
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "./input-group"
-import { SearchIcon } from "lucide-react"
+} from "./input-group";
 
 const meta = {
   title: "UI/InputGroup",
@@ -15,10 +15,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof InputGroup>
+} satisfies Meta<typeof InputGroup>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -32,4 +32,4 @@ export const Default: Story = {
       </InputGroupAddon>
     </InputGroup>
   ),
-}
+};

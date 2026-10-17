@@ -1,6 +1,7 @@
-import { getDB } from "@/lib/db"
-import { rpcHandler } from "@/server/orpc.handler"
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute } from "@tanstack/react-router";
+
+import { getDB } from "@/lib/db";
+import { rpcHandler } from "@/server/orpc.handler";
 
 export const Route = createFileRoute("/api/rpc/$")({
   server: {
@@ -16,10 +17,10 @@ export const Route = createFileRoute("/api/rpc/$")({
             roles: [],
             permissions: [],
           },
-        })
+        });
 
-        return response ?? new Response("Not Found", { status: 404 })
+        return response ?? new Response("Not Found", { status: 404 });
       },
     },
   },
-})
+});

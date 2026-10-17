@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Separator } from "./separator"
+import { Separator } from "./separator";
 
 const meta = {
   title: "UI/Separator",
@@ -9,10 +9,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Separator>
+} satisfies Meta<typeof Separator>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Horizontal: Story = {
   render: () => (
@@ -22,7 +22,7 @@ export const Horizontal: Story = {
       <span className="text-xs/relaxed">Content below</span>
     </div>
   ),
-}
+};
 
 export const Vertical: Story = {
   render: () => (
@@ -32,4 +32,4 @@ export const Vertical: Story = {
       <span className="text-xs/relaxed">Right</span>
     </div>
   ),
-}
+};

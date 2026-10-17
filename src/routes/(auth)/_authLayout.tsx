@@ -1,14 +1,20 @@
-import { SiteLogo } from "@/components/SiteLogo"
-import { FieldDescription } from "@/components/ui/field"
-import { DEFAULT_AUTH_PATH } from "@/constants"
-import { env } from "@/lib/env"
-import { head } from "@/lib/head"
-import { createFileRoute, Link, Outlet, redirect } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  redirect,
+} from "@tanstack/react-router";
+
+import { SiteLogo } from "@/components/SiteLogo";
+import { FieldDescription } from "@/components/ui/field";
+import { DEFAULT_AUTH_PATH } from "@/constants";
+import { env } from "@/lib/env";
+import { head } from "@/lib/head";
 
 export const Route = createFileRoute("/(auth)/_authLayout")({
   beforeLoad: async ({ context }) => {
     if (context.session && context.user) {
-      throw redirect({ to: DEFAULT_AUTH_PATH, replace: true })
+      throw redirect({ to: DEFAULT_AUTH_PATH, replace: true });
     }
   },
   head: ({ match }) =>
@@ -18,7 +24,7 @@ export const Route = createFileRoute("/(auth)/_authLayout")({
       description: `Authentication pages for ${env.VITE_APP_NAME}`,
     }),
   component: AuthLayout,
-})
+});
 
 function AuthLayout() {
   return (
@@ -40,5 +46,5 @@ function AuthLayout() {
         </FieldDescription>
       </div>
     </div>
-  )
+  );
 }

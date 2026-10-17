@@ -1,14 +1,15 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
+
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { ForgetPasswordForm } from "@/features/auth/components/forms/ForgetPasswordForm"
-import { head } from "@/lib/head"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import { ArrowLeft } from "lucide-react"
+} from "@/components/ui/card";
+import { ForgetPasswordForm } from "@/features/auth/components/forms/ForgetPasswordForm";
+import { head } from "@/lib/head";
 
 export const Route = createFileRoute("/(auth)/_authLayout/forgot-password")({
   head: ({ match }) =>
@@ -17,7 +18,7 @@ export const Route = createFileRoute("/(auth)/_authLayout/forgot-password")({
       pathname: match.pathname,
     }),
   component: ForgotPasswordPage,
-})
+});
 
 function ForgotPasswordPage() {
   return (
@@ -37,5 +38,5 @@ function ForgotPasswordPage() {
         <ForgetPasswordForm />
       </CardContent>
     </Card>
-  )
+  );
 }

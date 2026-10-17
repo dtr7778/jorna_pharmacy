@@ -1,4 +1,4 @@
-import { CircleQuestionMark } from "lucide-react"
+import { CircleQuestionMark } from "lucide-react";
 
 import {
   Empty,
@@ -6,7 +6,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "../ui/empty"
+} from "../ui/empty";
 
 function DataTableEmpty() {
   return (
@@ -19,7 +19,7 @@ function DataTableEmpty() {
         <EmptyDescription>No data found</EmptyDescription>
       </EmptyHeader>
     </Empty>
-  )
+  );
 }
 
-export { DataTableEmpty }
+export { DataTableEmpty };

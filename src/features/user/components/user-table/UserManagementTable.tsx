@@ -1,24 +1,25 @@
-import { useQuerySearch } from "@/hooks/use-query-search"
-import { orpcTQClient } from "@/server/orpc"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query";
 
-import { UsersTable } from "./UsersTable"
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback"
-import { DataTableGlobalSearch } from "@/components/data-table/data-table-global-search"
-import { QueryStateBoundary } from "@/components/tanstack-query/query-state-boundary"
-import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
-import { DataTableToolbarSkeleton } from "@/components/data-table/data-table-toolbar-skeleton"
-import { DataTableEmpty } from "@/components/data-table/data-table-empty"
+import { DataTableEmpty } from "@/components/data-table/data-table-empty";
+import { DataTableGlobalSearch } from "@/components/data-table/data-table-global-search";
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton";
+import { DataTableToolbarSkeleton } from "@/components/data-table/data-table-toolbar-skeleton";
+import { QueryStateBoundary } from "@/components/tanstack-query/query-state-boundary";
+import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
+import { useQuerySearch } from "@/hooks/use-query-search";
+import { orpcTQClient } from "@/server/orpc";
+
+import { UsersTable } from "./UsersTable";
 
 export function UserManagementTable({
   searchFields,
 }: {
-  searchFields: string[]
+  searchFields: string[];
 }) {
-  "use no memo"
+  "use no memo";
   const { filters, setFilters, setSearchFilter } = useQuerySearch(
     "/dashboard/_dashboardLayout/users/"
-  )
+  );
 
   const { data, isLoading, isError, error, refetch } = useQuery(
     orpcTQClient.user.list.queryOptions({
@@ -31,12 +32,12 @@ export function UserManagementTable({
         orderField: filters.orderField,
       },
     })
-  )
+  );
 
   const globalSearch = useDebouncedCallback(
     (searchValue: string | undefined) => setSearchFilter(searchValue),
     500
-  )
+  );
 
   return (
     <div className="space-y-3">
@@ -74,11 +75,11 @@ export function UserManagementTable({
                 limit: updatedFilters.limit,
                 order: updatedFilters.order,
                 orderField: updatedFilters.orderField,
-              })
+              });
             }}
           />
         )}
       </QueryStateBoundary>
     </div>
-  )
+  );
 }

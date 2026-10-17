@@ -1,30 +1,30 @@
-import { useCallback, useId, useMemo } from "react"
+import { useCallback, useId, useMemo } from "react";
 
-import { Asterisk } from "lucide-react"
+import { Asterisk } from "lucide-react";
 import type {
   Control,
   ControllerFieldState,
   ControllerRenderProps,
   FieldValues,
   Path,
-} from "react-hook-form"
-import { Controller } from "react-hook-form"
-import type { Country } from "react-phone-number-input"
+} from "react-hook-form";
+import { Controller } from "react-hook-form";
+import type { Country } from "react-phone-number-input";
 
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field"
-import { PhoneInput } from "../ui/phone-input"
+import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
+import { PhoneInput } from "../ui/phone-input";
 
 interface PhoneInputFieldProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"input"> {
-  name: Path<TFieldValues>
-  control: Control<TFieldValues>
-  label?: string
-  description?: string
-  requiredField?: boolean
-  defaultCountry?: Country
-  onValueChange?: (value: string) => void
-  valueModifier?: (value: string) => string
+  name: Path<TFieldValues>;
+  control: Control<TFieldValues>;
+  label?: string;
+  description?: string;
+  requiredField?: boolean;
+  defaultCountry?: Country;
+  onValueChange?: (value: string) => void;
+  valueModifier?: (value: string) => string;
 }
 
 function PhoneInputField<TFieldValues extends FieldValues>({
@@ -38,7 +38,7 @@ function PhoneInputField<TFieldValues extends FieldValues>({
   valueModifier,
   ...props
 }: PhoneInputFieldProps<TFieldValues>) {
-  const fieldId = useId()
+  const fieldId = useId();
   return (
     <Controller
       name={name}
@@ -74,17 +74,17 @@ function PhoneInputField<TFieldValues extends FieldValues>({
         </Field>
       )}
     />
-  )
+  );
 }
 
 interface PhoneInputFieldRenderProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"input"> {
-  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>
-  fieldState: ControllerFieldState
-  id: string
-  onValueChange?: (value: string) => void
-  valueModifier?: (value: string) => string
+  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>;
+  fieldState: ControllerFieldState;
+  id: string;
+  onValueChange?: (value: string) => void;
+  valueModifier?: (value: string) => string;
 }
 
 function PhoneInputFieldRender<TFieldValues extends FieldValues>({
@@ -99,15 +99,15 @@ function PhoneInputFieldRender<TFieldValues extends FieldValues>({
   const filedValue = useMemo(
     () => (valueModifier ? valueModifier(field.value) : field.value),
     [field, valueModifier]
-  )
+  );
 
   const handleChange = useCallback(
     (value: string) => {
-      field.onChange(value)
-      onValueChange?.(value)
+      field.onChange(value);
+      onValueChange?.(value);
     },
     [field, onValueChange]
-  )
+  );
 
   return (
     <PhoneInput
@@ -119,7 +119,7 @@ function PhoneInputFieldRender<TFieldValues extends FieldValues>({
       aria-invalid={fieldState.invalid}
       disabled={disabled}
     />
-  )
+  );
 }
 
-export { PhoneInputField }
+export { PhoneInputField };

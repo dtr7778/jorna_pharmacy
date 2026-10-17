@@ -1,42 +1,46 @@
-import { clearAll } from "../clearAll"
-import { seedPermission } from "../permission.seed"
-import { seedRolePermission } from "../rolePermission.seed"
-import { seedRoles } from "../roles.seed"
-import { seedDbClient } from "../seed-db.client"
-import { seedUsers } from "./user.seed"
+import { clearAll } from "../clearAll";
+import { seedPermission } from "../permission.seed";
+import { seedRolePermission } from "../rolePermission.seed";
+import { seedRoles } from "../roles.seed";
+import { seedDbClient } from "../seed-db.client";
+import { seedUsers } from "./user.seed";
 
 async function main() {
-  console.log("🌱 Starting database seed...\n")
+  console.log("🌱 Starting database seed...\n");
 
-  const { db, dispose } = await seedDbClient()
+  const { db, dispose } = await seedDbClient();
 
   try {
-    await clearAll(db)
+    await clearAll(db);
 
-    const roles = await seedRoles(db)
-    const permissions = await seedPermission(db)
-    const rolesAndPermissions = await seedRolePermission(db, roles, permissions)
+    const roles = await seedRoles(db);
+    const permissions = await seedPermission(db);
+    const rolesAndPermissions = await seedRolePermission(
+      db,
+      roles,
+      permissions
+    );
 
-    const users = await seedUsers(db, roles)
+    const users = await seedUsers(db, roles);
 
-    console.log("\n📊 Seed Summary:")
+    console.log("\n📊 Seed Summary:");
 
-    console.log(`Roles: ${roles.length}`)
-    console.log(`Permissions: ${permissions.length}`)
-    console.log(`Roles and Permissions: ${rolesAndPermissions.length}`)
-    console.log(`Users: ${users.length}`)
+    console.log(`Roles: ${roles.length}`);
+    console.log(`Permissions: ${permissions.length}`);
+    console.log(`Roles and Permissions: ${rolesAndPermissions.length}`);
+    console.log(`Users: ${users.length}`);
 
-    console.log("\n🎉 Seed completed successfully!")
+    console.log("\n🎉 Seed completed successfully!");
   } finally {
-    await dispose()
+    await dispose();
   }
 }
 
 main()
   .then(() => {
-    process.exit(0)
+    process.exit(0);
   })
   .catch((e) => {
-    console.error("❌ Error seeding database:", e)
-    process.exit(1)
-  })
+    console.error("❌ Error seeding database:", e);
+    process.exit(1);
+  });

@@ -1,12 +1,12 @@
-import { APIError, betterAuth, type BetterAuthPlugin } from "better-auth"
-import { drizzleAdapter } from "better-auth/adapters/drizzle"
-import { createAuthMiddleware } from "better-auth/api"
-import { admin, haveIBeenPwned, oneTap } from "better-auth/plugins"
-import { and, eq } from "drizzle-orm"
-import { tanstackStartCookies } from "better-auth/tanstack-start"
-import { systemAc, systemRoles } from "./access-control"
-import { parseUserAgent } from "./device-fingerprint"
-import type { DatabaseType } from "@/db/clients/drizzle-client"
+import { APIError, betterAuth, type BetterAuthPlugin } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { createAuthMiddleware } from "better-auth/api";
+import { admin, haveIBeenPwned, oneTap } from "better-auth/plugins";
+import { tanstackStartCookies } from "better-auth/tanstack-start";
+import { and, eq } from "drizzle-orm";
+
+import { AUTH_ERROR_PAGE } from "@/constants";
+import type { DatabaseType } from "@/db/clients/drizzle-client";
 import {
   AccountTable,
   RoleTable,
@@ -20,24 +20,26 @@ import {
   type InsertUserDevice,
   type InsertUserEvent,
   type InsertUserSession,
-} from "@/db/schemas"
-import { env } from "../../lib/env"
-import type { IMailService } from "@/mail/Mail.service"
-import { AUTH_ERROR_PAGE } from "@/constants"
-import { RoleEnumSchema } from "@/db/schemas/enums/zod-db-enums"
-import { getDB } from "../../lib/db"
-import { getMail } from "../../lib/mail"
+} from "@/db/schemas";
+import { RoleEnumSchema } from "@/db/schemas/enums/zod-db-enums";
+import type { IMailService } from "@/mail/Mail.service";
+
+import { getDB } from "../../lib/db";
+import { env } from "../../lib/env";
+import { getMail } from "../../lib/mail";
+import { systemAc, systemRoles } from "./access-control";
+import { parseUserAgent } from "./device-fingerprint";
 
 function getIp(headers: Headers): string {
   return (
     headers.get("x-forwarded-for")?.split(",")[0] ||
     headers.get("x-real-ip") ||
     "127.0.0.1"
-  )
+  );
 }
 
 async function createUserEvent(database: DatabaseType, value: InsertUserEvent) {
-  return await database.insert(UserEventTable).values(value)
+  return await database.insert(UserEventTable).values(value);
 }
 
 async function upsertUserDevice(
@@ -56,15 +58,15 @@ async function upsertUserDevice(
         lastSeenAt: new Date(),
       },
     })
-    .returning()
+    .returning();
 
-  return device
+  return device;
 }
 
 function createAuth(db: DatabaseType, mail: IMailService) {
-  const defaultPlugins: Array<BetterAuthPlugin> = []
+  const defaultPlugins: Array<BetterAuthPlugin> = [];
 
-  const isDev = env.ENVIRONMENT === "development"
+  const isDev = env.ENVIRONMENT === "development";
 
   if (!isDev) {
     defaultPlugins.push(
@@ -72,7 +74,7 @@ function createAuth(db: DatabaseType, mail: IMailService) {
         customPasswordCompromisedMessage:
           "This password is compromised, choose a stronger one",
       })
-    )
+    );
   }
 
   return betterAuth({
@@ -104,22 +106,22 @@ function createAuth(db: DatabaseType, mail: IMailService) {
               .select()
               .from(RoleTable)
               .where(eq(RoleTable.roleName, "USER"))
-              .limit(1)
+              .limit(1);
 
-            if (!defaultRole) return
+            if (!defaultRole) return;
 
             // 2. Assign it in your user_roles join table
             await db.insert(UserRoleTable).values({
               userId: user.id,
               roleId: defaultRole.id,
-            })
+            });
           },
         },
         delete: {
           after: async (user) => {
             await db
               .delete(UserRoleTable)
-              .where(eq(UserRoleTable.userId, user.id))
+              .where(eq(UserRoleTable.userId, user.id));
           },
         },
       },
@@ -131,7 +133,7 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                 .update(UserSessionTable)
                 .set({ logoutAt: new Date(), lastSeenAt: new Date() })
                 .where(eq(UserSessionTable.sessionId, session.id))
-                .returning({ deviceId: UserSessionTable.deviceId })
+                .returning({ deviceId: UserSessionTable.deviceId });
 
               await createUserEvent(db, {
                 userId: session.userId,
@@ -140,9 +142,9 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                 deviceId: closed?.deviceId ?? null,
                 ipAddress: session.ipAddress,
                 userAgent: session.userAgent,
-              })
+              });
             } catch (error) {
-              console.error(`Failed to record logout activity: ${error}`)
+              console.error(`Failed to record logout activity: ${error}`);
             }
           },
         },
@@ -150,17 +152,17 @@ function createAuth(db: DatabaseType, mail: IMailService) {
     },
     hooks: {
       after: createAuthMiddleware(async (ctx) => {
-        const headers = ctx.headers ?? ctx.request?.headers
-        const newSession = ctx.context.newSession
-        const userAgent = headers?.get("user-agent") ?? null
-        const ip = headers ? getIp(headers) : null
+        const headers = ctx.headers ?? ctx.request?.headers;
+        const newSession = ctx.context.newSession;
+        const userAgent = headers?.get("user-agent") ?? null;
+        const ip = headers ? getIp(headers) : null;
 
         // Record the login session, device and events after the endpoint has
         // committed. Runs in the background so telemetry can never break auth.
         if (newSession && userAgent) {
           ctx.context.runInBackgroundOrAwait(
             (async () => {
-              const parsed = parseUserAgent(userAgent)
+              const parsed = parseUserAgent(userAgent);
 
               const [existingDevice] = await db
                 .select({ id: UserDeviceTable.id })
@@ -171,7 +173,7 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                     eq(UserDeviceTable.fingerprint, parsed.fingerprint)
                   )
                 )
-                .limit(1)
+                .limit(1);
 
               const device = await upsertUserDevice(db, {
                 userId: newSession.user.id,
@@ -181,7 +183,7 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                 deviceType: parsed.deviceType,
                 firstSeenAt: new Date(),
                 lastSeenAt: new Date(),
-              })
+              });
 
               const inserted = await db
                 .insert(UserSessionTable)
@@ -194,9 +196,9 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                   expiresAt: newSession.session.expiresAt,
                 } satisfies InsertUserSession)
                 .onConflictDoNothing({ target: UserSessionTable.sessionId })
-                .returning({ id: UserSessionTable.id })
+                .returning({ id: UserSessionTable.id });
 
-              if (inserted.length === 0) return
+              if (inserted.length === 0) return;
 
               await createUserEvent(db, {
                 userId: newSession.user.id,
@@ -205,9 +207,9 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                 deviceId: device?.id ?? null,
                 ipAddress: ip,
                 userAgent,
-              })
+              });
 
-              if (existingDevice) return
+              if (existingDevice) return;
 
               await createUserEvent(db, {
                 userId: newSession.user.id,
@@ -216,9 +218,9 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                 deviceId: device?.id ?? null,
                 ipAddress: ip,
                 userAgent,
-              })
+              });
 
-              if (isDev || !ip) return
+              if (isDev || !ip) return;
 
               await mail.sendNewDeviceLoginMail({
                 to: newSession.user.email,
@@ -229,16 +231,16 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                 ipAddress: ip,
                 approximateLocation: "not available",
                 secureAccountUrl: `${env.VITE_SITE_URL}/dashboard/settings/reset-password`,
-              })
+              });
             })()
-          )
+          );
         }
 
         // failed sign in
         if (ctx.path.startsWith("/sign-in") && !newSession) {
           if (userAgent && ctx.context.returned instanceof APIError) {
             const email =
-              typeof ctx.body?.email === "string" ? ctx.body.email : null
+              typeof ctx.body?.email === "string" ? ctx.body.email : null;
 
             ctx.context.runInBackgroundOrAwait(
               createUserEvent(db, {
@@ -247,25 +249,25 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                 ipAddress: ip,
                 userAgent,
               })
-            )
+            );
           }
         }
 
         // after password changed
         if (ctx.path.startsWith("/change-password")) {
-          const session = ctx.context.session ?? ctx.context.newSession
+          const session = ctx.context.session ?? ctx.context.newSession;
 
           if (session && headers && userAgent && ip) {
             ctx.context.runInBackgroundOrAwait(
               (async () => {
-                const { deviceType } = parseUserAgent(userAgent)
+                const { deviceType } = parseUserAgent(userAgent);
 
                 await createUserEvent(db, {
                   userId: session.user.id,
                   event: "auth.password_changed",
                   ipAddress: ip,
                   userAgent,
-                })
+                });
 
                 await mail.sendPasswordChangedMail({
                   to: session.user.email,
@@ -273,9 +275,9 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                   changeTimestamp: Date.now().toString(),
                   ipAddress: ip,
                   deviceInfo: deviceType ?? "unknown",
-                })
+                });
               })()
-            )
+            );
           }
         }
 
@@ -284,7 +286,7 @@ function createAuth(db: DatabaseType, mail: IMailService) {
           const user = ctx.context.newSession?.user ?? {
             name: ctx.body.name,
             email: ctx.body.email,
-          }
+          };
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (user != null) {
             ctx.context.runInBackgroundOrAwait(
@@ -293,9 +295,9 @@ function createAuth(db: DatabaseType, mail: IMailService) {
                   to: user.email,
                   userName: user.name,
                   dashboardUrl: `${env.VITE_SITE_URL}/dashboard`,
-                })
+                });
               })()
-            )
+            );
           }
         }
       }),
@@ -354,7 +356,7 @@ function createAuth(db: DatabaseType, mail: IMailService) {
           to: user.email,
           userName: user.name,
           verifyUrl: url,
-        })
+        });
       },
     },
     emailAndPassword: {
@@ -369,13 +371,13 @@ function createAuth(db: DatabaseType, mail: IMailService) {
           userId: user.id,
           email: user.email,
           event: "auth.password_reset",
-        })
+        });
 
         await mail.sendPasswordResetMail({
           to: user.email,
           userName: user.name,
           resetUrl: url,
-        })
+        });
       },
     },
     plugins: [
@@ -394,11 +396,11 @@ function createAuth(db: DatabaseType, mail: IMailService) {
       oneTap({ clientId: env.VITE_GOOGLE_CLIENT_ID }),
       tanstackStartCookies(),
     ],
-  })
+  });
 }
 
-export const auth = createAuth(getDB(), getMail())
+export const auth = createAuth(getDB(), getMail());
 
-export type AuthType = typeof auth
-export type AuthUser = AuthType["$Infer"]["Session"]["user"]
-export type AuthSession = AuthType["$Infer"]["Session"]["session"]
+export type AuthType = typeof auth;
+export type AuthUser = AuthType["$Infer"]["Session"]["user"];
+export type AuthSession = AuthType["$Infer"]["Session"]["session"];

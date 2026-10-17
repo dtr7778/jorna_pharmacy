@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
 import {
   Pagination,
@@ -8,7 +8,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "./pagination"
+} from "./pagination";
 
 const meta = {
   title: "UI/Pagination",
@@ -17,10 +17,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Pagination>
+} satisfies Meta<typeof Pagination>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -49,4 +49,4 @@ export const Default: Story = {
       </PaginationContent>
     </Pagination>
   ),
-}
+};

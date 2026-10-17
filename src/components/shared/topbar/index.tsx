@@ -1,7 +1,8 @@
-import { SidebarTrigger } from "@/components/ui/sidebar"
-import { AppBreadcrumb } from "../AppBreadcrumb"
-import { TopbarUser } from "./TopbarUser"
-import { ThemeChanger } from "@/components/theme-changer"
+import { ThemeChanger } from "@/components/theme-changer";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+
+import { AppBreadcrumb } from "../AppBreadcrumb";
+import { TopbarUser } from "./TopbarUser";
 
 export function Topbar() {
   return (
@@ -15,5 +16,5 @@ export function Topbar() {
         <TopbarUser />
       </div>
     </header>
-  )
+  );
 }

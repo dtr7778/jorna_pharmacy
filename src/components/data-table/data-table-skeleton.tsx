@@ -1,5 +1,6 @@
-import { DataTablePaginationSkeleton } from "./data-table-pagination-skeleton"
-import { Skeleton } from "../ui/skeleton"
+import { cn } from "cn";
+
+import { Skeleton } from "../ui/skeleton";
 import {
   Table,
   TableBody,
@@ -7,12 +8,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
-import { cn } from "cn"
+} from "../ui/table";
+import { DataTablePaginationSkeleton } from "./data-table-pagination-skeleton";
 
 interface DataTableSkeletonProps extends React.ComponentProps<"div"> {
-  rows?: number
-  pagination?: boolean
+  rows?: number;
+  pagination?: boolean;
 }
 
 export function DataTableSkeleton({
@@ -49,5 +50,5 @@ export function DataTableSkeleton({
 
       {pagination && <DataTablePaginationSkeleton />}
     </div>
-  )
+  );
 }

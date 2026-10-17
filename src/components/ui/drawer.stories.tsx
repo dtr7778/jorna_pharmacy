@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
+import { Button } from "./button";
 import {
   Drawer,
   DrawerClose,
@@ -9,8 +10,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./drawer"
-import { Button } from "./button"
+} from "./drawer";
 
 const meta = {
   title: "UI/Drawer",
@@ -19,10 +19,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Drawer>
+} satisfies Meta<typeof Drawer>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -46,4 +46,4 @@ export const Default: Story = {
       </DrawerContent>
     </Drawer>
   ),
-}
+};

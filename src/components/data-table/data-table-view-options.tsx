@@ -1,9 +1,9 @@
-import { useMemo } from "react"
+import { useMemo } from "react";
 
-import type { Table } from "@tanstack/react-table"
-import { Settings2 } from "lucide-react"
+import type { Table } from "@tanstack/react-table";
+import { Settings2 } from "lucide-react";
 
-import { Button } from "../ui/button"
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -12,19 +12,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
+} from "../ui/dropdown-menu";
 
 interface DataTableViewOptionsProps<TData> extends React.ComponentProps<
   typeof DropdownMenuContent
 > {
-  table: Table<TData>
+  table: Table<TData>;
 }
 
 export function DataTableViewOptions<TData>({
   table,
   ...props
 }: DataTableViewOptionsProps<TData>) {
-  "use no memo"
+  "use no memo";
   const columns = useMemo(
     () =>
       table
@@ -34,7 +34,7 @@ export function DataTableViewOptions<TData>({
             typeof column.accessorFn !== "undefined" && column.getCanHide()
         ),
     [table]
-  )
+  );
 
   return (
     <DropdownMenu>
@@ -70,5 +70,5 @@ export function DataTableViewOptions<TData>({
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

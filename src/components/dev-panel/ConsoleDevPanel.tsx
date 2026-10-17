@@ -1,69 +1,69 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
-import { cn } from "cn"
+import { cn } from "cn";
 
-import type { LogType } from "./DevPanelContext"
-import { useDevPanelContext } from "./DevPanelContext"
+import type { LogType } from "./DevPanelContext";
+import { useDevPanelContext } from "./DevPanelContext";
 
-type FilterType = "all" | LogType
+type FilterType = "all" | LogType;
 
 const LOG_BADGE_STYLES: Record<LogType, string> = {
   log: "text-emerald-400 border-emerald-400/40",
   warn: "text-amber-400 border-amber-400/40",
   error: "text-red-400 border-red-400/40",
   info: "text-sky-400 border-sky-400/40",
-}
+};
 
-const filters: Array<FilterType> = ["all", "log", "warn", "error", "info"]
+const filters: Array<FilterType> = ["all", "log", "warn", "error", "info"];
 
 const orig = {
   log: console.log,
   warn: console.warn,
   error: console.error,
   info: console.info,
-}
+};
 
 export function ConsoleDevPanel() {
-  const [logFilter, setLogFilter] = useState<FilterType>("all")
+  const [logFilter, setLogFilter] = useState<FilterType>("all");
 
   const { incrementErrorCount, logEndRef, logs, addLog, clearLogs } =
-    useDevPanelContext()
+    useDevPanelContext();
 
   useEffect(() => {
     console.log = (...a) => {
-      orig.log(...a)
-      addLog("log", a)
-    }
+      orig.log(...a);
+      addLog("log", a);
+    };
     console.warn = (...a) => {
-      orig.warn(...a)
-      incrementErrorCount()
-      addLog("warn", a)
-    }
+      orig.warn(...a);
+      incrementErrorCount();
+      addLog("warn", a);
+    };
     console.error = (...a) => {
-      orig.error(...a)
-      addLog("error", a)
-    }
+      orig.error(...a);
+      addLog("error", a);
+    };
     console.info = (...a) => {
-      orig.info(...a)
-      addLog("info", a)
-    }
+      orig.info(...a);
+      addLog("info", a);
+    };
 
     return () => {
-      Object.assign(console, orig)
-    }
-  }, [incrementErrorCount, addLog])
+      Object.assign(console, orig);
+    };
+  }, [incrementErrorCount, addLog]);
 
   const filteredLogs = logs.filter(
     (l) => logFilter === "all" || l.type === logFilter
-  )
+  );
 
   return (
     <>
       {/* Filter bar */}
       <div className="flex items-center gap-1.5 border-b bg-neutral-950 px-3.5 py-1.5">
         {filters.map((f) => {
-          const isActive = logFilter === f
-          const isAll = f === "all"
+          const isActive = logFilter === f;
+          const isAll = f === "all";
           return (
             <button
               key={f}
@@ -81,7 +81,7 @@ export function ConsoleDevPanel() {
             >
               {f}
             </button>
-          )
+          );
         })}
         <button
           type="button"
@@ -122,5 +122,5 @@ export function ConsoleDevPanel() {
         <div ref={logEndRef} />
       </div>
     </>
-  )
+  );
 }

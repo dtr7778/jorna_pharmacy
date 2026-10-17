@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Checkbox } from "./checkbox"
+import { Checkbox } from "./checkbox";
 import {
   Field,
   FieldContent,
@@ -12,8 +12,8 @@ import {
   FieldSeparator,
   FieldSet,
   FieldTitle,
-} from "./field"
-import { Input } from "./input"
+} from "./field";
+import { Input } from "./input";
 
 const meta = {
   title: "UI/Field",
@@ -28,10 +28,10 @@ const meta = {
       options: ["vertical", "horizontal", "responsive"],
     },
   },
-} satisfies Meta<typeof Field>
+} satisfies Meta<typeof Field>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -46,7 +46,7 @@ export const Default: Story = {
       </Field>
     </div>
   ),
-}
+};
 
 export const WithError: Story = {
   render: () => (
@@ -60,7 +60,7 @@ export const WithError: Story = {
       </Field>
     </div>
   ),
-}
+};
 
 export const Horizontal: Story = {
   render: () => (
@@ -76,7 +76,7 @@ export const Horizontal: Story = {
       </Field>
     </div>
   ),
-}
+};
 
 export const Responsive: Story = {
   args: {
@@ -96,7 +96,7 @@ export const Responsive: Story = {
       </FieldGroup>
     </div>
   ),
-}
+};
 
 export const Group: Story = {
   render: () => (
@@ -117,7 +117,7 @@ export const Group: Story = {
       </FieldSet>
     </div>
   ),
-}
+};
 
 export const WithTitle: Story = {
   render: () => (
@@ -132,4 +132,4 @@ export const WithTitle: Story = {
       </Field>
     </div>
   ),
-}
+};

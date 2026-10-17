@@ -1,16 +1,17 @@
-import { env } from "@/lib/env"
-import { SmartCoercionPlugin } from "@orpc/json-schema"
-import { OpenAPIHandler } from "@orpc/openapi/fetch"
-import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins"
-import { RPCHandler } from "@orpc/server/fetch"
+import { SmartCoercionPlugin } from "@orpc/json-schema";
+import { OpenAPIHandler } from "@orpc/openapi/fetch";
+import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
+import { RPCHandler } from "@orpc/server/fetch";
 import {
   CORSPlugin,
   SimpleCsrfProtectionHandlerPlugin,
-} from "@orpc/server/plugins"
-import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4"
+} from "@orpc/server/plugins";
+import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 
-import pkg from "../../package.json" with { type: "json" }
-import { router } from "./orpc.router"
+import { env } from "@/lib/env";
+
+import pkg from "../../package.json" with { type: "json" };
+import { router } from "./orpc.router";
 
 export const openAPIHandler = new OpenAPIHandler(router, {
   plugins: [
@@ -48,7 +49,7 @@ export const openAPIHandler = new OpenAPIHandler(router, {
       },
     }),
   ],
-})
+});
 
 export const rpcHandler = new RPCHandler(router, {
   plugins: [
@@ -58,4 +59,4 @@ export const rpcHandler = new RPCHandler(router, {
       schemaConverters: [new ZodToJsonSchemaConverter()],
     }),
   ],
-})
+});

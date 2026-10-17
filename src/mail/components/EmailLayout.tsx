@@ -60,7 +60,7 @@ export function EmailLayout({
             <Section className="text-sm text-foreground">{children}</Section>
 
             <Section className="mt-8 border-t border-border text-center">
-              <Text className="text-sm text-center text-muted-foreground">
+              <Text className="text-center text-sm text-muted-foreground">
                 Need help? Contact our support team at{" "}
                 <EmailLink href={`mailto:${supportMail}`}>
                   {supportMail}
@@ -79,7 +79,7 @@ export function EmailLayout({
 
 export function EmailHeading({ children }: { children: React.ReactNode }) {
   return (
-    <Text className="text-lg font-bold mt-0 mb-2 text-foreground">
+    <Text className="mt-0 mb-2 text-lg font-bold text-foreground">
       {children}
     </Text>
   );
@@ -87,7 +87,7 @@ export function EmailHeading({ children }: { children: React.ReactNode }) {
 
 export function EmailInfoCard({ children }: { children: React.ReactNode }) {
   return (
-    <Section className="bg-card rounded-md border border-border p-4 my-4">
+    <Section className="my-4 rounded-md border border-border bg-card p-4">
       {children}
     </Section>
   );
@@ -101,9 +101,9 @@ export function EmailMetric({
   value: string;
 }) {
   return (
-    <Column className="bg-card rounded-md border border-border p-3 w-1/2">
-      <Text className="text-xs text-muted-foreground m-0 mb-1">{label}</Text>
-      <Text className="text-base font-bold text-foreground m-0">{value}</Text>
+    <Column className="w-1/2 rounded-md border border-border bg-card p-3">
+      <Text className="m-0 mb-1 text-xs text-muted-foreground">{label}</Text>
+      <Text className="m-0 text-base font-bold text-foreground">{value}</Text>
     </Column>
   );
 }

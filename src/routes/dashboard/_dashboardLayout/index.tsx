@@ -1,17 +1,18 @@
-import { DashboardShell } from "@/components/shared/dashboard-shell"
+import { createFileRoute } from "@tanstack/react-router";
+
+import { DashboardShell } from "@/components/shared/dashboard-shell";
 import {
   DashboardShellDescription,
   DashboardShellHeader,
   DashboardShellTitle,
-} from "@/components/shared/dashboard-shell/DashboardShellHeader"
-import { createFileRoute } from "@tanstack/react-router"
+} from "@/components/shared/dashboard-shell/DashboardShellHeader";
 
 export const Route = createFileRoute("/dashboard/_dashboardLayout/")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const { user } = Route.useRouteContext()
+  const { user } = Route.useRouteContext();
 
   return (
     <DashboardShell
@@ -24,5 +25,5 @@ function RouteComponent() {
         </DashboardShellHeader>
       }
     ></DashboardShell>
-  )
+  );
 }

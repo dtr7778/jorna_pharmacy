@@ -1,12 +1,17 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState } from "react";
 
-import { setHours, setMinutes, setMonth, setYear } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { cn } from "cn";
+import { setHours, setMinutes, setMonth, setYear } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 
-import type { ButtonProps } from "./button"
-import { Button } from "./button"
-import type { CalendarProps } from "./calendar"
-import { Calendar, CalendarDayButton } from "./calendar"
+import { useControllableState } from "@/hooks/use-controllable-state";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { formatDateWithTimezone } from "@/utils/formatDate";
+
+import type { ButtonProps } from "./button";
+import { Button } from "./button";
+import type { CalendarProps } from "./calendar";
+import { Calendar, CalendarDayButton } from "./calendar";
 import {
   Drawer,
   DrawerContent,
@@ -14,8 +19,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./drawer"
-import { Popover, PopoverContent, PopoverTrigger } from "./popover"
+} from "./drawer";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import {
   Select,
   SelectContent,
@@ -23,15 +28,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./select"
-import { cn } from "cn"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { formatDateWithTimezone } from "@/utils/formatDate"
-import { useControllableState } from "@/hooks/use-controllable-state"
+} from "./select";
 
-const DEFAULT_FROM_YEAR = 1970
-const DEFAULT_TO_YEAR = 2050
-const DEFAULT_TIMEZONE = "America/New_York"
+const DEFAULT_FROM_YEAR = 1970;
+const DEFAULT_TO_YEAR = 2050;
+const DEFAULT_TIMEZONE = "America/New_York";
 
 const MONTH_NAMES = [
   "January",
@@ -46,27 +47,27 @@ const MONTH_NAMES = [
   "October",
   "November",
   "December",
-]
+];
 
 export type CalendarCompProps = Omit<
   CalendarProps,
   "mode" | "selected" | "onSelect" | "month" | "onMonthChange"
->
+>;
 
 interface DateTimePickerProps {
-  value: Date | null | undefined
-  onSelectValue: (value: Date | null | undefined) => void
-  triggerVariant?: ButtonProps["variant"]
-  timezone?: string | null | undefined
-  calendarProps?: CalendarCompProps
-  placeholder?: string
-  triggerClassName?: string
-  fromYear?: number
-  toYear?: number
-  showTimeSelection?: boolean
-  disabled?: boolean
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
+  value: Date | null | undefined;
+  onSelectValue: (value: Date | null | undefined) => void;
+  triggerVariant?: ButtonProps["variant"];
+  timezone?: string | null | undefined;
+  calendarProps?: CalendarCompProps;
+  placeholder?: string;
+  triggerClassName?: string;
+  fromYear?: number;
+  toYear?: number;
+  showTimeSelection?: boolean;
+  disabled?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
@@ -86,12 +87,12 @@ export function DateTimePicker({
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
 }: DateTimePickerProps) {
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
   const [open, setOpen] = useControllableState<boolean>({
     prop: controlledOpen,
     defaultProp: false,
     onChange: controlledOnOpenChange,
-  })
+  });
 
   const trigger = (
     <DateTimePickerTrigger
@@ -104,7 +105,7 @@ export function DateTimePicker({
       timezone={timezone}
       aria-disabled={disabled}
     />
-  )
+  );
 
   const content = (
     <DateTimePickerContent
@@ -117,7 +118,7 @@ export function DateTimePicker({
       timeZone={timezone || DEFAULT_TIMEZONE}
       {...calendarProps}
     />
-  )
+  );
 
   if (isMobile) {
     return (
@@ -131,7 +132,7 @@ export function DateTimePicker({
           <div className="border-t">{content}</div>
         </DrawerContent>
       </Drawer>
-    )
+    );
   }
 
   return (
@@ -141,14 +142,14 @@ export function DateTimePicker({
         {content}
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
 interface DateTimePickerTriggerProps extends Omit<ButtonProps, "value"> {
-  value: Date | null | undefined
-  timezone?: string | null | undefined
-  placeholder?: string
-  showTimeSelection?: boolean
+  value: Date | null | undefined;
+  timezone?: string | null | undefined;
+  placeholder?: string;
+  showTimeSelection?: boolean;
 }
 
 function DateTimePickerTrigger({
@@ -184,16 +185,16 @@ function DateTimePickerTrigger({
         <span>{placeholder}</span>
       )}
     </Button>
-  )
+  );
 }
 
 interface DateTimePickerContentProps extends CalendarCompProps {
-  value: Date | null | undefined
-  onSelectValue: (value: Date | null | undefined) => void
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  fromYear?: number
-  toYear?: number
-  showTimeSelection?: boolean
+  value: Date | null | undefined;
+  onSelectValue: (value: Date | null | undefined) => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  fromYear?: number;
+  toYear?: number;
+  showTimeSelection?: boolean;
 }
 
 function DateTimePickerContent({
@@ -207,55 +208,55 @@ function DateTimePickerContent({
   className,
   ...props
 }: DateTimePickerContentProps) {
-  const [pendingDate, setPendingDate] = useState<Date>(value ?? new Date())
+  const [pendingDate, setPendingDate] = useState<Date>(value ?? new Date());
 
   const handleConfirm = useCallback(() => {
-    onSelectValue(pendingDate)
-    setOpen(false)
-  }, [pendingDate, onSelectValue, setOpen])
+    onSelectValue(pendingDate);
+    setOpen(false);
+  }, [pendingDate, onSelectValue, setOpen]);
 
   const handleDaySelect = useCallback((day: Date | undefined) => {
-    if (!day) return
+    if (!day) return;
     setPendingDate((prev) =>
       setHours(setMinutes(day, prev.getMinutes()), prev.getHours())
-    )
-  }, [])
+    );
+  }, []);
 
   const handleMonthChange = useCallback((monthIndex: string | null) => {
-    if (monthIndex === null) return
-    setPendingDate((prev) => setMonth(prev, Number(monthIndex)))
-  }, [])
+    if (monthIndex === null) return;
+    setPendingDate((prev) => setMonth(prev, Number(monthIndex)));
+  }, []);
 
   const handleYearChange = useCallback((year: string | null) => {
-    if (year === null) return
-    setPendingDate((prev) => setYear(prev, Number(year)))
-  }, [])
+    if (year === null) return;
+    setPendingDate((prev) => setYear(prev, Number(year)));
+  }, []);
 
   const handleHourChange = useCallback((hour: string | null) => {
-    if (hour === null) return
+    if (hour === null) return;
     setPendingDate((prev) => {
-      const isPM = prev.getHours() >= 12
-      let h = Number(hour)
-      if (isPM && h < 12) h += 12
-      if (!isPM && h === 12) h = 0
-      return setHours(prev, h)
-    })
-  }, [])
+      const isPM = prev.getHours() >= 12;
+      let h = Number(hour);
+      if (isPM && h < 12) h += 12;
+      if (!isPM && h === 12) h = 0;
+      return setHours(prev, h);
+    });
+  }, []);
 
   const handleMinuteChange = useCallback((minute: string | null) => {
-    if (minute === null) return
-    setPendingDate((prev) => setMinutes(prev, Number(minute)))
-  }, [])
+    if (minute === null) return;
+    setPendingDate((prev) => setMinutes(prev, Number(minute)));
+  }, []);
 
   const handleMeridiemChange = useCallback((meridiem: string | null) => {
-    if (!meridiem) return
+    if (!meridiem) return;
     setPendingDate((prev) => {
-      const h = prev.getHours()
-      if (meridiem === "PM" && h < 12) return setHours(prev, h + 12)
-      if (meridiem === "AM" && h >= 12) return setHours(prev, h - 12)
-      return prev
-    })
-  }, [])
+      const h = prev.getHours();
+      if (meridiem === "PM" && h < 12) return setHours(prev, h + 12);
+      if (meridiem === "AM" && h >= 12) return setHours(prev, h - 12);
+      return prev;
+    });
+  }, []);
 
   return (
     <div className="flex flex-col">
@@ -302,17 +303,17 @@ function DateTimePickerContent({
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 function MonthSelect({
   value,
   onChange,
 }: {
-  value: Date | null | undefined
-  onChange: (v: string | null) => void
+  value: Date | null | undefined;
+  onChange: (v: string | null) => void;
 }) {
-  const items = MONTH_NAMES.map((label, i) => ({ value: i.toString(), label }))
+  const items = MONTH_NAMES.map((label, i) => ({ value: i.toString(), label }));
 
   return (
     <Select
@@ -331,7 +332,7 @@ function MonthSelect({
         ))}
       </SelectContent>
     </Select>
-  )
+  );
 }
 
 function YearSelect({
@@ -340,15 +341,15 @@ function YearSelect({
   toYear = DEFAULT_TO_YEAR,
   onChange,
 }: {
-  value: Date
-  fromYear?: number
-  toYear?: number
-  onChange: (v: string | null) => void
+  value: Date;
+  fromYear?: number;
+  toYear?: number;
+  onChange: (v: string | null) => void;
 }) {
   const items = Array.from({ length: toYear - fromYear + 1 }, (_, i) => {
-    const year = (fromYear + i).toString()
-    return { value: year, label: year }
-  })
+    const year = (fromYear + i).toString();
+    return { value: year, label: year };
+  });
 
   return (
     <Select
@@ -369,23 +370,23 @@ function YearSelect({
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }
 
 function HourSelect({
   value,
   onChange,
 }: {
-  value: Date
-  onChange: (v: string | null) => void
+  value: Date;
+  onChange: (v: string | null) => void;
 }) {
   const items = Array.from({ length: 12 }, (_, i) => {
-    const hour = (i + 1).toString()
-    return { value: hour, label: hour }
-  })
+    const hour = (i + 1).toString();
+    return { value: hour, label: hour };
+  });
 
-  const raw = value.getHours()
-  const display = raw === 0 ? 12 : raw > 12 ? raw - 12 : raw
+  const raw = value.getHours();
+  const display = raw === 0 ? 12 : raw > 12 ? raw - 12 : raw;
 
   return (
     <Select
@@ -406,20 +407,20 @@ function HourSelect({
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }
 
 function MinuteSelect({
   value,
   onChange,
 }: {
-  value: Date
-  onChange: (v: string | null) => void
+  value: Date;
+  onChange: (v: string | null) => void;
 }) {
   const items = Array.from({ length: 12 }, (_, i) => {
-    const minute = (i * 5).toString()
-    return { value: minute, label: minute }
-  })
+    const minute = (i * 5).toString();
+    return { value: minute, label: minute };
+  });
 
   return (
     <Select
@@ -440,20 +441,20 @@ function MinuteSelect({
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }
 
 function MeridiemSelect({
   value,
   onChange,
 }: {
-  value: Date
-  onChange: (v: string | null) => void
+  value: Date;
+  onChange: (v: string | null) => void;
 }) {
   const items = [
     { value: "AM", label: "AM" },
     { value: "PM", label: "PM" },
-  ]
+  ];
 
   return (
     <Select
@@ -474,7 +475,7 @@ function MeridiemSelect({
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }
 
 export function DateTimeDayButton({
@@ -484,11 +485,11 @@ export function DateTimeDayButton({
   timezone,
   ...props
 }: React.ComponentProps<typeof CalendarDayButton> & {
-  bookings?: Record<string, number>
-  timezone?: string | null | undefined
+  bookings?: Record<string, number>;
+  timezone?: string | null | undefined;
 }) {
-  const dateKey = formatDateWithTimezone(day.date, "yyyy-MM-dd", timezone)
-  const bookingCount = bookings?.[dateKey]
+  const dateKey = formatDateWithTimezone(day.date, "yyyy-MM-dd", timezone);
+  const bookingCount = bookings?.[dateKey];
 
   return (
     <CalendarDayButton
@@ -512,5 +513,5 @@ export function DateTimeDayButton({
         )}
       </div>
     </CalendarDayButton>
-  )
+  );
 }

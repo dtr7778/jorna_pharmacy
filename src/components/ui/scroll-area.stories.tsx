@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { ScrollArea } from "./scroll-area"
+import { ScrollArea } from "./scroll-area";
 
-const tags = Array.from({ length: 24 }, (_, i) => `Tag ${i + 1}`)
+const tags = Array.from({ length: 24 }, (_, i) => `Tag ${i + 1}`);
 
 const meta = {
   title: "UI/ScrollArea",
@@ -11,10 +11,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof ScrollArea>
+} satisfies Meta<typeof ScrollArea>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -28,4 +28,4 @@ export const Default: Story = {
       </div>
     </ScrollArea>
   ),
-}
+};

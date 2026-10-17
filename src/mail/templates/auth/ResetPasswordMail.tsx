@@ -34,7 +34,7 @@ export default function ResetPasswordMail({
       <Text>Hello {userName},</Text>
       <Text>We received a request to reset your {appName} password.</Text>
 
-      <Section className="text-center my-6">
+      <Section className="my-6 text-center">
         <EmailButton href={resetUrl}>Reset Password</EmailButton>
       </Section>
 
@@ -45,20 +45,20 @@ export default function ResetPasswordMail({
         <EmailLink href={resetUrl}>{resetUrl}</EmailLink>
       </Section>
 
-      <Text className="text-sm text-muted-foreground mb-0">
+      <Text className="mb-0 text-sm text-muted-foreground">
         This link will expire in 1 hour for security reasons.
       </Text>
 
       {ipAddress && (
         <EmailInfoCard>
-          <Text className="text-xs text-muted-foreground m-0">
+          <Text className="m-0 text-xs text-muted-foreground">
             Request originated from IP:{" "}
             <span className="font-mono">{ipAddress}</span>
           </Text>
         </EmailInfoCard>
       )}
 
-      <Text className="text-sm text-muted-foreground mt-4">
+      <Text className="mt-4 text-sm text-muted-foreground">
         If you did not request a password reset, please secure your account
         immediately or contact support.
       </Text>

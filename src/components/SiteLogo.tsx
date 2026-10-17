@@ -1,5 +1,6 @@
-import { env } from "@/lib/env"
-import { Link } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router";
+
+import { env } from "@/lib/env";
 
 export function SiteLogo() {
   return (
@@ -12,5 +13,5 @@ export function SiteLogo() {
       </div>
       <span>{env.VITE_APP_NAME}</span>
     </Link>
-  )
+  );
 }

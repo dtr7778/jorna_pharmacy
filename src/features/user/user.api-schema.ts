@@ -1,12 +1,13 @@
+import z from "zod";
+
 import {
   RoleTable,
   selectRoleSchema,
   selectUserSchema,
   UserTable,
-} from "@/db/schemas"
-import { RoleEnumSchema } from "@/db/schemas/enums/zod-db-enums"
-import { jsonGroupArray } from "@/db/sql-helpers"
-import z from "zod"
+} from "@/db/schemas";
+import { RoleEnumSchema } from "@/db/schemas/enums/zod-db-enums";
+import { jsonGroupArray } from "@/db/sql-helpers";
 
 export const roleColumnSql = jsonGroupArray(
   {
@@ -14,7 +15,7 @@ export const roleColumnSql = jsonGroupArray(
     roleName: RoleTable.roleName,
   },
   RoleTable.id
-).as("roles")
+).as("roles");
 
 export const userProfileColumns = {
   id: UserTable.id,
@@ -22,7 +23,7 @@ export const userProfileColumns = {
   email: UserTable.email,
   image: UserTable.image,
   roles: roleColumnSql,
-}
+};
 
 export const roleSqlSchema = selectRoleSchema
   .pick({
@@ -30,7 +31,7 @@ export const roleSqlSchema = selectRoleSchema
   })
   .extend({
     roleName: RoleEnumSchema,
-  })
+  });
 
 export const userProfileSchema = selectUserSchema
   .pick({
@@ -41,5 +42,5 @@ export const userProfileSchema = selectUserSchema
   })
   .extend({
     roles: z.array(roleSqlSchema),
-  })
-export type UserProfileType = z.infer<typeof userProfileSchema>
+  });
+export type UserProfileType = z.infer<typeof userProfileSchema>;

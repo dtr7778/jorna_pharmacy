@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
 import {
   Breadcrumb,
@@ -8,7 +8,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "./breadcrumb"
+} from "./breadcrumb";
 
 const meta = {
   title: "UI/Breadcrumb",
@@ -17,10 +17,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Breadcrumb>
+} satisfies Meta<typeof Breadcrumb>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -44,4 +44,4 @@ export const Default: Story = {
       </BreadcrumbList>
     </Breadcrumb>
   ),
-}
+};

@@ -1,22 +1,24 @@
-import { cn } from "cn"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { resolveUserImage } from "@/utils/resolveUserImage"
-import { strInitials } from "@/utils/strInitials"
-import { formatEnumValue } from "@/utils/formatEnum"
+import { cn } from "cn";
+
+import { formatEnumValue } from "@/utils/formatEnum";
+import { resolveUserImage } from "@/utils/resolveUserImage";
+import { strInitials } from "@/utils/strInitials";
+
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface UserAvatarProps {
-  containerClassName?: string
-  className?: string
-  imageUrl?: string | null | undefined
-  userName: string
-  userEmail: string
+  containerClassName?: string;
+  className?: string;
+  imageUrl?: string | null | undefined;
+  userName: string;
+  userEmail: string;
   userRoles?: Array<{
-    id: string
-    roleName: string
-  }>
-  showRoleDetails?: boolean
-  showDetails?: boolean
-  isActive?: boolean
+    id: string;
+    roleName: string;
+  }>;
+  showRoleDetails?: boolean;
+  showDetails?: boolean;
+  isActive?: boolean;
 }
 
 export function UserAvatar({
@@ -65,5 +67,5 @@ export function UserAvatar({
         </div>
       )}
     </div>
-  )
+  );
 }

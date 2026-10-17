@@ -5,23 +5,17 @@ import {
   useContext,
   useMemo,
   useState,
-} from "react"
+} from "react";
 
-import { ChevronDownIcon } from "lucide-react"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { useControllableState } from "@/hooks/use-controllable-state"
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback"
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "./ui/drawer"
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
-import { Button, type ButtonProps } from "./ui/button"
-import { cn } from "cn"
+import { cn } from "cn";
+import { ChevronDownIcon } from "lucide-react";
+
+import { useControllableState } from "@/hooks/use-controllable-state";
+import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+import { QueryStateBoundary } from "./tanstack-query/query-state-boundary";
+import { Button, type ButtonProps } from "./ui/button";
 import {
   Command,
   CommandEmpty,
@@ -29,44 +23,52 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./ui/command"
-import { QueryStateBoundary } from "./tanstack-query/query-state-boundary"
+} from "./ui/command";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "./ui/drawer";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface SearchableSelectorContextProps {
-  isMobile: boolean
-  open: boolean | undefined
-  setOpen: (nextValue: boolean | ((prev: boolean) => boolean)) => void
-  handleSelect: (itemId: string) => void
-  searchValue: string
-  handleSearchChange: (searchValue: string) => void
-  value: string | Array<string> | undefined
-  multiple: boolean
-  disabled?: boolean
+  isMobile: boolean;
+  open: boolean | undefined;
+  setOpen: (nextValue: boolean | ((prev: boolean) => boolean)) => void;
+  handleSelect: (itemId: string) => void;
+  searchValue: string;
+  handleSearchChange: (searchValue: string) => void;
+  value: string | Array<string> | undefined;
+  multiple: boolean;
+  disabled?: boolean;
 }
 
 const SearchableSelectorContext =
-  createContext<SearchableSelectorContextProps | null>(null)
+  createContext<SearchableSelectorContextProps | null>(null);
 
 function useSearchableSelectorContext() {
-  const context = useContext(SearchableSelectorContext)
+  const context = useContext(SearchableSelectorContext);
   if (!context) {
     throw new Error(
       "SearchableSelector components must be used within a SearchableSelector"
-    )
+    );
   }
-  return context
+  return context;
 }
 
 interface SearchableSelectorProps<TValue extends string | Array<string>> {
-  children: React.ReactNode
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-  value: TValue | undefined
-  onChange: (value: TValue | undefined) => void
-  onSearch: (searchValue: string) => void
-  searchDebounceMs?: number
-  disabled?: boolean
-  multiple?: boolean
+  children: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  value: TValue | undefined;
+  onChange: (value: TValue | undefined) => void;
+  onSearch: (searchValue: string) => void;
+  searchDebounceMs?: number;
+  disabled?: boolean;
+  multiple?: boolean;
 }
 
 export function SearchableSelector<
@@ -82,51 +84,51 @@ export function SearchableSelector<
   multiple = false,
   disabled = false,
 }: SearchableSelectorProps<TValue>) {
-  const isMobile = useIsMobile()
-  const [searchValue, setSearchValue] = useState("")
+  const isMobile = useIsMobile();
+  const [searchValue, setSearchValue] = useState("");
 
   const [open, setOpen] = useControllableState<boolean>({
     prop: controlledOpen,
     defaultProp: false,
     onChange: controlledOnOpenChange,
-  })
+  });
 
   const handleSetOpen = useCallback(
     (val: boolean | ((prev: boolean) => boolean)) => {
-      if (disabled) return
-      setOpen(val)
+      if (disabled) return;
+      setOpen(val);
     },
     [setOpen, disabled]
-  )
+  );
 
   const debouncedSearch = useDebouncedCallback(
     (inputSearchValue: string) => onSearch(inputSearchValue),
     searchDebounceMs
-  )
+  );
 
   const handleSelect = useCallback(
     (itemId: string) => {
       if (multiple) {
-        const current: Array<string> = Array.isArray(value) ? value : []
+        const current: Array<string> = Array.isArray(value) ? value : [];
         const next = current.includes(itemId)
           ? current.filter((id) => id !== itemId)
-          : [...current, itemId]
-        onChange(next as TValue)
-        return
+          : [...current, itemId];
+        onChange(next as TValue);
+        return;
       }
-      onChange((itemId === value ? undefined : itemId) as TValue)
-      handleSetOpen(false)
+      onChange((itemId === value ? undefined : itemId) as TValue);
+      handleSetOpen(false);
     },
     [multiple, value, onChange, handleSetOpen]
-  )
+  );
 
   const handleSearchChange = useCallback(
     (inputSearchValue: string) => {
-      setSearchValue(inputSearchValue)
-      debouncedSearch(inputSearchValue)
+      setSearchValue(inputSearchValue);
+      debouncedSearch(inputSearchValue);
     },
     [debouncedSearch, setSearchValue]
-  )
+  );
 
   const contextValue = useMemo<SearchableSelectorContextProps>(
     () => ({
@@ -151,9 +153,9 @@ export function SearchableSelector<
       multiple,
       disabled,
     ]
-  )
+  );
 
-  const WrapperComp = isMobile ? Drawer : Popover
+  const WrapperComp = isMobile ? Drawer : Popover;
 
   return (
     <SearchableSelectorContext.Provider value={contextValue}>
@@ -161,10 +163,10 @@ export function SearchableSelector<
         {children}
       </WrapperComp>
     </SearchableSelectorContext.Provider>
-  )
+  );
 }
 
-type SearchableSelectorTriggerProps = ButtonProps
+type SearchableSelectorTriggerProps = ButtonProps;
 
 export function SearchableSelectorTrigger({
   className,
@@ -173,7 +175,7 @@ export function SearchableSelectorTrigger({
   children,
   ...props
 }: SearchableSelectorTriggerProps) {
-  const { open, isMobile, disabled } = useSearchableSelectorContext()
+  const { open, isMobile, disabled } = useSearchableSelectorContext();
 
   const trigger = (
     <Button
@@ -192,28 +194,28 @@ export function SearchableSelectorTrigger({
       {children}
       <ChevronDownIcon className="pointer-events-none ml-auto size-4 text-muted-foreground transition-transform group-data-open/searchable-selector-trigger:rotate-180" />
     </Button>
-  )
+  );
 
   if (isMobile) {
-    return <DrawerTrigger render={trigger} />
+    return <DrawerTrigger render={trigger} />;
   }
 
-  return <PopoverTrigger render={trigger} />
+  return <PopoverTrigger render={trigger} />;
 }
 
 interface SearchableSelectorContentProps<T> {
-  title: string
-  description: string
-  className?: string
-  searchPlaceholder?: string
-  loadingFallback: React.ReactNode
-  emptyFallback: React.ReactNode
-  errorFallback?: (error: Error) => React.ReactNode
-  children: (item: T) => React.ReactNode
-  data: T[] | undefined
-  isLoading: boolean
-  isError: boolean
-  error: Error | null
+  title: string;
+  description: string;
+  className?: string;
+  searchPlaceholder?: string;
+  loadingFallback: React.ReactNode;
+  emptyFallback: React.ReactNode;
+  errorFallback?: (error: Error) => React.ReactNode;
+  children: (item: T) => React.ReactNode;
+  data: T[] | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
 }
 
 export function SearchableSelectorContent<T>({
@@ -231,7 +233,7 @@ export function SearchableSelectorContent<T>({
   error,
 }: SearchableSelectorContentProps<T>) {
   const { isMobile, handleSearchChange, searchValue } =
-    useSearchableSelectorContext()
+    useSearchableSelectorContext();
 
   const commandContent = (
     <Command shouldFilter={false} className={className}>
@@ -263,7 +265,7 @@ export function SearchableSelectorContent<T>({
         )}
       </QueryStateBoundary>
     </Command>
-  )
+  );
 
   if (isMobile) {
     return (
@@ -274,21 +276,21 @@ export function SearchableSelectorContent<T>({
         </DrawerHeader>
         <div className="flex flex-col gap-2 border-t">{commandContent}</div>
       </DrawerContent>
-    )
+    );
   }
 
   return (
     <PopoverContent className="w-72 p-0" align="start">
       {commandContent}
     </PopoverContent>
-  )
+  );
 }
 
 // ─── Loading Skeleton ────────────────────────────────────────────────────────
 
 interface SearchableSelectorLoadingSkeletonProps {
-  count?: number
-  children: React.ReactNode
+  count?: number;
+  children: React.ReactNode;
 }
 
 export function SearchableSelectorLoadingSkeleton({
@@ -301,14 +303,14 @@ export function SearchableSelectorLoadingSkeleton({
         <Fragment key={idx}>{children}</Fragment>
       ))}
     </div>
-  )
+  );
 }
 
 // ─── Empty ───────────────────────────────────────────────────────────────────
 
 interface SearchableSelectorEmptyProps {
-  icon: React.ReactNode
-  message: string
+  icon: React.ReactNode;
+  message: string;
 }
 
 export function SearchableSelectorEmpty({
@@ -320,7 +322,7 @@ export function SearchableSelectorEmpty({
       {icon}
       <span>{message}</span>
     </CommandEmpty>
-  )
+  );
 }
 
 // ─── Item ────────────────────────────────────────────────────────────────────
@@ -328,8 +330,8 @@ export function SearchableSelectorEmpty({
 interface SearchableSelectorItemProps<T> extends React.ComponentProps<
   typeof CommandItem
 > {
-  item: T
-  getItemId: (item: T) => string
+  item: T;
+  getItemId: (item: T) => string;
 }
 
 export function SearchableSelectorItem<T>({
@@ -338,11 +340,11 @@ export function SearchableSelectorItem<T>({
   getItemId,
   ...props
 }: SearchableSelectorItemProps<T>) {
-  const { handleSelect, value, multiple } = useSearchableSelectorContext()
-  const itemId = getItemId(item)
+  const { handleSelect, value, multiple } = useSearchableSelectorContext();
+  const itemId = getItemId(item);
   const isChecked = multiple
     ? Array.isArray(value) && value.includes(itemId)
-    : itemId === value
+    : itemId === value;
 
   return (
     <CommandItem
@@ -352,5 +354,5 @@ export function SearchableSelectorItem<T>({
     >
       {children}
     </CommandItem>
-  )
+  );
 }

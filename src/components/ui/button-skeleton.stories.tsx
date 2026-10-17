@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { ButtonSkeleton } from "./button-skeleton"
+import { ButtonSkeleton } from "./button-skeleton";
 
 const meta = {
   title: "UI/Button/ButtonSkeleton",
@@ -24,19 +24,19 @@ const meta = {
       control: { type: "radio" },
     },
   },
-} satisfies Meta<typeof ButtonSkeleton>
+} satisfies Meta<typeof ButtonSkeleton>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     size: "default",
   },
-}
+};
 
 export const Icon: Story = {
   args: {
     size: "icon",
   },
-}
+};

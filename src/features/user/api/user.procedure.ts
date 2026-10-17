@@ -1,12 +1,4 @@
-import { API_MESSAGES } from "@/constants/apiMessage"
-import {
-  authMiddleware,
-  userPermissionMiddleware,
-  userRoleMiddleware,
-} from "@/server/middleware/auth.middleware"
-import { errorMiddleware } from "@/server/middleware/error.middleware"
-import type { ORPCContext } from "@/types/orpc.types"
-import { implement, ORPCError } from "@orpc/server"
+import { implement, ORPCError } from "@orpc/server";
 import {
   and,
   countDistinct,
@@ -18,10 +10,10 @@ import {
   max,
   ne,
   or,
-} from "drizzle-orm"
+} from "drizzle-orm";
 
-import { userContract } from "./user.contract"
-import { buildPaginateOptions, buildPaginationMeta } from "@/db/paginate-query"
+import { API_MESSAGES } from "@/constants/apiMessage";
+import { buildPaginateOptions, buildPaginationMeta } from "@/db/paginate-query";
 import {
   RoleTable,
   UserDeviceTable,
@@ -29,15 +21,24 @@ import {
   UserRoleTable,
   UserSessionTable,
   UserTable,
-} from "@/db/schemas"
-import { roleColumnSql, userProfileColumns } from "../user.api-schema"
-import { apiResponse } from "@/lib/apiResponse"
-import { auth } from "@/features/auth/auth.server"
+} from "@/db/schemas";
+import { auth } from "@/features/auth/auth.server";
+import { apiResponse } from "@/lib/apiResponse";
+import {
+  authMiddleware,
+  userPermissionMiddleware,
+  userRoleMiddleware,
+} from "@/server/middleware/auth.middleware";
+import { errorMiddleware } from "@/server/middleware/error.middleware";
+import type { ORPCContext } from "@/types/orpc.types";
+
+import { roleColumnSql, userProfileColumns } from "../user.api-schema";
+import { userContract } from "./user.contract";
 
 export const userImpl = implement(userContract)
   .$context<ORPCContext>()
   .use(authMiddleware)
-  .use(errorMiddleware)
+  .use(errorMiddleware);
 
 export const listUserProcedure = userImpl.list
   .use(
@@ -55,7 +56,7 @@ export const listUserProcedure = userImpl.list
         updatedAt: UserTable.updatedAt,
       },
       input
-    )
+    );
 
     const lastLoginSq = context.db
       .select({
@@ -64,7 +65,7 @@ export const listUserProcedure = userImpl.list
       })
       .from(UserSessionTable)
       .groupBy(UserSessionTable.userId)
-      .as("last_login_sq")
+      .as("last_login_sq");
 
     const [totalCount, users] = await Promise.all([
       context.db.$count(UserTable),
@@ -96,31 +97,31 @@ export const listUserProcedure = userImpl.list
         .orderBy(orderBy)
         .limit(limit)
         .offset(offset),
-    ])
+    ]);
 
-    const meta = buildPaginationMeta(totalCount, users.length, page, limit)
+    const meta = buildPaginationMeta(totalCount, users.length, page, limit);
 
-    return apiResponse(API_MESSAGES.USER.GET_ALL, { meta, data: users })
-  })
+    return apiResponse(API_MESSAGES.USER.GET_ALL, { meta, data: users });
+  });
 
 function daysAgo(days: number) {
-  return new Date(Date.now() - days * 24 * 60 * 60 * 1000)
+  return new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 }
 
 function calcGrowth(previous: number, current: number): number | null {
-  if (previous === 0) return null // avoid division by zero — no data last period
-  return Math.round(((current - previous) / previous) * 1000) / 10
+  if (previous === 0) return null; // avoid division by zero — no data last period
+  return Math.round(((current - previous) / previous) * 1000) / 10;
 }
 
 export const userStatsProcedure = userImpl.stats
   .use(userRoleMiddleware(["ADMIN", "SUPER_ADMIN"]))
   .handler(async ({ context }) => {
-    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000)
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
 
-    const thisWeekStart = daysAgo(7)
-    const lastWeekStart = daysAgo(14)
-    const thisMonthStart = daysAgo(30)
-    const lastMonthStart = daysAgo(60)
+    const thisWeekStart = daysAgo(7);
+    const lastWeekStart = daysAgo(14);
+    const thisMonthStart = daysAgo(30);
+    const lastMonthStart = daysAgo(60);
 
     const allData = await Promise.all([
       // Total registered users
@@ -205,24 +206,24 @@ export const userStatsProcedure = userImpl.stats
           gte(UserEventTable.createdAt, daysAgo(1))
         )
       ),
-    ])
+    ]);
 
-    const totalUsers = allData[0]
-    const lastMonthTotal = allData[1]
-    const activeNow = allData[2][0]
-    const wau = allData[3][0]
-    const lastWau = allData[4][0]
-    const mau = allData[5][0]
-    const lastMau = allData[6][0]
-    const activeSessions = allData[7][0]
-    const totalDevices = allData[8]
-    const newDevices = allData[9]
-    const failedLogins = allData[10]
+    const totalUsers = allData[0];
+    const lastMonthTotal = allData[1];
+    const activeNow = allData[2][0];
+    const wau = allData[3][0];
+    const lastWau = allData[4][0];
+    const mau = allData[5][0];
+    const lastMau = allData[6][0];
+    const activeSessions = allData[7][0];
+    const totalDevices = allData[8];
+    const newDevices = allData[9];
+    const failedLogins = allData[10];
 
-    const wauCount = wau ? wau.count : 0
-    const lastWauCount = lastWau ? lastWau.count : 0
-    const mauCount = mau ? mau.count : 0
-    const lastMauCount = lastMau ? lastMau.count : 0
+    const wauCount = wau ? wau.count : 0;
+    const lastWauCount = lastWau ? lastWau.count : 0;
+    const mauCount = mau ? mau.count : 0;
+    const lastMauCount = lastMau ? lastMau.count : 0;
 
     return apiResponse(API_MESSAGES.USER.GET_STATS, {
       totalUsers,
@@ -236,8 +237,8 @@ export const userStatsProcedure = userImpl.stats
       totalDevices,
       newDevices,
       failedLogins,
-    })
-  })
+    });
+  });
 
 export const updateUserRoleProcedure = userImpl.updateRole
   .use(
@@ -253,36 +254,36 @@ export const updateUserRoleProcedure = userImpl.updateRole
       })
       .from(UserTable)
       .where(eq(UserTable.id, input.userId))
-      .limit(1)
+      .limit(1);
 
     if (!existUser) {
-      throw errors.NOT_FOUND()
+      throw errors.NOT_FOUND();
     }
 
     const roles = await context.db
       .select({ id: RoleTable.id })
       .from(RoleTable)
-      .where(eq(RoleTable.roleName, input.roleName))
+      .where(eq(RoleTable.roleName, input.roleName));
 
     if (roles.length === 0) {
       throw new ORPCError("NOT_FOUND", {
         message: API_MESSAGES.USER.ROLE.NOT_FOUND,
-      })
+      });
     }
 
     await context.db
       .delete(UserRoleTable)
-      .where(eq(UserRoleTable.userId, existUser.id))
+      .where(eq(UserRoleTable.userId, existUser.id));
 
     await context.db.insert(UserRoleTable).values(
       roles.map((role) => ({
         userId: existUser.id,
         roleId: role.id,
       }))
-    )
+    );
 
-    return apiResponse(API_MESSAGES.USER.UPDATE, null)
-  })
+    return apiResponse(API_MESSAGES.USER.UPDATE, null);
+  });
 
 export const userDetailsProcedure = userImpl.details
   .use(
@@ -299,7 +300,7 @@ export const userDetailsProcedure = userImpl.details
       })
       .from(UserSessionTable)
       .groupBy(UserSessionTable.userId)
-      .as("last_login_sq")
+      .as("last_login_sq");
 
     const [user] = await context.db
       .select({
@@ -309,17 +310,17 @@ export const userDetailsProcedure = userImpl.details
       .from(UserTable)
       .leftJoin(lastLoginSq, eq(UserTable.id, lastLoginSq.userId))
       .where(eq(UserTable.id, input.userId))
-      .limit(1)
+      .limit(1);
 
     if (!user) {
-      throw errors.NOT_FOUND()
+      throw errors.NOT_FOUND();
     }
 
     return apiResponse(API_MESSAGES.USER.GET_DETAILS, {
       ...user.user,
       lastLogin: user.lastLogin,
-    })
-  })
+    });
+  });
 
 export const listUserForSearchProcedure = userImpl.listUserForSearch
   .use(
@@ -335,7 +336,7 @@ export const listUserForSearchProcedure = userImpl.listUserForSearch
         email: UserTable.email,
       },
       input
-    )
+    );
 
     const members = await context.db
       .select(userProfileColumns)
@@ -343,10 +344,10 @@ export const listUserForSearchProcedure = userImpl.listUserForSearch
       .innerJoin(UserRoleTable, eq(UserRoleTable.userId, UserTable.id))
       .innerJoin(RoleTable, eq(UserRoleTable.roleId, RoleTable.id))
       .where(and(where, ne(UserTable.id, context.user.id)))
-      .groupBy(UserTable.id)
+      .groupBy(UserTable.id);
 
-    return apiResponse(API_MESSAGES.USER.GET_ALL_FOR_SEARCH, members)
-  })
+    return apiResponse(API_MESSAGES.USER.GET_ALL_FOR_SEARCH, members);
+  });
 
 export const profileUpdateProcedure = userImpl.updateProfile
   .use(
@@ -359,13 +360,13 @@ export const profileUpdateProcedure = userImpl.updateProfile
     await auth.api.updateUser({
       body: { name: input.name },
       headers: context.reqHeaders,
-    })
+    });
 
     const [updatedUserData] = await context.db
       .select()
       .from(UserTable)
       .where(eq(UserTable.id, context.user.id))
-      .limit(1)
+      .limit(1);
 
-    return apiResponse(API_MESSAGES.USER.PROFILE_UPDATE, updatedUserData!)
-  })
+    return apiResponse(API_MESSAGES.USER.PROFILE_UPDATE, updatedUserData!);
+  });

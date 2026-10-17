@@ -1,22 +1,23 @@
-import { orpcTQClient } from "@/server/orpc"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query";
 
-import { RoleTable } from "./RoleTable"
-import { QueryStateBoundary } from "@/components/tanstack-query/query-state-boundary"
-import { useQuerySearch } from "@/hooks/use-query-search"
-import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
-import { DataTableToolbarSkeleton } from "@/components/data-table/data-table-toolbar-skeleton"
-import { DataTableEmpty } from "@/components/data-table/data-table-empty"
+import { DataTableEmpty } from "@/components/data-table/data-table-empty";
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton";
+import { DataTableToolbarSkeleton } from "@/components/data-table/data-table-toolbar-skeleton";
+import { QueryStateBoundary } from "@/components/tanstack-query/query-state-boundary";
+import { useQuerySearch } from "@/hooks/use-query-search";
+import { orpcTQClient } from "@/server/orpc";
+
+import { RoleTable } from "./RoleTable";
 
 export function RoleManagementTable() {
-  "use no memo"
+  "use no memo";
   const { filters, setFilters } = useQuerySearch(
     "/dashboard/_dashboardLayout/roles"
-  )
+  );
 
   const { data, isLoading, isError, error } = useQuery(
     orpcTQClient.role.listRole.queryOptions()
-  )
+  );
 
   return (
     <QueryStateBoundary
@@ -48,10 +49,10 @@ export function RoleManagementTable() {
               limit: updatedFilters.limit,
               order: updatedFilters.order,
               orderField: updatedFilters.orderField,
-            })
+            });
           }}
         />
       )}
     </QueryStateBoundary>
-  )
+  );
 }

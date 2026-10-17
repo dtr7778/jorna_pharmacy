@@ -43,28 +43,28 @@ export default function RoleChangedMail({
       <EmailInfoCard>
         <Row>
           <Column>
-            <Text className="text-xs text-muted-foreground m-0 mb-1">
+            <Text className="m-0 mb-1 text-xs text-muted-foreground">
               Previous Role
             </Text>
-            <Text className="text-sm font-semibold m-0 line-through text-muted-foreground">
+            <Text className="m-0 text-sm font-semibold text-muted-foreground line-through">
               {oldRole}
             </Text>
           </Column>
           <Column className="px-4">
-            <Text className="text-sm m-0">→</Text>
+            <Text className="m-0 text-sm">→</Text>
           </Column>
           <Column>
-            <Text className="text-xs text-muted-foreground m-0 mb-1">
+            <Text className="m-0 mb-1 text-xs text-muted-foreground">
               New Role
             </Text>
-            <Text className="text-sm font-semibold m-0 text-foreground">
+            <Text className="m-0 text-sm font-semibold text-foreground">
               {newRole}
             </Text>
           </Column>
         </Row>
       </EmailInfoCard>
 
-      <Section className="text-center my-6">
+      <Section className="my-6 text-center">
         <EmailButton href={permissionsUrl}>View Your Permissions</EmailButton>
       </Section>
 

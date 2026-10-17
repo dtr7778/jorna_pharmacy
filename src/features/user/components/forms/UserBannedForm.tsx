@@ -1,50 +1,51 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import { authClient } from "@/features/auth/auth.client"
-import type { UserBannedType } from "@/features/auth/auth.schema"
-import { userBannedSchema } from "@/features/auth/auth.schema"
-import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { createClientOnlyFn } from "@tanstack/react-start"
-import { Controller, useForm, useWatch } from "react-hook-form"
-import toast from "react-hot-toast"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createClientOnlyFn } from "@tanstack/react-start";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import toast from "react-hot-toast";
+
+import { DateTimePickerField } from "@/components/form-fields/DateTimePickerField";
+import { InputField } from "@/components/form-fields/InputField";
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "@/components/ui/field"
-import { Switch } from "@/components/ui/switch"
-import { InputField } from "@/components/form-fields/InputField"
-import { DateTimePickerField } from "@/components/form-fields/DateTimePickerField"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
+} from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
+import { Switch } from "@/components/ui/switch";
+import { authClient } from "@/features/auth/auth.client";
+import type { UserBannedType } from "@/features/auth/auth.schema";
+import { userBannedSchema } from "@/features/auth/auth.schema";
+import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext";
 
 interface UserBannedFormProps {
-  initialData: UserBannedType
-  onSuccess?: () => void
+  initialData: UserBannedType;
+  onSuccess?: () => void;
 }
 
 export function UserBannedForm({
   initialData,
   onSuccess,
 }: UserBannedFormProps) {
-  "use no memo"
-  const [isLoading, setIsLoading] = useState(false)
-  const toastId = "ban_unbanned_user_toast_message"
+  "use no memo";
+  const [isLoading, setIsLoading] = useState(false);
+  const toastId = "ban_unbanned_user_toast_message";
 
-  const user = useAuthStore((state) => state.user)
+  const user = useAuthStore((state) => state.user);
   const form = useForm<UserBannedType>({
     resolver: zodResolver(userBannedSchema),
     defaultValues: initialData,
-  })
+  });
 
   const handleSubmit = createClientOnlyFn(async (e: UserBannedType) => {
     if (e.banned) {
-      let banExpiresIn: number = 60 * 60 * 24 * 10
+      let banExpiresIn: number = 60 * 60 * 24 * 10;
 
       if (e.banExpires) {
-        banExpiresIn = e.banExpires.getTime() - Date.now()
+        banExpiresIn = e.banExpires.getTime() - Date.now();
       }
 
       await authClient.admin.banUser({
@@ -53,50 +54,50 @@ export function UserBannedForm({
         banReason: e.banReason,
         fetchOptions: {
           onRequest: () => {
-            setIsLoading(true)
-            toast.loading("Loading...", { id: toastId })
+            setIsLoading(true);
+            toast.loading("Loading...", { id: toastId });
           },
           onSuccess: () => {
-            setIsLoading(false)
-            onSuccess?.()
+            setIsLoading(false);
+            onSuccess?.();
             toast.success("User has been banned successfully.", {
               id: toastId,
-            })
+            });
           },
           onError: ({ error }) => {
-            setIsLoading(false)
-            toast.error(error.message, { id: toastId })
+            setIsLoading(false);
+            toast.error(error.message, { id: toastId });
           },
         },
-      })
+      });
     } else {
       await authClient.admin.unbanUser({
         userId: e.userId,
         fetchOptions: {
           onRequest: () => {
-            setIsLoading(true)
-            toast.loading("Loading...", { id: toastId })
+            setIsLoading(true);
+            toast.loading("Loading...", { id: toastId });
           },
           onSuccess: () => {
-            setIsLoading(false)
-            onSuccess?.()
+            setIsLoading(false);
+            onSuccess?.();
             toast.success("User has been unbanned successfully.", {
               id: toastId,
-            })
+            });
           },
           onError: ({ error }) => {
-            setIsLoading(false)
-            toast.error(error.message, { id: toastId })
+            setIsLoading(false);
+            toast.error(error.message, { id: toastId });
           },
         },
-      })
+      });
     }
-  })
+  });
 
   const isBanned = useWatch({
     control: form.control,
     name: "banned",
-  })
+  });
 
   return (
     <div className="rounded-md border p-3 pt-0 shadow">
@@ -119,10 +120,10 @@ export function UserBannedForm({
                       id="banned"
                       checked={field.value}
                       onCheckedChange={(checked) => {
-                        field.onChange(checked)
+                        field.onChange(checked);
                         if (!checked) {
-                          form.setValue("banReason", undefined)
-                          form.setValue("banExpires", undefined)
+                          form.setValue("banReason", undefined);
+                          form.setValue("banExpires", undefined);
                         }
                       }}
                       disabled={isLoading}
@@ -171,5 +172,5 @@ export function UserBannedForm({
         </FieldGroup>
       </form>
     </div>
-  )
+  );
 }

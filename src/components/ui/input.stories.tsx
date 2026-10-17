@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Input } from "./input"
+import { Input } from "./input";
 
 const meta = {
   title: "UI/Input",
@@ -18,17 +18,17 @@ const meta = {
       control: { type: "boolean" },
     },
   },
-} satisfies Meta<typeof Input>
+} satisfies Meta<typeof Input>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     type: "text",
     placeholder: "Enter text...",
   },
-}
+};
 
 export const Disabled: Story = {
   args: {
@@ -36,4 +36,4 @@ export const Disabled: Story = {
     placeholder: "Disabled input",
     disabled: true,
   },
-}
+};

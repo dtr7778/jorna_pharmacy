@@ -1,10 +1,11 @@
-import { useCallback } from "react"
+import { useCallback } from "react";
 
-import { CheckIcon, ChevronsUpDown } from "lucide-react"
-import * as RPNInput from "react-phone-number-input"
-import flags from "react-phone-number-input/flags"
+import { cn } from "cn";
+import { CheckIcon, ChevronsUpDown } from "lucide-react";
+import * as RPNInput from "react-phone-number-input";
+import flags from "react-phone-number-input/flags";
 
-import { Button } from "./button"
+import { Button } from "./button";
 import {
   Command,
   CommandEmpty,
@@ -12,19 +13,18 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./command"
-import { Input } from "./input"
-import { Popover, PopoverContent, PopoverTrigger } from "./popover"
-import { ScrollArea } from "./scroll-area"
-import { cn } from "cn"
+} from "./command";
+import { Input } from "./input";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { ScrollArea } from "./scroll-area";
 
 type PhoneInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "onChange" | "value"
 > &
   Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
-    onChange?: (value: RPNInput.Value) => void
-  }
+    onChange?: (value: RPNInput.Value) => void;
+  };
 
 function PhoneInput({ className, onChange, ...props }: PhoneInputProps) {
   return (
@@ -45,29 +45,29 @@ function PhoneInput({ className, onChange, ...props }: PhoneInputProps) {
        */
       onChange={(value) => {
         if (value) {
-          onChange?.(value)
+          onChange?.(value);
         }
       }}
       {...props}
     />
-  )
+  );
 }
 
 function InputComponent({
   className,
   ...props
 }: React.ComponentProps<"input">) {
-  return <Input className={cn("rounded-s-none", className)} {...props} />
+  return <Input className={cn("rounded-s-none", className)} {...props} />;
 }
 
-type CountrySelectOption = { label: string; value: RPNInput.Country }
+type CountrySelectOption = { label: string; value: RPNInput.Country };
 
 type CountrySelectProps = {
-  disabled?: boolean
-  value: RPNInput.Country
-  onChange: (value: RPNInput.Country) => void
-  options: CountrySelectOption[]
-}
+  disabled?: boolean;
+  value: RPNInput.Country;
+  onChange: (value: RPNInput.Country) => void;
+  options: CountrySelectOption[];
+};
 
 const CountrySelect = ({
   disabled,
@@ -77,10 +77,10 @@ const CountrySelect = ({
 }: CountrySelectProps) => {
   const handleSelect = useCallback(
     (country: RPNInput.Country) => {
-      onChange(country)
+      onChange(country);
     },
     [onChange]
-  )
+  );
 
   return (
     <Popover>
@@ -139,17 +139,17 @@ const CountrySelect = ({
         </Command>
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};
 
 function FlagComponent({ country, countryName }: RPNInput.FlagProps) {
-  const Flag = flags[country]
+  const Flag = flags[country];
 
   return (
     <span className="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20 [&_svg]:size-full!">
       {Flag && <Flag title={countryName} />}
     </span>
-  )
+  );
 }
 
-export { PhoneInput }
+export { PhoneInput };

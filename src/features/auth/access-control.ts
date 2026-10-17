@@ -1,12 +1,13 @@
-import { RoleEnumSchema } from "@/db/schemas/enums/zod-db-enums"
-import { createAccessControl } from "better-auth/plugins"
-import { defaultStatements } from "better-auth/plugins/admin/access"
+import { createAccessControl } from "better-auth/plugins";
+import { defaultStatements } from "better-auth/plugins/admin/access";
+
+import { RoleEnumSchema } from "@/db/schemas/enums/zod-db-enums";
 
 const statement = {
   ...defaultStatements,
-} as const
+} as const;
 
-export const systemAc = createAccessControl(statement)
+export const systemAc = createAccessControl(statement);
 
 export const systemRoles = {
   [RoleEnumSchema.enum.USER]: systemAc.newRole({
@@ -55,9 +56,9 @@ export const systemRoles = {
     ],
     session: ["list", "revoke", "delete"],
   }),
-}
+};
 
-export type SystemPermissionStatement = typeof statement
-export type SystemResource = keyof SystemPermissionStatement
+export type SystemPermissionStatement = typeof statement;
+export type SystemResource = keyof SystemPermissionStatement;
 export type SystemAction<T extends SystemResource> =
-  SystemPermissionStatement[T][number]
+  SystemPermissionStatement[T][number];

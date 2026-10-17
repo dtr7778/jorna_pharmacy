@@ -1,10 +1,10 @@
-import * as React from "react"
+import * as React from "react";
 
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
-import { addDays } from "date-fns"
-import type { DateRange } from "react-day-picker"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { addDays } from "date-fns";
+import type { DateRange } from "react-day-picker";
 
-import { DateFilter } from "./date-filter"
+import { DateFilter } from "./date-filter";
 
 const meta = {
   title: "UI/DateFilter",
@@ -13,10 +13,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof DateFilter>
+} satisfies Meta<typeof DateFilter>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -26,7 +26,7 @@ export const Default: Story = {
   render: (args) => {
     const [value, setValue] = React.useState<Date | DateRange | undefined>(
       new Date()
-    )
+    );
 
     return (
       <DateFilter
@@ -35,9 +35,9 @@ export const Default: Story = {
         onValueChange={setValue}
         onApply={(v) => console.log("Apply", v)}
       />
-    )
+    );
   },
-}
+};
 
 export const Range: Story = {
   args: {
@@ -48,7 +48,7 @@ export const Range: Story = {
     const [value, setValue] = React.useState<Date | DateRange | undefined>({
       from: new Date(),
       to: addDays(new Date(), 7),
-    })
+    });
 
     return (
       <DateFilter
@@ -58,6 +58,6 @@ export const Range: Story = {
         onApply={(v) => console.log("Apply", v)}
         onCancel={() => setValue(undefined)}
       />
-    )
+    );
   },
-}
+};

@@ -1,14 +1,15 @@
-import { API_MESSAGES } from "@/constants/apiMessage"
-import { baseContract } from "@/server/orpc.contract-base"
-import type { InferContractRouterType } from "@/types/orpc.types"
-import z from "zod"
+import z from "zod";
 
-import { profileUpdateSchema, roleUpdateSchema } from "../user.schema"
-import { paginateInputSchema } from "@/lib/zod-schemas/paginateInputSchema"
-import { selectUserSchema } from "@/db/schemas"
-import { apiOutputSchema } from "@/lib/zod-schemas/apiOutputSchema"
-import { paginateOutputSchema } from "@/lib/zod-schemas/paginateOutputSchema"
-import { roleSqlSchema, userProfileSchema } from "../user.api-schema"
+import { API_MESSAGES } from "@/constants/apiMessage";
+import { selectUserSchema } from "@/db/schemas";
+import { apiOutputSchema } from "@/lib/zod-schemas/apiOutputSchema";
+import { paginateInputSchema } from "@/lib/zod-schemas/paginateInputSchema";
+import { paginateOutputSchema } from "@/lib/zod-schemas/paginateOutputSchema";
+import { baseContract } from "@/server/orpc.contract-base";
+import type { InferContractRouterType } from "@/types/orpc.types";
+
+import { roleSqlSchema, userProfileSchema } from "../user.api-schema";
+import { profileUpdateSchema, roleUpdateSchema } from "../user.schema";
 
 const userBaseContract = baseContract.errors({
   NOT_FOUND: {
@@ -16,9 +17,9 @@ const userBaseContract = baseContract.errors({
     success: false,
     message: API_MESSAGES.USER.NOT_FOUND,
   },
-})
+});
 
-const tags = ["User"] as const
+const tags = ["User"] as const;
 
 const listUserContract = userBaseContract
   .route({
@@ -41,10 +42,10 @@ const listUserContract = userBaseContract
         })
       )
     )
-  )
+  );
 export type ListUserContractType = InferContractRouterType<
   typeof listUserContract
->
+>;
 
 const listUserForSearchContract = baseContract
   .route({
@@ -58,10 +59,10 @@ const listUserForSearchContract = baseContract
       orderFields: [],
     })
   )
-  .output(apiOutputSchema(z.array(userProfileSchema)))
+  .output(apiOutputSchema(z.array(userProfileSchema)));
 export type ListUserForSearchContractType = InferContractRouterType<
   typeof listUserForSearchContract
->
+>;
 
 const userStatsContract = userBaseContract
   .route({
@@ -86,10 +87,10 @@ const userStatsContract = userBaseContract
         failedLogins: z.number(),
       })
     )
-  )
+  );
 export type UserStatsContractType = InferContractRouterType<
   typeof userStatsContract
->
+>;
 
 const userRoleUpdateContract = userBaseContract
   .route({
@@ -98,10 +99,10 @@ const userRoleUpdateContract = userBaseContract
     tags,
   })
   .input(roleUpdateSchema)
-  .output(apiOutputSchema(z.null()))
+  .output(apiOutputSchema(z.null()));
 export type UserRoleUpdateContractType = InferContractRouterType<
   typeof userRoleUpdateContract
->
+>;
 
 const userDetailsContract = userBaseContract
   .route({
@@ -116,10 +117,10 @@ const userDetailsContract = userBaseContract
         lastLogin: z.date().nullable(),
       })
     )
-  )
+  );
 export type UserDetailsContractType = InferContractRouterType<
   typeof userDetailsContract
->
+>;
 
 const profileUpdateContract = baseContract
   .route({
@@ -128,10 +129,10 @@ const profileUpdateContract = baseContract
     tags,
   })
   .input(profileUpdateSchema)
-  .output(apiOutputSchema(selectUserSchema))
+  .output(apiOutputSchema(selectUserSchema));
 export type ProfileUpdateContractType = InferContractRouterType<
   typeof profileUpdateContract
->
+>;
 
 export const userContract = {
   list: listUserContract,
@@ -140,4 +141,4 @@ export const userContract = {
   updateRole: userRoleUpdateContract,
   updateProfile: profileUpdateContract,
   details: userDetailsContract,
-}
+};

@@ -1,21 +1,21 @@
-import { relations } from "drizzle-orm/relations"
+import { relations } from "drizzle-orm/relations";
 import {
   foreignKey,
   index,
   sqliteTable,
   text,
   uniqueIndex,
-} from "drizzle-orm/sqlite-core"
+} from "drizzle-orm/sqlite-core";
 import {
   createInsertSchema,
   createSelectSchema,
   createUpdateSchema,
-} from "drizzle-zod"
-import z from "zod"
+} from "drizzle-zod";
+import z from "zod";
 
-import { db_created_at, db_date, db_id, db_updated_at } from "../db-utils"
-import { UserSessionTable } from "./user"
-import { UserTable } from "./user/user.table"
+import { db_created_at, db_date, db_id, db_updated_at } from "../db-utils";
+import { UserSessionTable } from "./user";
+import { UserTable } from "./user/user.table";
 
 export const SessionTable = sqliteTable(
   "sessions",
@@ -40,7 +40,7 @@ export const SessionTable = sqliteTable(
     index("session_userId_idx").on(table.userId),
     index("session_expiresAt_idx").on(table.expiresAt),
   ]
-)
+);
 
 export const SessionRelations = relations(SessionTable, ({ one }) => ({
   user: one(UserTable, {
@@ -53,7 +53,7 @@ export const SessionRelations = relations(SessionTable, ({ one }) => ({
     references: [UserSessionTable.sessionId],
     relationName: "UserSessionToSession",
   }),
-}))
+}));
 
 export const insertSessionSchema = createInsertSchema(SessionTable, {
   userId: z.uuid(),
@@ -61,19 +61,19 @@ export const insertSessionSchema = createInsertSchema(SessionTable, {
   id: true,
   createdAt: true,
   updatedAt: true,
-})
+});
 export const selectSessionSchema = createSelectSchema(SessionTable, {
   id: z.uuid(),
   userId: z.uuid(),
-})
+});
 export const updateSessionSchema = createUpdateSchema(SessionTable, {
   userId: z.uuid().optional(),
 }).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
-})
+});
 
-export type SessionDataModel = typeof SessionTable.$inferSelect
-export type SelectSession = z.infer<typeof selectSessionSchema>
-export type InsertSession = z.infer<typeof insertSessionSchema>
+export type SessionDataModel = typeof SessionTable.$inferSelect;
+export type SelectSession = z.infer<typeof selectSessionSchema>;
+export type InsertSession = z.infer<typeof insertSessionSchema>;

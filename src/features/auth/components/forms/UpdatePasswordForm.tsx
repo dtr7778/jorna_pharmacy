@@ -1,20 +1,21 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import { authClient } from "@/features/auth/auth.client"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { createClientOnlyFn } from "@tanstack/react-start"
-import { Controller, useForm } from "react-hook-form"
-import toast from "react-hot-toast"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createClientOnlyFn } from "@tanstack/react-start";
+import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
-import { updatePasswordSchema } from "../../auth.schema"
-import type { UpdatePasswordType } from "../../auth.schema"
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { PasswordInputField } from "@/components/form-fields/PasswordInputField"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ButtonSpinner } from "@/components/ui/button-spinner"
+import { PasswordInputField } from "@/components/form-fields/PasswordInputField";
+import { ButtonSpinner } from "@/components/ui/button-spinner";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { authClient } from "@/features/auth/auth.client";
+
+import { updatePasswordSchema } from "../../auth.schema";
+import type { UpdatePasswordType } from "../../auth.schema";
 
 export default function UpdatePasswordForm() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<UpdatePasswordType>({
     resolver: zodResolver(updatePasswordSchema),
@@ -24,10 +25,10 @@ export default function UpdatePasswordForm() {
       confirmPassword: "",
       revokeOtherSessions: false,
     },
-  })
+  });
 
   const handleSubmit = createClientOnlyFn(async (e: UpdatePasswordType) => {
-    const toastId = "update_password_toast_message"
+    const toastId = "update_password_toast_message";
 
     return authClient.changePassword({
       newPassword: e.newPassword,
@@ -35,25 +36,25 @@ export default function UpdatePasswordForm() {
       revokeOtherSessions: e.revokeOtherSessions,
       fetchOptions: {
         onRequest: () => {
-          setIsLoading(true)
+          setIsLoading(true);
           toast.loading("Updating password...", {
             id: toastId,
-          })
+          });
         },
         onSuccess: () => {
-          setIsLoading(false)
-          toast.success("Password updated", { id: toastId })
-          form.reset()
-          window.location.reload()
+          setIsLoading(false);
+          toast.success("Password updated", { id: toastId });
+          form.reset();
+          window.location.reload();
         },
         onError: ({ error }) => {
-          setIsLoading(false)
-          toast.error(error.message, { id: toastId })
-          form.reset()
+          setIsLoading(false);
+          toast.error(error.message, { id: toastId });
+          form.reset();
         },
       },
-    })
-  })
+    });
+  });
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -110,5 +111,5 @@ export default function UpdatePasswordForm() {
         </ButtonSpinner>
       </FieldGroup>
     </form>
-  )
+  );
 }

@@ -1,6 +1,7 @@
-import { createDrizzleClient } from "@/db/clients/drizzle-client"
-import { env as workerEnv } from "cloudflare:workers"
+import { env as workerEnv } from "cloudflare:workers";
+
+import { createDrizzleClient } from "@/db/clients/drizzle-client";
 
 export function getDB() {
-  return createDrizzleClient(workerEnv.DB)
+  return createDrizzleClient(workerEnv.DB);
 }

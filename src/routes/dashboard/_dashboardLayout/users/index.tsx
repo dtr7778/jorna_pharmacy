@@ -1,24 +1,25 @@
-import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
-import { DataTableToolbarSkeleton } from "@/components/data-table/data-table-toolbar-skeleton"
-import { DashboardShell } from "@/components/shared/dashboard-shell"
+import { createFileRoute } from "@tanstack/react-router";
+
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton";
+import { DataTableToolbarSkeleton } from "@/components/data-table/data-table-toolbar-skeleton";
+import { DashboardShell } from "@/components/shared/dashboard-shell";
 import {
   DashboardShellDescription,
   DashboardShellHeader,
   DashboardShellTitle,
-} from "@/components/shared/dashboard-shell/DashboardShellHeader"
+} from "@/components/shared/dashboard-shell/DashboardShellHeader";
 import {
   DashboardShellDescriptionSkeleton,
   DashboardShellTitleSkeleton,
-} from "@/components/shared/dashboard-shell/DashboardShellHeaderSkeleton"
-import { DashboardShellSkeleton } from "@/components/shared/dashboard-shell/DashboardShellSkeleton"
-import { requirePermissions } from "@/features/auth/auth.functions"
-import { UserManagementTable } from "@/features/user/components/user-table/UserManagementTable"
-import { UserStats } from "@/features/user/components/UserStats"
-import { querySearchSchema } from "@/lib/querySearchSchema"
-import { orpcTQClient } from "@/server/orpc"
-import { createFileRoute } from "@tanstack/react-router"
+} from "@/components/shared/dashboard-shell/DashboardShellHeaderSkeleton";
+import { DashboardShellSkeleton } from "@/components/shared/dashboard-shell/DashboardShellSkeleton";
+import { requirePermissions } from "@/features/auth/auth.functions";
+import { UserStats } from "@/features/user/components/UserStats";
+import { UserManagementTable } from "@/features/user/components/user-table/UserManagementTable";
+import { querySearchSchema } from "@/lib/querySearchSchema";
+import { orpcTQClient } from "@/server/orpc";
 
-const searchFields = ["name", "email"]
+const searchFields = ["name", "email"];
 
 export const Route = createFileRoute("/dashboard/_dashboardLayout/users/")({
   beforeLoad: ({ context }) => {
@@ -29,7 +30,7 @@ export const Route = createFileRoute("/dashboard/_dashboardLayout/users/")({
         { level: "system", resource: "user", action: "list" },
       ],
       context.user.id
-    )
+    );
   },
   validateSearch: querySearchSchema,
   loaderDeps: ({ search }) => search,
@@ -45,13 +46,13 @@ export const Route = createFileRoute("/dashboard/_dashboardLayout/users/")({
           orderField: deps.orderField,
         },
       })
-    )
+    );
 
-    await queryClient.query(orpcTQClient.user.stats.queryOptions())
+    await queryClient.query(orpcTQClient.user.stats.queryOptions());
   },
   pendingComponent: LoadingComponent,
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   return (
@@ -68,7 +69,7 @@ function RouteComponent() {
       <UserStats />
       <UserManagementTable searchFields={searchFields} />
     </DashboardShell>
-  )
+  );
 }
 
 function LoadingComponent() {
@@ -85,5 +86,5 @@ function LoadingComponent() {
         <DataTableToolbarSkeleton />
       </DataTableSkeleton>
     </DashboardShellSkeleton>
-  )
+  );
 }

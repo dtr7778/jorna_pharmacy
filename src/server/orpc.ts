@@ -1,14 +1,15 @@
-import { getDB } from "@/lib/db"
-import { createORPCClient } from "@orpc/client"
-import { RPCLink } from "@orpc/client/fetch"
-import { SimpleCsrfProtectionLinkPlugin } from "@orpc/client/plugins"
-import { createRouterClient } from "@orpc/server"
-import type { RouterClient } from "@orpc/server"
-import { createTanstackQueryUtils } from "@orpc/tanstack-query"
-import { createIsomorphicFn } from "@tanstack/react-start"
-import { getRequestHeaders } from "@tanstack/react-start/server"
+import { createORPCClient } from "@orpc/client";
+import { RPCLink } from "@orpc/client/fetch";
+import { SimpleCsrfProtectionLinkPlugin } from "@orpc/client/plugins";
+import { createRouterClient } from "@orpc/server";
+import type { RouterClient } from "@orpc/server";
+import { createTanstackQueryUtils } from "@orpc/tanstack-query";
+import { createIsomorphicFn } from "@tanstack/react-start";
+import { getRequestHeaders } from "@tanstack/react-start/server";
 
-import { router } from "./orpc.router"
+import { getDB } from "@/lib/db";
+
+import { router } from "./orpc.router";
 
 const getORPCClient = createIsomorphicFn()
   .server(() =>
@@ -27,16 +28,16 @@ const getORPCClient = createIsomorphicFn()
     const link = new RPCLink({
       url: () => {
         if (typeof window === "undefined") {
-          throw new Error("RPCLink is not allowed on the server side.")
+          throw new Error("RPCLink is not allowed on the server side.");
         }
 
-        return `${window.location.origin}/api/rpc`
+        return `${window.location.origin}/api/rpc`;
       },
       plugins: [new SimpleCsrfProtectionLinkPlugin()],
-    })
-    return createORPCClient(link)
-  })
+    });
+    return createORPCClient(link);
+  });
 
-export const orpcClient: RouterClient<typeof router> = getORPCClient()
+export const orpcClient: RouterClient<typeof router> = getORPCClient();
 
-export const orpcTQClient = createTanstackQueryUtils(orpcClient)
+export const orpcTQClient = createTanstackQueryUtils(orpcClient);

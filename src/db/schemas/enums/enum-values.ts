@@ -1,6 +1,6 @@
-export const ROLES = ["USER", "EMPLOYEE", "ADMIN", "SUPER_ADMIN"] as const
+export const ROLES = ["USER", "EMPLOYEE", "ADMIN", "SUPER_ADMIN"] as const;
 
-export const PERMISSION_LEVEL = ["system", "self"] as const
+export const PERMISSION_LEVEL = ["system", "self"] as const;
 export const RESOURCE_TYPE = [
   "user",
   "role_permission",
@@ -14,7 +14,7 @@ export const RESOURCE_TYPE = [
   "sale",
   "sale_return",
   "salary",
-] as const
+] as const;
 export const ACTION_TYPE = [
   "create",
   "read",
@@ -23,7 +23,7 @@ export const ACTION_TYPE = [
   "delete",
   "manage",
   "export",
-] as const
+] as const;
 
 export const ADDRESS_TYPE = [
   "billing",
@@ -32,7 +32,7 @@ export const ADDRESS_TYPE = [
   "home",
   "work",
   "other",
-] as const
+] as const;
 
 export const USER_EVENT_TYPE = [
   "auth.login",
@@ -42,4 +42,4 @@ export const USER_EVENT_TYPE = [
   "auth.password_reset",
   "device.new_detected",
   "admin.impersonation",
-] as const
+] as const;

@@ -1,4 +1,15 @@
-import { useCallback, useEffect, useId, useState } from "react"
+import { useCallback, useEffect, useId, useState } from "react";
+
+import { useQuery } from "@tanstack/react-query";
+import { Asterisk, Info, UserSearch, X } from "lucide-react";
+import type {
+  Control,
+  ControllerFieldState,
+  ControllerRenderProps,
+  FieldValues,
+  Path,
+} from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import {
   SearchableSelector,
@@ -7,41 +18,31 @@ import {
   SearchableSelectorItem,
   SearchableSelectorLoadingSkeleton,
   SearchableSelectorTrigger,
-} from "@/components/SearchableSelector"
-import { UserAvatar } from "@/components/UserAvatar"
-import { DEFAULT_PAGE_INDEX } from "@/constants"
-import { orpcTQClient } from "@/server/orpc"
-import { resolveUserImage } from "@/utils/resolveUserImage"
-import { useQuery } from "@tanstack/react-query"
-import { Asterisk, Info, UserSearch, X } from "lucide-react"
-import type {
-  Control,
-  ControllerFieldState,
-  ControllerRenderProps,
-  FieldValues,
-  Path,
-} from "react-hook-form"
-import { Controller } from "react-hook-form"
+} from "@/components/SearchableSelector";
+import { UserAvatar } from "@/components/UserAvatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldLabel,
-} from "@/components/ui/field"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { strInitials } from "@/utils/strInitials"
-import { Skeleton } from "@/components/ui/skeleton"
+} from "@/components/ui/field";
+import { Skeleton } from "@/components/ui/skeleton";
+import { DEFAULT_PAGE_INDEX } from "@/constants";
+import { orpcTQClient } from "@/server/orpc";
+import { resolveUserImage } from "@/utils/resolveUserImage";
+import { strInitials } from "@/utils/strInitials";
 
 interface UserSelectorFieldProps<TFieldValues extends FieldValues> {
-  name: Path<TFieldValues>
-  control: Control<TFieldValues>
-  label?: string
-  description?: string
-  isDescriptionInfoIconShow?: boolean
-  requiredField?: boolean
-  disabled?: boolean
-  multiple?: boolean
-  fetchApi?: boolean
+  name: Path<TFieldValues>;
+  control: Control<TFieldValues>;
+  label?: string;
+  description?: string;
+  isDescriptionInfoIconShow?: boolean;
+  requiredField?: boolean;
+  disabled?: boolean;
+  multiple?: boolean;
+  fetchApi?: boolean;
 }
 
 export function UserSelectorField<TFieldValues extends FieldValues>({
@@ -55,7 +56,7 @@ export function UserSelectorField<TFieldValues extends FieldValues>({
   multiple = false,
   fetchApi = false,
 }: UserSelectorFieldProps<TFieldValues>) {
-  const fieldId = useId()
+  const fieldId = useId();
   return (
     <Controller
       name={name}
@@ -91,17 +92,17 @@ export function UserSelectorField<TFieldValues extends FieldValues>({
         </Field>
       )}
     />
-  )
+  );
 }
 
 interface UserSelectorFieldRenderProps<TFieldValues extends FieldValues> {
-  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>
-  fieldState: ControllerFieldState
-  id: string
-  disabled?: boolean
-  multiple: boolean
-  placeholder?: string
-  fetchApi?: boolean
+  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>;
+  fieldState: ControllerFieldState;
+  id: string;
+  disabled?: boolean;
+  multiple: boolean;
+  placeholder?: string;
+  fetchApi?: boolean;
 }
 
 function UserSelectorFieldRender<TFieldValues extends FieldValues>({
@@ -113,7 +114,7 @@ function UserSelectorFieldRender<TFieldValues extends FieldValues>({
   placeholder = multiple ? "Select Users" : "Select User",
   fetchApi = false,
 }: UserSelectorFieldRenderProps<TFieldValues>) {
-  const [search, setSearch] = useState<string | undefined>(undefined)
+  const [search, setSearch] = useState<string | undefined>(undefined);
 
   const { data, isLoading, isError, error } = useQuery(
     orpcTQClient.user.listUserForSearch.queryOptions({
@@ -126,54 +127,54 @@ function UserSelectorFieldRender<TFieldValues extends FieldValues>({
       enabled: fetchApi,
       select: (result) => result.data,
     })
-  )
+  );
 
-  type UserItem = NonNullable<typeof data>[number]
+  type UserItem = NonNullable<typeof data>[number];
 
   const [knownUsers, setKnownUsers] = useState<Map<string, UserItem>>(
     () => new Map()
-  )
+  );
 
   useEffect(() => {
-    if (!data) return
+    if (!data) return;
     setKnownUsers((prev) => {
-      let changed = false
-      const next = new Map(prev)
+      let changed = false;
+      const next = new Map(prev);
       for (const user of data) {
         if (!next.has(user.id)) {
-          next.set(user.id, user)
-          changed = true
+          next.set(user.id, user);
+          changed = true;
         }
       }
-      return changed ? next : prev
-    })
-  }, [data])
+      return changed ? next : prev;
+    });
+  }, [data]);
 
-  const fieldValue = field.value as string | Array<string> | undefined
+  const fieldValue = field.value as string | Array<string> | undefined;
 
   const selectedIds: Array<string> = Array.isArray(fieldValue)
     ? fieldValue
     : fieldValue
       ? [fieldValue]
-      : []
+      : [];
 
   const selectedUsers = selectedIds
     .map((userId) => knownUsers.get(userId))
-    .filter((user): user is UserItem => Boolean(user))
+    .filter((user): user is UserItem => Boolean(user));
 
   const handleOnChange = useCallback(
     (value: string | Array<string> | undefined) => {
-      field.onChange(value)
+      field.onChange(value);
     },
     [field]
-  )
+  );
 
   const removeUser = useCallback(
     (userId: string) => {
-      field.onChange(selectedIds.filter((selectedId) => selectedId !== userId))
+      field.onChange(selectedIds.filter((selectedId) => selectedId !== userId));
     },
     [field, selectedIds]
-  )
+  );
 
   return (
     <div>
@@ -264,5 +265,5 @@ function UserSelectorFieldRender<TFieldValues extends FieldValues>({
         </SearchableSelectorContent>
       </SearchableSelector>
     </div>
-  )
+  );
 }

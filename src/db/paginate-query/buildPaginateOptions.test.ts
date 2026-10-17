@@ -1,5 +1,5 @@
-import { sqliteTable, text } from "drizzle-orm/sqlite-core"
-import { describe, expect, test } from "vitest"
+import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { describe, expect, test } from "vitest";
 
 import {
   db_bool,
@@ -7,8 +7,8 @@ import {
   db_date,
   db_id,
   db_updated_at,
-} from "../schemas/db-utils"
-import { buildPaginateOptions } from "./buildPaginateOptions"
+} from "../schemas/db-utils";
+import { buildPaginateOptions } from "./buildPaginateOptions";
 
 describe("buildPaginateOptions", () => {
   const UserTable = sqliteTable("users", {
@@ -23,7 +23,7 @@ describe("buildPaginateOptions", () => {
     banExpires: db_date("ban_expires"),
     createdAt: db_created_at,
     updatedAt: db_updated_at,
-  })
+  });
 
   test("should build paginate options", () => {
     const paginateOptions = buildPaginateOptions(
@@ -49,12 +49,12 @@ describe("buildPaginateOptions", () => {
         page: 1,
         limit: 10,
       }
-    )
+    );
 
     expect(paginateOptions).include({
       limit: 10,
       offset: 0,
       page: 1,
-    })
-  })
-})
+    });
+  });
+});

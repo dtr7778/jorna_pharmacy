@@ -1,3 +1,4 @@
+import { SidebarLogo } from "@/components/SidebarLogo";
 import {
   Sidebar,
   SidebarContent,
@@ -5,12 +6,12 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { SidebarFooterMenu } from "./SidebarFooterMenu"
-import { SidebarMainMenu } from "./SidebarMainMenu"
-import { SidebarLogo } from "@/components/SidebarLogo"
+} from "@/components/ui/sidebar";
 
-type AppSidebarProps = React.ComponentProps<typeof Sidebar>
+import { SidebarFooterMenu } from "./SidebarFooterMenu";
+import { SidebarMainMenu } from "./SidebarMainMenu";
+
+type AppSidebarProps = React.ComponentProps<typeof Sidebar>;
 
 export function AppSidebar({ ...props }: AppSidebarProps) {
   return (
@@ -28,5 +29,5 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

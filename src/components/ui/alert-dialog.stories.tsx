@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
-import { Trash2Icon } from "lucide-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { Trash2Icon } from "lucide-react";
 
 import {
   AlertDialog,
@@ -12,8 +12,8 @@ import {
   AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./alert-dialog"
-import { Button } from "./button"
+} from "./alert-dialog";
+import { Button } from "./button";
 
 const meta = {
   title: "UI/AlertDialog",
@@ -22,10 +22,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof AlertDialog>
+} satisfies Meta<typeof AlertDialog>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -48,7 +48,7 @@ export const Default: Story = {
       </AlertDialogContent>
     </AlertDialog>
   ),
-}
+};
 
 export const Destructive: Story = {
   render: () => (
@@ -74,7 +74,7 @@ export const Destructive: Story = {
       </AlertDialogContent>
     </AlertDialog>
   ),
-}
+};
 
 export const Small: Story = {
   render: () => (
@@ -96,4 +96,4 @@ export const Small: Story = {
       </AlertDialogContent>
     </AlertDialog>
   ),
-}
+};

@@ -1,16 +1,17 @@
-import { UserAvatar } from "@/components/UserAvatar"
-import { format } from "date-fns"
+import { format } from "date-fns";
 
-import type { ListUserContractType } from "../../api/user.contract"
-import { UserBannedCell } from "./cells/UserBannedCell"
-import { UserTableRowAction } from "./UserTableRowAction"
-import type { ColumnType } from "@/types/data-table"
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { Badge } from "@/components/ui/badge"
-import { formatEnumValue } from "@/utils/formatEnum"
+import { UserAvatar } from "@/components/UserAvatar";
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
+import { Badge } from "@/components/ui/badge";
+import type { ColumnType } from "@/types/data-table";
+import { formatEnumValue } from "@/utils/formatEnum";
+
+import type { ListUserContractType } from "../../api/user.contract";
+import { UserTableRowAction } from "./UserTableRowAction";
+import { UserBannedCell } from "./cells/UserBannedCell";
 
 type UserTableRowDataType =
-  ListUserContractType["output"]["data"]["data"][number]
+  ListUserContractType["output"]["data"]["data"][number];
 
 export const userTableColumn: ColumnType<UserTableRowDataType> = [
   {
@@ -37,7 +38,7 @@ export const userTableColumn: ColumnType<UserTableRowDataType> = [
       <DataTableColumnHeader column={column} label="Roles" />
     ),
     cell: ({ getValue }) => {
-      const roles = getValue<UserTableRowDataType["roles"]>()
+      const roles = getValue<UserTableRowDataType["roles"]>();
       return (
         <div className="flex flex-wrap items-center gap-2">
           {roles.map(({ id, roleName }) => (
@@ -46,7 +47,7 @@ export const userTableColumn: ColumnType<UserTableRowDataType> = [
             </Badge>
           ))}
         </div>
-      )
+      );
     },
     meta: {
       label: "Roles",
@@ -76,12 +77,12 @@ export const userTableColumn: ColumnType<UserTableRowDataType> = [
       <DataTableColumnHeader column={column} label="Email Verified" />
     ),
     cell: ({ getValue }) => {
-      const emailVerified = getValue<UserTableRowDataType["emailVerified"]>()
+      const emailVerified = getValue<UserTableRowDataType["emailVerified"]>();
       return (
         <Badge variant={emailVerified ? "default" : "secondary"}>
           {emailVerified ? "Verified" : "Not verified"}
         </Badge>
-      )
+      );
     },
     meta: { label: "Email Verified" },
     enableSorting: false,
@@ -92,12 +93,12 @@ export const userTableColumn: ColumnType<UserTableRowDataType> = [
       <DataTableColumnHeader column={column} label="Last Login" />
     ),
     cell: ({ getValue }) => {
-      const lastLogin = getValue<UserTableRowDataType["lastLogin"]>()
+      const lastLogin = getValue<UserTableRowDataType["lastLogin"]>();
       return lastLogin ? (
         <Badge variant="secondary">
           {format(new Date(lastLogin), "dd MMM, yyyy hh:mm aa")}
         </Badge>
-      ) : null
+      ) : null;
     },
     enableSorting: false,
     meta: { label: "Last Login" },
@@ -108,4 +109,4 @@ export const userTableColumn: ColumnType<UserTableRowDataType> = [
     enableSorting: false,
     enableHiding: false,
   },
-]
+];

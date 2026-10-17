@@ -48,7 +48,7 @@ export default function AccountLockedMail({
       <EmailInfoCard>
         <Row className="mb-2">
           <Column className="text-xs text-muted-foreground">Locked On</Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {lockTimestamp}
           </Column>
         </Row>
@@ -56,7 +56,7 @@ export default function AccountLockedMail({
           <Column className="text-xs text-muted-foreground">
             Attacker IP Address
           </Column>
-          <Column className="text-xs font-bold text-right font-mono text-foreground">
+          <Column className="text-right font-mono text-xs font-bold text-foreground">
             {ipAddress}
           </Column>
         </Row>
@@ -67,7 +67,7 @@ export default function AccountLockedMail({
         verify your identity and set a new password.
       </Text>
 
-      <Section className="text-center my-6">
+      <Section className="my-6 text-center">
         <EmailButton href={unlockUrl}>Unlock My Account</EmailButton>
       </Section>
 
@@ -78,7 +78,7 @@ export default function AccountLockedMail({
         <EmailLink href={unlockUrl}>{unlockUrl}</EmailLink>
       </Section>
 
-      <Text className="text-sm text-muted-foreground mt-4">
+      <Text className="mt-4 text-sm text-muted-foreground">
         If you are continuously getting locked out, please contact our support
         team for assistance.
       </Text>

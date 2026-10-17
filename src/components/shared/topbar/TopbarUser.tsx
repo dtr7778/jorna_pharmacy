@@ -1,4 +1,15 @@
 import {
+  Link,
+  useLocation,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
+import { createClientOnlyFn } from "@tanstack/react-start";
+import { LogOut, UserRound, UserRoundCog } from "lucide-react";
+import toast from "react-hot-toast";
+
+import { UserAvatar } from "@/components/UserAvatar";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -6,53 +17,43 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { UserAvatar } from "@/components/UserAvatar"
-import { DEFAULT_UNAUTH_PATH } from "@/constants"
-import { authClient } from "@/features/auth/auth.client"
-import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext"
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useRouter,
-} from "@tanstack/react-router"
-import { createClientOnlyFn } from "@tanstack/react-start"
-import { LogOut, UserRound, UserRoundCog } from "lucide-react"
-import toast from "react-hot-toast"
+} from "@/components/ui/dropdown-menu";
+import { DEFAULT_UNAUTH_PATH } from "@/constants";
+import { authClient } from "@/features/auth/auth.client";
+import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext";
 
 export function TopbarUser() {
-  const navigate = useNavigate()
-  const router = useRouter()
-  const { pathname } = useLocation()
+  const navigate = useNavigate();
+  const router = useRouter();
+  const { pathname } = useLocation();
 
-  const user = useAuthStore((state) => state.user)
+  const user = useAuthStore((state) => state.user);
 
   const handleLogout = createClientOnlyFn(async () => {
-    const toastId = "sign_out_toast_message"
+    const toastId = "sign_out_toast_message";
 
     await authClient.signOut({
       fetchOptions: {
         onRequest: () => {
-          toast.loading("Logging out...", { id: toastId })
+          toast.loading("Logging out...", { id: toastId });
         },
         onSuccess: () => {
           toast.success("Logged out successfully", {
             id: toastId,
-          })
-          router.invalidate()
+          });
+          router.invalidate();
           navigate({
             href: `${DEFAULT_UNAUTH_PATH}?redirect=${pathname}`,
-          })
+          });
         },
         onError: () => {
           toast.error("Failed to log out. Please try again", {
             id: toastId,
-          })
+          });
         },
       },
-    })
-  })
+    });
+  });
 
   return (
     <DropdownMenu>
@@ -100,5 +101,5 @@ export function TopbarUser() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

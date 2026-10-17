@@ -1,16 +1,16 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import { X } from "lucide-react"
+import { X } from "lucide-react";
 
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { RefreshButton } from "../ui/refresh-button"
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { RefreshButton } from "../ui/refresh-button";
 
 interface DataTableGlobalSearchProps {
-  searchValue?: string | null | undefined
-  setSearchValue: (value: string | undefined) => void
-  refresh: () => void
-  children?: React.ReactNode
+  searchValue?: string | null | undefined;
+  setSearchValue: (value: string | undefined) => void;
+  refresh: () => void;
+  children?: React.ReactNode;
 }
 
 export function DataTableGlobalSearch({
@@ -19,18 +19,18 @@ export function DataTableGlobalSearch({
   refresh,
   children,
 }: DataTableGlobalSearchProps) {
-  const [inputValue, setInputValue] = useState<string>(searchValue ?? "")
+  const [inputValue, setInputValue] = useState<string>(searchValue ?? "");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setSearchValue(value)
-    setInputValue(value)
-  }
+    const value = e.target.value;
+    setSearchValue(value);
+    setInputValue(value);
+  };
 
   const handleReset = () => {
-    setSearchValue(undefined)
-    setInputValue("")
-  }
+    setSearchValue(undefined);
+    setInputValue("");
+  };
 
   return (
     <div className="flex items-center gap-2">
@@ -52,5 +52,5 @@ export function DataTableGlobalSearch({
       {children}
       <RefreshButton isLoading={false} onButtonClick={refresh} />
     </div>
-  )
+  );
 }

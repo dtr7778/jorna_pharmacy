@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState } from "react";
 
-import { RefreshCw } from "lucide-react"
-import { Button, type ButtonProps } from "./button"
-import { cn } from "cn"
+import { cn } from "cn";
+import { RefreshCw } from "lucide-react";
+
+import { Button, type ButtonProps } from "./button";
 
 export function RefreshButton({
   isLoading,
@@ -11,18 +12,18 @@ export function RefreshButton({
   variant = "outline",
   ...props
 }: Omit<ButtonProps, "onClick" | "disabled"> & {
-  isLoading: boolean
-  onButtonClick: () => void
+  isLoading: boolean;
+  onButtonClick: () => void;
 }) {
-  const [isOnRefresh, setIsOnRefresh] = useState<boolean>(false)
+  const [isOnRefresh, setIsOnRefresh] = useState<boolean>(false);
 
   const handleRefresh = useCallback(() => {
-    onButtonClick()
-    setIsOnRefresh(true)
+    onButtonClick();
+    setIsOnRefresh(true);
     setTimeout(() => {
-      setIsOnRefresh(false)
-    }, 2000)
-  }, [onButtonClick])
+      setIsOnRefresh(false);
+    }, 2000);
+  }, [onButtonClick]);
 
   return (
     <Button
@@ -34,5 +35,5 @@ export function RefreshButton({
     >
       <RefreshCw className={cn((isLoading || isOnRefresh) && "animate-spin")} />
     </Button>
-  )
+  );
 }

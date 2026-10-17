@@ -1,57 +1,58 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import { createClientOnlyFn } from "@tanstack/react-start"
-import { Monitor, Smartphone, Trash2 } from "lucide-react"
-import toast from "react-hot-toast"
-import { UAParser } from "ua-parser-js"
+import { createClientOnlyFn } from "@tanstack/react-start";
+import { Monitor, Smartphone, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
+import { UAParser } from "ua-parser-js";
 
-import { authClient } from "../auth.client"
-import type { AuthSession } from "../auth.server"
-import { ButtonSpinner } from "@/components/ui/button-spinner"
+import { Badge } from "@/components/ui/badge";
+import { ButtonSpinner } from "@/components/ui/button-spinner";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { formatDateWithTimezone } from "@/utils/formatDate"
-import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext"
+} from "@/components/ui/card";
+import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext";
+import { formatDateWithTimezone } from "@/utils/formatDate";
+
+import { authClient } from "../auth.client";
+import type { AuthSession } from "../auth.server";
 
 export function SessionManagement({
   sessions,
   currentSessionToken,
 }: {
-  sessions: Array<AuthSession>
-  currentSessionToken: string
+  sessions: Array<AuthSession>;
+  currentSessionToken: string;
 }) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const otherSessions = sessions.filter((s) => s.token !== currentSessionToken)
-  const currentSession = sessions.find((s) => s.token === currentSessionToken)
+  const otherSessions = sessions.filter((s) => s.token !== currentSessionToken);
+  const currentSession = sessions.find((s) => s.token === currentSessionToken);
 
   const revokeOtherSessions = createClientOnlyFn(() => {
-    if (otherSessions.length === 0) return
-    const toastId = "revoke_other_sessions_toast_message"
+    if (otherSessions.length === 0) return;
+    const toastId = "revoke_other_sessions_toast_message";
 
     return authClient.revokeOtherSessions(undefined, {
       onRequest: () => {
-        setIsLoading(true)
-        toast.loading("Revoking other sessions...", { id: toastId })
+        setIsLoading(true);
+        toast.loading("Revoking other sessions...", { id: toastId });
       },
       onSuccess: () => {
-        setIsLoading(false)
-        toast.success("Other sessions revoked", { id: toastId })
+        setIsLoading(false);
+        toast.success("Other sessions revoked", { id: toastId });
       },
       onError: ({ error }) => {
-        setIsLoading(false)
+        setIsLoading(false);
         toast.error(error.message || "Error revoking other sessions", {
           id: toastId,
-        })
+        });
       },
-    })
-  })
+    });
+  });
 
   return (
     <div className="space-y-6">
@@ -99,7 +100,7 @@ export function SessionManagement({
         )}
       </div>
     </div>
-  )
+  );
 }
 
 function SessionCard({
@@ -108,29 +109,29 @@ function SessionCard({
   isLoading,
   setIsLoading,
 }: {
-  session: AuthSession
-  isCurrentSession?: boolean
-  isLoading: boolean
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  session: AuthSession;
+  isCurrentSession?: boolean;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const user = useAuthStore((state) => state.user)
+  const user = useAuthStore((state) => state.user);
 
-  const userAgentInfo = session.userAgent ? UAParser(session.userAgent) : null
+  const userAgentInfo = session.userAgent ? UAParser(session.userAgent) : null;
 
   const getBrowserInformation = () => {
-    if (userAgentInfo == null) return "Unknown Device"
+    if (userAgentInfo == null) return "Unknown Device";
     if (userAgentInfo.browser.name == null && userAgentInfo.os.name == null) {
-      return "Unknown Device"
+      return "Unknown Device";
     }
 
-    if (userAgentInfo.browser.name == null) return userAgentInfo.os.name
-    if (userAgentInfo.os.name == null) return userAgentInfo.browser.name
+    if (userAgentInfo.browser.name == null) return userAgentInfo.os.name;
+    if (userAgentInfo.os.name == null) return userAgentInfo.browser.name;
 
-    return `${userAgentInfo.browser.name}, ${userAgentInfo.os.name}`
-  }
+    return `${userAgentInfo.browser.name}, ${userAgentInfo.os.name}`;
+  };
 
   const revokeSession = createClientOnlyFn(() => {
-    const toastId = "revoke_session_toast_message"
+    const toastId = "revoke_session_toast_message";
 
     return authClient.revokeSession(
       {
@@ -138,22 +139,22 @@ function SessionCard({
       },
       {
         onRequest: () => {
-          setIsLoading(true)
-          toast.loading("Revoking session...", { id: toastId })
+          setIsLoading(true);
+          toast.loading("Revoking session...", { id: toastId });
         },
         onSuccess: () => {
-          setIsLoading(false)
-          toast.success("Session revoked", { id: toastId })
+          setIsLoading(false);
+          toast.success("Session revoked", { id: toastId });
         },
         onError: ({ error }) => {
-          setIsLoading(false)
+          setIsLoading(false);
           toast.error(error.message || "Error revoking session", {
             id: toastId,
-          })
+          });
         },
       }
-    )
-  })
+    );
+  });
 
   return (
     <Card>
@@ -205,5 +206,5 @@ function SessionCard({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

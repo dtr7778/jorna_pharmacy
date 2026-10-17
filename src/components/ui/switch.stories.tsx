@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Switch } from "./switch"
+import { Switch } from "./switch";
 
 const meta = {
   title: "UI/Switch",
@@ -18,29 +18,29 @@ const meta = {
       control: { type: "boolean" },
     },
   },
-} satisfies Meta<typeof Switch>
+} satisfies Meta<typeof Switch>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Unchecked: Story = {}
+export const Unchecked: Story = {};
 
 export const Checked: Story = {
   args: {
     defaultChecked: true,
   },
-}
+};
 
 export const Small: Story = {
   args: {
     size: "sm",
     defaultChecked: true,
   },
-}
+};
 
 export const Disabled: Story = {
   args: {
     defaultChecked: true,
     disabled: true,
   },
-}
+};

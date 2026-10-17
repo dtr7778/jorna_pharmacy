@@ -1,9 +1,10 @@
+import { House, Settings, ShieldUser, User, UsersRound } from "lucide-react";
+
 import type {
   RoutePathType,
   SidebarGroupMenuLinkType,
   SidebarMenuLinkType,
-} from "@/types"
-import { House, Settings, ShieldUser, User, UsersRound } from "lucide-react"
+} from "@/types";
 
 export const sidebarMenuLinks: Array<SidebarGroupMenuLinkType> = [
   {
@@ -42,7 +43,7 @@ export const sidebarMenuLinks: Array<SidebarGroupMenuLinkType> = [
       },
     ],
   },
-]
+];
 
 export const footerMenuLinks: Array<SidebarMenuLinkType> = [
   {
@@ -57,7 +58,7 @@ export const footerMenuLinks: Array<SidebarMenuLinkType> = [
     path: "/dashboard/settings",
     pathRegex: /^\/dashboard\/settings$/,
   },
-]
+];
 
 export const settingsMenuLinks: Array<{ title: string; path: RoutePathType }> =
   [
@@ -77,4 +78,4 @@ export const settingsMenuLinks: Array<{ title: string; path: RoutePathType }> =
       title: "Connected Apps",
       path: "/dashboard/settings/connected-apps",
     },
-  ]
+  ];

@@ -1,27 +1,28 @@
-import { API_MESSAGES } from "@/constants/apiMessage"
-import {
-  authMiddleware,
-  userPermissionMiddleware,
-} from "@/server/middleware/auth.middleware"
-import { errorMiddleware } from "@/server/middleware/error.middleware"
-import type { ORPCContext } from "@/types/orpc.types"
-import { implement } from "@orpc/server"
-import { eq, sql } from "drizzle-orm"
+import { implement } from "@orpc/server";
+import { eq, sql } from "drizzle-orm";
 
-import { roleContract } from "./role.contract"
+import { API_MESSAGES } from "@/constants/apiMessage";
 import {
   PermissionTable,
   RolePermissionTable,
   RoleTable,
   UserRoleTable,
-} from "@/db/schemas"
-import { jsonGroupArray } from "@/db/sql-helpers"
-import { apiResponse } from "@/lib/apiResponse"
+} from "@/db/schemas";
+import { jsonGroupArray } from "@/db/sql-helpers";
+import { apiResponse } from "@/lib/apiResponse";
+import {
+  authMiddleware,
+  userPermissionMiddleware,
+} from "@/server/middleware/auth.middleware";
+import { errorMiddleware } from "@/server/middleware/error.middleware";
+import type { ORPCContext } from "@/types/orpc.types";
+
+import { roleContract } from "./role.contract";
 
 export const roleImpl = implement(roleContract)
   .$context<ORPCContext>()
   .use(authMiddleware)
-  .use(errorMiddleware)
+  .use(errorMiddleware);
 
 export const listRoleProcedure = roleImpl.listRole
   .use(
@@ -57,7 +58,7 @@ export const listRoleProcedure = roleImpl.listRole
         PermissionTable,
         eq(RolePermissionTable.permissionId, PermissionTable.id)
       )
-      .groupBy(RoleTable.id)
+      .groupBy(RoleTable.id);
 
-    return apiResponse(API_MESSAGES.USER.ROLE.GET_ALL, result)
-  })
+    return apiResponse(API_MESSAGES.USER.ROLE.GET_ALL, result);
+  });

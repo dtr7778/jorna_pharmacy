@@ -1,67 +1,69 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
-import { createClientOnlyFn } from "@tanstack/react-start"
-import toast from "react-hot-toast"
-import { authClient } from "../auth.client"
-import { AUTH_ERROR_PAGE } from "@/constants"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
-import { GoogleIcon } from "@/assets/icons/SocialIcons"
-import { Portal, PortalBackdrop } from "@/components/ui/portal"
+import { createClientOnlyFn } from "@tanstack/react-start";
+import toast from "react-hot-toast";
+
+import { GoogleIcon } from "@/assets/icons/SocialIcons";
+import { Button } from "@/components/ui/button";
+import { Portal, PortalBackdrop } from "@/components/ui/portal";
+import { Spinner } from "@/components/ui/spinner";
+import { AUTH_ERROR_PAGE } from "@/constants";
+
+import { authClient } from "../auth.client";
 
 export function SocialAuth({
   redirect,
   invitationId,
 }: {
-  redirect: string
-  invitationId?: string | undefined
+  redirect: string;
+  invitationId?: string | undefined;
 }) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const redirectURL = invitationId
     ? `/accept-invitation?invitationId=${invitationId}`
-    : redirect
+    : redirect;
 
   useEffect(() => {
     createClientOnlyFn(async () => {
       try {
-        const toastId = "google_one_login_toast_message"
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+        const toastId = "google_one_login_toast_message";
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
         await authClient.oneTap({
           callbackURL: redirectURL,
           fetchOptions: {
             onRequest: () => {
-              setIsLoading(true)
+              setIsLoading(true);
             },
             onSuccess: () => {
-              setIsLoading(false)
+              setIsLoading(false);
               authClient.updateUser({
                 timezone,
                 fetchOptions: {
                   onError: ({ error }) => {
-                    toast.error(error.message, { id: toastId })
+                    toast.error(error.message, { id: toastId });
                   },
                 },
-              })
+              });
             },
             onError: ({ error }) => {
-              toast.error(error.message, { id: toastId })
-              setIsLoading(false)
+              toast.error(error.message, { id: toastId });
+              setIsLoading(false);
             },
           },
-        })
+        });
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : "Error in OneTap Login"
-        )
+        );
       }
-    })()
-  }, [redirectURL])
+    })();
+  }, [redirectURL]);
 
   const handleGoogleLogin = createClientOnlyFn(async () => {
-    const toastId = "google_login_toast_message"
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const toastId = "google_login_toast_message";
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     authClient.signIn.social({
       provider: "google",
@@ -70,26 +72,26 @@ export function SocialAuth({
       errorCallbackURL: AUTH_ERROR_PAGE,
       fetchOptions: {
         onRequest: () => {
-          setIsLoading(true)
+          setIsLoading(true);
         },
         onSuccess: () => {
-          setIsLoading(false)
+          setIsLoading(false);
           authClient.updateUser({
             timezone,
             fetchOptions: {
               onError: ({ error }) => {
-                toast.error(error.message, { id: toastId })
+                toast.error(error.message, { id: toastId });
               },
             },
-          })
+          });
         },
         onError: ({ error }) => {
-          toast.error(error.message, { id: toastId })
-          setIsLoading(false)
+          toast.error(error.message, { id: toastId });
+          setIsLoading(false);
         },
       },
-    })
-  })
+    });
+  });
 
   return (
     <>
@@ -121,5 +123,5 @@ export function SocialAuth({
         </Portal>
       )}
     </>
-  )
+  );
 }

@@ -1,15 +1,15 @@
 /** @jsxRuntime automatic */
-import { Section, Text } from "react-email"
+import { Section, Text } from "react-email";
 
-import { EmailButton } from "../../components/EmailButton"
-import { EmailHeading, EmailLayout } from "../../components/EmailLayout"
-import { EmailLink } from "../../components/EmailLink"
+import { EmailButton } from "../../components/EmailButton";
+import { EmailHeading, EmailLayout } from "../../components/EmailLayout";
+import { EmailLink } from "../../components/EmailLink";
 
 export interface WelcomeMailProps {
-  userName: string
-  appName: string
-  supportMail: string
-  dashboardUrl: string
+  userName: string;
+  appName: string;
+  supportMail: string;
+  dashboardUrl: string;
 }
 
 export default function WelcomeMail({
@@ -50,7 +50,7 @@ export default function WelcomeMail({
         <EmailLink href={`mailto:${supportMail}`}>{supportMail}</EmailLink>.
       </Text>
     </EmailLayout>
-  )
+  );
 }
 
 WelcomeMail.PreviewProps = {
@@ -58,4 +58,4 @@ WelcomeMail.PreviewProps = {
   appName: "App name",
   supportMail: "help@app-name.com",
   dashboardUrl: "http://localhost:3000/dashboard",
-}
+};

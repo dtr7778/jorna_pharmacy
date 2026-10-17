@@ -1,5 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { SearchIcon } from "lucide-react";
 
+import { Button } from "./button";
 import {
   Empty,
   EmptyContent,
@@ -7,9 +9,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "./empty"
-import { Button } from "./button"
-import { SearchIcon } from "lucide-react"
+} from "./empty";
 
 const meta = {
   title: "UI/Empty",
@@ -18,10 +18,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Empty>
+} satisfies Meta<typeof Empty>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -40,4 +40,4 @@ export const Default: Story = {
       </EmptyContent>
     </Empty>
   ),
-}
+};

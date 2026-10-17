@@ -1,13 +1,14 @@
-import { UsersRound } from "lucide-react"
+import { UsersRound } from "lucide-react";
 
-import type { ListRoleContractType } from "../../api/role.contract"
-import { PermissionsCell } from "./PermissionsCell"
-import type { ColumnType } from "@/types/data-table"
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { formatEnumValue } from "@/utils/formatEnum"
-import { Badge } from "@/components/ui/badge"
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
+import { Badge } from "@/components/ui/badge";
+import type { ColumnType } from "@/types/data-table";
+import { formatEnumValue } from "@/utils/formatEnum";
 
-type RoleTableRowDataType = ListRoleContractType["output"]["data"][number]
+import type { ListRoleContractType } from "../../api/role.contract";
+import { PermissionsCell } from "./PermissionsCell";
+
+type RoleTableRowDataType = ListRoleContractType["output"]["data"][number];
 
 export const roleTableColumn: ColumnType<RoleTableRowDataType> = [
   {
@@ -68,4 +69,4 @@ export const roleTableColumn: ColumnType<RoleTableRowDataType> = [
     enableColumnFilter: false,
     enableSorting: false,
   },
-]
+];

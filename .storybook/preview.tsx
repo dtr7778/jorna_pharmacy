@@ -1,4 +1,3 @@
-import type { Preview } from "@storybook/tanstack-react"
 import {
   Controls,
   Description,
@@ -6,10 +5,11 @@ import {
   Stories,
   Subtitle,
   Title,
-} from "@storybook/addon-docs/blocks"
+} from "@storybook/addon-docs/blocks";
+import type { Preview } from "@storybook/tanstack-react";
 
 // @ts-expect-error CSS is loaded by Storybook's bundler.
-import "../src/styles.css"
+import "../src/styles.css";
 
 const preview: Preview = {
   parameters: {
@@ -39,6 +39,6 @@ const preview: Preview = {
       ),
     },
   },
-}
+};
 
-export default preview
+export default preview;

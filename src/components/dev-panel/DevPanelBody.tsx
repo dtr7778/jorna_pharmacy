@@ -1,17 +1,17 @@
-import { cn } from "cn"
+import { cn } from "cn";
 
-import { AuthPanel } from "./AuthPanel"
-import { ConsoleDevPanel } from "./ConsoleDevPanel"
-import type { TabType } from "./DevPanelContext"
-import { useDevPanelContext } from "./DevPanelContext"
-import { DevPanelFooter } from "./DevPanelFooter"
-import { EnvVarPanel } from "./EnvVarPanel"
-import { PerformancePanel } from "./PerformancePanel"
-import { StoragePanel } from "./StoragePanel"
+import { AuthPanel } from "./AuthPanel";
+import { ConsoleDevPanel } from "./ConsoleDevPanel";
+import type { TabType } from "./DevPanelContext";
+import { useDevPanelContext } from "./DevPanelContext";
+import { DevPanelFooter } from "./DevPanelFooter";
+import { EnvVarPanel } from "./EnvVarPanel";
+import { PerformancePanel } from "./PerformancePanel";
+import { StoragePanel } from "./StoragePanel";
 
 export function DevPanelBody() {
   const { currentEnv, isOpen, errorCount, activeTab, addActiveTab } =
-    useDevPanelContext()
+    useDevPanelContext();
 
   const tabs: { id: TabType; label: string }[] = [
     {
@@ -22,7 +22,7 @@ export function DevPanelBody() {
     { id: "env", label: "env" },
     { id: "perf", label: "performance" },
     { id: "storage", label: "storage" },
-  ]
+  ];
 
   return (
     <div
@@ -83,5 +83,5 @@ export function DevPanelBody() {
 
       <DevPanelFooter />
     </div>
-  )
+  );
 }

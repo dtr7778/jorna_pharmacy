@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
+import { Button } from "./button";
 import {
   Card,
   CardAction,
@@ -8,8 +9,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./card"
-import { Button } from "./button"
+} from "./card";
 
 const meta = {
   title: "UI/Card",
@@ -18,10 +18,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Card>
+} satisfies Meta<typeof Card>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -41,7 +41,7 @@ export const Default: Story = {
       </CardFooter>
     </Card>
   ),
-}
+};
 
 export const Small: Story = {
   args: {
@@ -56,4 +56,4 @@ export const Small: Story = {
       <CardContent>Card content goes here.</CardContent>
     </Card>
   ),
-}
+};

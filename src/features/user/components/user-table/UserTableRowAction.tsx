@@ -1,27 +1,28 @@
-import { Link } from "@tanstack/react-router"
-import { Eye } from "lucide-react"
+import { Link } from "@tanstack/react-router";
+import { Eye } from "lucide-react";
 
-import type { ListUserContractType } from "../../api/user.contract"
-import { UserUpdateDialog } from "../UserUpdateDialog"
-import { usePermissionCheck } from "@/hooks/use-permission-check"
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/tooltip";
+import { usePermissionCheck } from "@/hooks/use-permission-check";
+
+import type { ListUserContractType } from "../../api/user.contract";
+import { UserUpdateDialog } from "../UserUpdateDialog";
 
 export function UserTableRowAction({
   userData,
 }: {
-  userData: ListUserContractType["output"]["data"]["data"][number]
+  userData: ListUserContractType["output"]["data"]["data"][number];
 }) {
   const isAllowUpdate = usePermissionCheck([
     { level: "self", resource: "user", action: "manage" },
     { level: "self", resource: "user", action: "update" },
     { level: "system", resource: "user", action: "manage" },
     { level: "system", resource: "user", action: "update" },
-  ])
+  ]);
 
   return (
     <div className="flex items-center gap-2">
@@ -54,5 +55,5 @@ export function UserTableRowAction({
         </TooltipContent>
       </Tooltip>
     </div>
-  )
+  );
 }

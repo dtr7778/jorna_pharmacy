@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
-import { PlusIcon } from "lucide-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { PlusIcon } from "lucide-react";
 
 import {
   Avatar,
@@ -8,7 +8,7 @@ import {
   AvatarGroup,
   AvatarGroupCount,
   AvatarImage,
-} from "./avatar"
+} from "./avatar";
 
 const meta = {
   title: "UI/Avatar",
@@ -23,10 +23,10 @@ const meta = {
       control: { type: "radio" },
     },
   },
-} satisfies Meta<typeof Avatar>
+} satisfies Meta<typeof Avatar>;
 
-export default meta
-type Story = StoryObj<typeof Avatar>
+export default meta;
+type Story = StoryObj<typeof Avatar>;
 
 /**
  * Basic component
@@ -41,9 +41,9 @@ export const Basic: Story = {
         <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
-    )
+    );
   },
-}
+};
 
 /**
  * Active component
@@ -59,7 +59,7 @@ export const Active: Story = {
       <AvatarBadge className="bg-primary" />
     </Avatar>
   ),
-}
+};
 
 /**
  * Group component
@@ -90,4 +90,4 @@ export const Group: Story = {
       </AvatarGroupCount>
     </AvatarGroup>
   ),
-}
+};

@@ -1,15 +1,16 @@
-import { selectPermissionSchema, selectRoleSchema } from "@/db/schemas"
+import z from "zod";
+
+import { selectPermissionSchema, selectRoleSchema } from "@/db/schemas";
 import {
   ActionTypeEnumSchema,
   PermissionLevelEnumSchema,
   ResourceTypeEnumSchema,
-} from "@/db/schemas/enums/zod-db-enums"
-import { apiOutputSchema } from "@/lib/zod-schemas/apiOutputSchema"
-import { baseContract } from "@/server/orpc.contract-base"
-import type { InferContractRouterType } from "@/types/orpc.types"
-import z from "zod"
+} from "@/db/schemas/enums/zod-db-enums";
+import { apiOutputSchema } from "@/lib/zod-schemas/apiOutputSchema";
+import { baseContract } from "@/server/orpc.contract-base";
+import type { InferContractRouterType } from "@/types/orpc.types";
 
-const tags = ["Role & Permissions"] as const
+const tags = ["Role & Permissions"] as const;
 
 const listRoleContract = baseContract
   .route({
@@ -44,11 +45,11 @@ const listRoleContract = baseContract
           })
       )
     )
-  )
+  );
 export type ListRoleContractType = InferContractRouterType<
   typeof listRoleContract
->
+>;
 
 export const roleContract = {
   listRole: listRoleContract,
-}
+};

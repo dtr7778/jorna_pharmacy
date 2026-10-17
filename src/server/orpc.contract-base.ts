@@ -1,6 +1,7 @@
-import { API_MESSAGES } from "@/constants/apiMessage"
-import { oc } from "@orpc/contract"
-import z from "zod"
+import { oc } from "@orpc/contract";
+import z from "zod";
+
+import { API_MESSAGES } from "@/constants/apiMessage";
 
 export const baseContract = oc.errors({
   UNAUTHORIZED: {
@@ -32,4 +33,4 @@ export const baseContract = oc.errors({
       fieldErrors: z.record(z.string(), z.array(z.string()).optional()),
     }),
   },
-})
+});

@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
-import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react";
 
-import { Toggle } from "./toggle"
+import { Toggle } from "./toggle";
 
 const meta = {
   title: "UI/Toggle",
@@ -20,17 +20,17 @@ const meta = {
       options: ["sm", "default", "lg"],
     },
   },
-} satisfies Meta<typeof Toggle>
+} satisfies Meta<typeof Toggle>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     "aria-label": "Toggle bold",
     children: <BoldIcon />,
   },
-}
+};
 
 export const Outline: Story = {
   args: {
@@ -38,7 +38,7 @@ export const Outline: Story = {
     "aria-label": "Toggle italic",
     children: <ItalicIcon />,
   },
-}
+};
 
 export const WithText: Story = {
   args: {
@@ -50,7 +50,7 @@ export const WithText: Story = {
       Underline
     </Toggle>
   ),
-}
+};
 
 export const Small: Story = {
   args: {
@@ -58,7 +58,7 @@ export const Small: Story = {
     "aria-label": "Toggle bold",
     children: <BoldIcon />,
   },
-}
+};
 
 export const Large: Story = {
   args: {
@@ -66,7 +66,7 @@ export const Large: Story = {
     "aria-label": "Toggle bold",
     children: <BoldIcon />,
   },
-}
+};
 
 export const Disabled: Story = {
   args: {
@@ -74,4 +74,4 @@ export const Disabled: Story = {
     "aria-label": "Toggle bold",
     children: <BoldIcon />,
   },
-}
+};

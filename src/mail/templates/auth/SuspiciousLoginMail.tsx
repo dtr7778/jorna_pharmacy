@@ -49,25 +49,25 @@ export default function SuspiciousLoginMail({
           <Column className="text-xs text-muted-foreground">
             Attempted On
           </Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {attemptTimestamp}
           </Column>
         </Row>
         <Row className="mb-2">
           <Column className="text-xs text-muted-foreground">Location</Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {location}
           </Column>
         </Row>
         <Row className="mb-2">
           <Column className="text-xs text-muted-foreground">Device</Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {deviceInfo}
           </Column>
         </Row>
         <Row>
           <Column className="text-xs text-muted-foreground">IP Address</Column>
-          <Column className="text-xs font-bold text-right font-mono text-foreground">
+          <Column className="text-right font-mono text-xs font-bold text-foreground">
             {ipAddress}
           </Column>
         </Row>
@@ -78,7 +78,7 @@ export default function SuspiciousLoginMail({
         please secure your account immediately.
       </Text>
 
-      <Section className="text-center my-6">
+      <Section className="my-6 text-center">
         <EmailButton href={secureAccountUrl}>Secure My Account</EmailButton>
       </Section>
 

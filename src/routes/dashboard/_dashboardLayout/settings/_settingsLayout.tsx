@@ -1,18 +1,19 @@
-import { DashboardShell } from "@/components/shared/dashboard-shell"
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+
+import { DashboardShell } from "@/components/shared/dashboard-shell";
 import {
   DashboardShellDescription,
   DashboardShellHeader,
   DashboardShellTitle,
-} from "@/components/shared/dashboard-shell/DashboardShellHeader"
-import { SettingsSidebar } from "@/components/shared/sidebar/SettingsSidebar"
-import { Separator } from "@/components/ui/separator"
-import { createFileRoute, Outlet } from "@tanstack/react-router"
+} from "@/components/shared/dashboard-shell/DashboardShellHeader";
+import { SettingsSidebar } from "@/components/shared/sidebar/SettingsSidebar";
+import { Separator } from "@/components/ui/separator";
 
 export const Route = createFileRoute(
   "/dashboard/_dashboardLayout/settings/_settingsLayout"
 )({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   return (
@@ -34,5 +35,5 @@ function RouteComponent() {
         </div>
       </div>
     </DashboardShell>
-  )
+  );
 }

@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
-import { Label } from "./label"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+
+import { Label } from "./label";
 
 const meta = {
   title: "UI/Label",
@@ -8,14 +9,14 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Label>
+} satisfies Meta<typeof Label>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     children: "Email address",
     htmlFor: "email",
   },
-}
+};

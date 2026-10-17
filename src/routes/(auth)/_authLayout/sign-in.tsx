@@ -1,3 +1,6 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import z from "zod";
+
 import {
   Card,
   CardContent,
@@ -5,13 +8,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { DEFAULT_AUTH_PATH } from "@/constants"
-import { SignInForm } from "@/features/auth/components/forms/SignInForm"
-import { SocialAuth } from "@/features/auth/components/SocialAuth"
-import { head } from "@/lib/head"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import z from "zod"
+} from "@/components/ui/card";
+import { DEFAULT_AUTH_PATH } from "@/constants";
+import { SocialAuth } from "@/features/auth/components/SocialAuth";
+import { SignInForm } from "@/features/auth/components/forms/SignInForm";
+import { head } from "@/lib/head";
 
 export const Route = createFileRoute("/(auth)/_authLayout/sign-in")({
   head: ({ match }) =>
@@ -24,10 +25,10 @@ export const Route = createFileRoute("/(auth)/_authLayout/sign-in")({
     invitationId: z.uuid().optional(),
   }),
   component: SignInPage,
-})
+});
 
 function SignInPage() {
-  const { redirect, invitationId } = Route.useSearch()
+  const { redirect, invitationId } = Route.useSearch();
 
   return (
     <Card>
@@ -61,5 +62,5 @@ function SignInPage() {
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

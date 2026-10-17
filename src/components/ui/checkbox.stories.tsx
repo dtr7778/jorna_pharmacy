@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Checkbox } from "./checkbox"
+import { Checkbox } from "./checkbox";
 
 const meta = {
   title: "UI/Checkbox",
@@ -14,21 +14,21 @@ const meta = {
       control: { type: "boolean" },
     },
   },
-} satisfies Meta<typeof Checkbox>
+} satisfies Meta<typeof Checkbox>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Unchecked: Story = {}
+export const Unchecked: Story = {};
 
 export const Checked: Story = {
   args: {
     defaultChecked: true,
   },
-}
+};
 
 export const Disabled: Story = {
   args: {
     disabled: true,
   },
-}
+};

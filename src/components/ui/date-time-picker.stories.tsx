@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { DateTimeDayButton, DateTimePicker } from "./date-time-picker"
+import { DateTimeDayButton, DateTimePicker } from "./date-time-picker";
 
 const meta = {
   title: "UI/Date-Time-Picker",
@@ -15,10 +15,10 @@ const meta = {
       options: ["default", "outline", "secondary", "ghost"],
     },
   },
-} satisfies Meta<typeof DateTimePicker>
+} satisfies Meta<typeof DateTimePicker>;
 
-export default meta
-type Story = StoryObj<typeof DateTimePicker>
+export default meta;
+type Story = StoryObj<typeof DateTimePicker>;
 
 export const Basic: Story = {
   args: {
@@ -27,9 +27,9 @@ export const Basic: Story = {
     showTimeSelection: true,
   },
   render: (args) => {
-    return <DateTimePicker {...args} />
+    return <DateTimePicker {...args} />;
   },
-}
+};
 
 export const WithBookings: Story = {
   args: {
@@ -57,6 +57,6 @@ export const WithBookings: Story = {
       <div>
         <DateTimePicker {...args} />
       </div>
-    )
+    );
   },
-}
+};

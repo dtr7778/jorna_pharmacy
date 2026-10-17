@@ -1,119 +1,120 @@
 /** @jsxRuntime automatic */
-import { render, toPlainText } from "react-email"
+import { render, toPlainText } from "react-email";
 
+import type { MailTo, SendMailOption } from "./mail.types";
 import AccountLockedMail, {
   type AccountLockedMailProps,
-} from "./templates/auth/AccountLockedMail"
+} from "./templates/auth/AccountLockedMail";
 import EmailVerificationMail, {
   type EmailVerificationMailProps,
-} from "./templates/auth/EmailVerificationMail"
+} from "./templates/auth/EmailVerificationMail";
 import NewDeviceLoginMail, {
   type NewDeviceLoginMailProps,
-} from "./templates/auth/NewDeviceLoginMail"
+} from "./templates/auth/NewDeviceLoginMail";
 import PasswordChangedMail, {
   type PasswordChangedMailProps,
-} from "./templates/auth/PasswordChangedMail"
+} from "./templates/auth/PasswordChangedMail";
 import ResetPasswordMail, {
   type ResetPasswordMailProps,
-} from "./templates/auth/ResetPasswordMail"
+} from "./templates/auth/ResetPasswordMail";
 import RoleChangedMail, {
   type RoleChangedMailProps,
-} from "./templates/auth/RoleChangedMail"
+} from "./templates/auth/RoleChangedMail";
 import SuspiciousLoginMail, {
   type SuspiciousLoginMailProps,
-} from "./templates/auth/SuspiciousLoginMail"
+} from "./templates/auth/SuspiciousLoginMail";
 import WelcomeMail, {
   type WelcomeMailProps,
-} from "./templates/auth/WelcomeMail"
-
+} from "./templates/auth/WelcomeMail";
 import {
   NodeMailerTransporter,
   type NodeMailerTransporterConfig,
-} from "./transports/NodeMailer.transporter"
-import type { MailTo, SendMailOption } from "./mail.types"
+} from "./transports/NodeMailer.transporter";
 
 type WelcomeEmailOptions = Omit<SendMailOption, "subject" | "text" | "html"> &
-  Omit<WelcomeMailProps, "appName" | "supportMail">
+  Omit<WelcomeMailProps, "appName" | "supportMail">;
 
 type EmailVerificationMailOptions = Omit<
   SendMailOption,
   "subject" | "text" | "html"
 > &
-  Omit<EmailVerificationMailProps, "appName" | "supportMail">
+  Omit<EmailVerificationMailProps, "appName" | "supportMail">;
 
 type PasswordResetEmailOptions = Omit<
   SendMailOption,
   "subject" | "text" | "html"
 > &
-  Omit<ResetPasswordMailProps, "appName" | "supportMail">
+  Omit<ResetPasswordMailProps, "appName" | "supportMail">;
 
 type PasswordChangedMailOptions = Omit<
   SendMailOption,
   "subject" | "text" | "html"
 > &
-  Omit<PasswordChangedMailProps, "appName" | "supportMail">
+  Omit<PasswordChangedMailProps, "appName" | "supportMail">;
 
 type NewDeviceLoginEmailOptions = Omit<
   SendMailOption,
   "subject" | "text" | "html"
 > &
-  Omit<NewDeviceLoginMailProps, "appName" | "supportMail">
+  Omit<NewDeviceLoginMailProps, "appName" | "supportMail">;
 
 type SuspiciousLoginMailOptions = Omit<
   SendMailOption,
   "subject" | "text" | "html"
 > &
-  Omit<SuspiciousLoginMailProps, "appName" | "supportMail">
+  Omit<SuspiciousLoginMailProps, "appName" | "supportMail">;
 
 type RoleChangedMailOptions = Omit<
   SendMailOption,
   "subject" | "text" | "html"
 > &
-  Omit<RoleChangedMailProps, "appName" | "supportMail">
+  Omit<RoleChangedMailProps, "appName" | "supportMail">;
 
 type AccountLockedMailOptions = Omit<
   SendMailOption,
   "subject" | "text" | "html"
 > &
-  Omit<AccountLockedMailProps, "appName" | "supportMail">
+  Omit<AccountLockedMailProps, "appName" | "supportMail">;
 
 export interface IMailService {
-  sendWelcomeMail: (options: WelcomeEmailOptions) => Promise<string>
+  sendWelcomeMail: (options: WelcomeEmailOptions) => Promise<string>;
 
   sendEmailVerificationMail: (
     options: EmailVerificationMailOptions
-  ) => Promise<string>
+  ) => Promise<string>;
 
-  sendPasswordResetMail: (options: PasswordResetEmailOptions) => Promise<string>
+  sendPasswordResetMail: (
+    options: PasswordResetEmailOptions
+  ) => Promise<string>;
 
   sendPasswordChangedMail: (
     options: PasswordChangedMailOptions
-  ) => Promise<string>
+  ) => Promise<string>;
 
   sendNewDeviceLoginMail: (
     options: NewDeviceLoginEmailOptions
-  ) => Promise<string>
+  ) => Promise<string>;
 
   sendSuspiciousLoginMail: (
     options: SuspiciousLoginMailOptions
-  ) => Promise<string>
+  ) => Promise<string>;
 
-  sendRoleChangedMail: (options: RoleChangedMailOptions) => Promise<string>
+  sendRoleChangedMail: (options: RoleChangedMailOptions) => Promise<string>;
 
-  sendAccountLockedMail: (options: AccountLockedMailOptions) => Promise<string>
+  sendAccountLockedMail: (options: AccountLockedMailOptions) => Promise<string>;
 }
 
 export interface MailConfig extends NodeMailerTransporterConfig {
-  appName: string
-  mailFrom: string
+  appName: string;
+  mailFrom: string;
 }
 
 export class MailService extends NodeMailerTransporter {
-  public readonly mailConfig: MailConfig
+  public readonly mailConfig: MailConfig;
 
   constructor(config: MailConfig) {
-    super(config)
-    this.mailConfig = config
+    super(config);
+    this.mailConfig = config;
   }
 
   public async sendMailTemplate(
@@ -122,8 +123,8 @@ export class MailService extends NodeMailerTransporter {
     component: React.ReactNode,
     options: Partial<SendMailOption> = {}
   ): Promise<string> {
-    const html = await render(component)
-    const text = toPlainText(html)
+    const html = await render(component);
+    const text = toPlainText(html);
 
     return this.sendMail({
       ...options,
@@ -131,7 +132,7 @@ export class MailService extends NodeMailerTransporter {
       subject,
       text,
       html,
-    })
+    });
   }
 
   public async sendWelcomeMail({
@@ -147,7 +148,7 @@ export class MailService extends NodeMailerTransporter {
         {...options}
       />,
       options
-    )
+    );
   }
 
   public async sendEmailVerificationMail({
@@ -163,7 +164,7 @@ export class MailService extends NodeMailerTransporter {
         {...options}
       />,
       options
-    )
+    );
   }
 
   public async sendPasswordResetMail({
@@ -179,7 +180,7 @@ export class MailService extends NodeMailerTransporter {
         {...options}
       />,
       options
-    )
+    );
   }
 
   public async sendPasswordChangedMail({
@@ -195,7 +196,7 @@ export class MailService extends NodeMailerTransporter {
         {...options}
       />,
       options
-    )
+    );
   }
 
   public async sendNewDeviceLoginMail({
@@ -211,7 +212,7 @@ export class MailService extends NodeMailerTransporter {
         {...options}
       />,
       options
-    )
+    );
   }
 
   public async sendSuspiciousLoginMail({
@@ -227,7 +228,7 @@ export class MailService extends NodeMailerTransporter {
         {...options}
       />,
       options
-    )
+    );
   }
 
   public async sendRoleChangedMail({
@@ -243,7 +244,7 @@ export class MailService extends NodeMailerTransporter {
         {...options}
       />,
       options
-    )
+    );
   }
 
   public async sendAccountLockedMail({
@@ -259,6 +260,6 @@ export class MailService extends NodeMailerTransporter {
         {...options}
       />,
       options
-    )
+    );
   }
 }

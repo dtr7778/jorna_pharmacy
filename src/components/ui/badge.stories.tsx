@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Badge } from "./badge"
+import { Badge } from "./badge";
 
 const meta = {
   title: "UI/Badge",
@@ -22,10 +22,10 @@ const meta = {
       control: { type: "radio" },
     },
   },
-} satisfies Meta<typeof Badge>
+} satisfies Meta<typeof Badge>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 /**
  * Primary Button
@@ -35,4 +35,4 @@ export const Primary: Story = {
     variant: "default",
     children: "Badge",
   },
-}
+};

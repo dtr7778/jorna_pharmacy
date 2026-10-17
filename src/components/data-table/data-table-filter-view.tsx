@@ -1,10 +1,9 @@
-import { useCallback, useMemo } from "react"
+import { useCallback, useMemo } from "react";
 
-import type { Table } from "@tanstack/react-table"
-import { Funnel, X } from "lucide-react"
+import type { Table } from "@tanstack/react-table";
+import { Funnel, X } from "lucide-react";
 
-import { Button } from "../ui/button"
-import { DataTableFilterItems } from "./data-table-filter-items"
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogDescription,
@@ -13,29 +12,30 @@ import {
   DialogStickyHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+} from "../ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { DataTableFilterItems } from "./data-table-filter-items";
 
 interface DataTableFilterViewProps<TData> {
-  table: Table<TData>
-  timezone?: string | null | undefined
+  table: Table<TData>;
+  timezone?: string | null | undefined;
 }
 
 export function DataTableFilterView<TData>({
   table,
   timezone,
 }: DataTableFilterViewProps<TData>) {
-  "use no memo"
-  const isFiltered = table.getState().columnFilters.length > 0
+  "use no memo";
+  const isFiltered = table.getState().columnFilters.length > 0;
 
   const columns = useMemo(
     () => table.getAllColumns().filter((column) => column.getCanFilter()),
     [table]
-  )
+  );
 
   const onReset = useCallback(() => {
-    table.resetColumnFilters()
-  }, [table])
+    table.resetColumnFilters();
+  }, [table]);
 
   return (
     <div className="flex flex-1 flex-wrap items-center gap-2">
@@ -79,7 +79,7 @@ export function DataTableFilterView<TData>({
         </Tooltip>
       )}
     </div>
-  )
+  );
 }
 
 function FilterFunnelView({ children }: { children: React.ReactNode }) {
@@ -112,5 +112,5 @@ function FilterFunnelView({ children }: { children: React.ReactNode }) {
         </DialogResponsiveBody>
       </DialogResponsiveContent>
     </Dialog>
-  )
+  );
 }

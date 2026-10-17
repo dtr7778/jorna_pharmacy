@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
+import { Button } from "./button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./tooltip"
-import { Button } from "./button"
+} from "./tooltip";
 
 const meta = {
   title: "UI/Tooltip",
@@ -15,10 +15,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Tooltip>
+} satisfies Meta<typeof Tooltip>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -31,4 +31,4 @@ export const Default: Story = {
       </Tooltip>
     </TooltipProvider>
   ),
-}
+};

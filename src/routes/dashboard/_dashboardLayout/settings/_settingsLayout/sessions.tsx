@@ -1,14 +1,15 @@
-import { Spinner } from "@/components/ui/spinner"
-import { auth } from "@/features/auth/auth.server"
-import { SessionManagement } from "@/features/auth/components/SessionManagement"
-import { createFileRoute } from "@tanstack/react-router"
-import { createServerFn } from "@tanstack/react-start"
-import { getRequestHeaders } from "@tanstack/react-start/server"
+import { createFileRoute } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeaders } from "@tanstack/react-start/server";
+
+import { Spinner } from "@/components/ui/spinner";
+import { auth } from "@/features/auth/auth.server";
+import { SessionManagement } from "@/features/auth/components/SessionManagement";
 
 const getSessions = createServerFn({ method: "GET" }).handler(async () => {
-  const headers = getRequestHeaders()
-  return auth.api.listSessions({ headers })
-})
+  const headers = getRequestHeaders();
+  return auth.api.listSessions({ headers });
+});
 
 export const Route = createFileRoute(
   "/dashboard/_dashboardLayout/settings/_settingsLayout/sessions"
@@ -16,11 +17,11 @@ export const Route = createFileRoute(
   loader: () => getSessions(),
   pendingComponent: LoadingComponent,
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const { session } = Route.useRouteContext()
-  const sessions = Route.useLoaderData()
+  const { session } = Route.useRouteContext();
+  const sessions = Route.useLoaderData();
 
   return (
     <div>
@@ -30,7 +31,7 @@ function RouteComponent() {
         currentSessionToken={session.token}
       />
     </div>
-  )
+  );
 }
 
 function LoadingComponent() {
@@ -38,5 +39,5 @@ function LoadingComponent() {
     <div className="flex w-full items-center justify-center p-4">
       <Spinner className="size-14 text-primary" strokeWidth={1} />
     </div>
-  )
+  );
 }

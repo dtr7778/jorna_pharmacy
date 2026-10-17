@@ -1,8 +1,9 @@
-import { useState } from "react"
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import { useState } from "react";
 
-import { Button } from "./button"
-import { Portal, PortalBackdrop } from "./portal"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+
+import { Button } from "./button";
+import { Portal, PortalBackdrop } from "./portal";
 
 const meta = {
   title: "UI/Portal",
@@ -11,13 +12,13 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Portal>
+} satisfies Meta<typeof Portal>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 function PortalDemo() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -34,9 +35,9 @@ function PortalDemo() {
         </Portal>
       )}
     </>
-  )
+  );
 }
 
 export const Default: Story = {
   render: () => <PortalDemo />,
-}
+};

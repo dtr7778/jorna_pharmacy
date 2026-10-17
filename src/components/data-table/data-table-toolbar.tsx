@@ -1,12 +1,12 @@
-import type { Table } from "@tanstack/react-table"
+import type { Table } from "@tanstack/react-table";
+import { cn } from "cn";
 
-import { DataTableFilterView } from "./data-table-filter-view"
-import { DataTableViewOptions } from "./data-table-view-options"
-import { cn } from "cn"
+import { DataTableFilterView } from "./data-table-filter-view";
+import { DataTableViewOptions } from "./data-table-view-options";
 
 interface DataTableToolbarProps<TData> extends React.ComponentProps<"div"> {
-  table: Table<TData>
-  timezone?: string | null | undefined
+  table: Table<TData>;
+  timezone?: string | null | undefined;
 }
 
 export function DataTableToolbar<TData>({
@@ -16,7 +16,7 @@ export function DataTableToolbar<TData>({
   timezone,
   ...props
 }: DataTableToolbarProps<TData>) {
-  "use no memo"
+  "use no memo";
   return (
     <div
       role="toolbar"
@@ -30,5 +30,5 @@ export function DataTableToolbar<TData>({
         <DataTableViewOptions table={table} />
       </div>
     </div>
-  )
+  );
 }

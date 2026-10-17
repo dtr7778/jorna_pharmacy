@@ -1,6 +1,6 @@
-import { useCallback, useId } from "react"
+import { useCallback, useId } from "react";
 
-import { Asterisk, Info } from "lucide-react"
+import { Asterisk, Info } from "lucide-react";
 import {
   type Control,
   Controller,
@@ -8,21 +8,21 @@ import {
   type ControllerRenderProps,
   type FieldValues,
   type Path,
-} from "react-hook-form"
+} from "react-hook-form";
 
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field"
-import { Textarea } from "../ui/textarea"
+import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
+import { Textarea } from "../ui/textarea";
 
 interface TextareaFieldProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"textarea"> {
-  name: Path<TFieldValues>
-  control: Control<TFieldValues>
-  label?: string
-  description?: string
-  isDescriptionInfoIconShow?: boolean
-  requiredField?: boolean
-  onValueChange?: (value: string) => void
+  name: Path<TFieldValues>;
+  control: Control<TFieldValues>;
+  label?: string;
+  description?: string;
+  isDescriptionInfoIconShow?: boolean;
+  requiredField?: boolean;
+  onValueChange?: (value: string) => void;
 }
 
 function TextareaField<TFieldValues extends FieldValues>({
@@ -36,7 +36,7 @@ function TextareaField<TFieldValues extends FieldValues>({
   onValueChange,
   ...props
 }: TextareaFieldProps<TFieldValues>) {
-  const fieldId = useId()
+  const fieldId = useId();
   return (
     <Controller
       name={name}
@@ -72,16 +72,16 @@ function TextareaField<TFieldValues extends FieldValues>({
         </Field>
       )}
     />
-  )
+  );
 }
 
 interface TextareaFieldRenderProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"textarea"> {
-  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>
-  fieldState: ControllerFieldState
-  id: string
-  onValueChange?: (value: string) => void
+  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>;
+  fieldState: ControllerFieldState;
+  id: string;
+  onValueChange?: (value: string) => void;
 }
 
 function TextareaFieldRender<TFieldValues extends FieldValues>({
@@ -94,16 +94,16 @@ function TextareaFieldRender<TFieldValues extends FieldValues>({
 }: TextareaFieldRenderProps<TFieldValues>) {
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      event.preventDefault()
-      event.stopPropagation()
+      event.preventDefault();
+      event.stopPropagation();
 
-      const value = event.target.value
+      const value = event.target.value;
 
-      field.onChange(value)
-      onValueChange?.(value)
+      field.onChange(value);
+      onValueChange?.(value);
     },
     [field, onValueChange]
-  )
+  );
 
   return (
     <Textarea
@@ -114,7 +114,7 @@ function TextareaFieldRender<TFieldValues extends FieldValues>({
       aria-invalid={fieldState.invalid}
       disabled={disabled}
     />
-  )
+  );
 }
 
-export { TextareaField }
+export { TextareaField };

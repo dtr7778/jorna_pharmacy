@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { SelectSkeleton } from "./select-skeleton"
+import { SelectSkeleton } from "./select-skeleton";
 
 const meta = {
   title: "UI/SelectSkeleton",
@@ -15,21 +15,21 @@ const meta = {
       control: { type: "radio" },
     },
   },
-} satisfies Meta<typeof SelectSkeleton>
+} satisfies Meta<typeof SelectSkeleton>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     size: "default",
     className: "w-36",
   },
-}
+};
 
 export const Small: Story = {
   args: {
     size: "sm",
     className: "w-36",
   },
-}
+};

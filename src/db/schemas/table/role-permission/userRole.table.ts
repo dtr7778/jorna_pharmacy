@@ -1,17 +1,17 @@
-import { relations, sql } from "drizzle-orm"
+import { relations, sql } from "drizzle-orm";
 import {
   foreignKey,
   index,
   sqliteTable,
   text,
   uniqueIndex,
-} from "drizzle-orm/sqlite-core"
-import { createInsertSchema, createSelectSchema } from "drizzle-zod"
-import z from "zod"
+} from "drizzle-orm/sqlite-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import z from "zod";
 
-import { db_date, db_id } from "../../db-utils"
-import { UserTable } from "../user"
-import { RoleTable } from "./role.table"
+import { db_date, db_id } from "../../db-utils";
+import { UserTable } from "../user";
+import { RoleTable } from "./role.table";
 
 export const UserRoleTable = sqliteTable(
   "user_roles",
@@ -38,7 +38,7 @@ export const UserRoleTable = sqliteTable(
     index("user_role_role_id_idx").on(table.roleId),
     index("user_role_user_id_idx").on(table.userId),
   ]
-)
+);
 
 export const UserRoleRelations = relations(UserRoleTable, ({ one }) => ({
   role: one(RoleTable, {
@@ -51,7 +51,7 @@ export const UserRoleRelations = relations(UserRoleTable, ({ one }) => ({
     references: [UserTable.id],
     relationName: "UserRoleToUser",
   }),
-}))
+}));
 
 export const insertUserRoleSchema = createInsertSchema(UserRoleTable, {
   roleId: z.uuid(),
@@ -59,12 +59,12 @@ export const insertUserRoleSchema = createInsertSchema(UserRoleTable, {
 }).omit({
   id: true,
   assignedAt: true,
-})
+});
 export const selectUserRoleSchema = createSelectSchema(UserRoleTable, {
   id: z.uuid(),
   roleId: z.uuid(),
   userId: z.uuid(),
-})
+});
 
-export type UserRoleDataModel = typeof UserRoleTable.$inferInsert
-export type InsertUserRole = z.infer<typeof insertUserRoleSchema>
+export type UserRoleDataModel = typeof UserRoleTable.$inferInsert;
+export type InsertUserRole = z.infer<typeof insertUserRoleSchema>;

@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm/relations"
+import { relations } from "drizzle-orm/relations";
 import {
   foreignKey,
   index,
@@ -6,16 +6,16 @@ import {
   sqliteTable,
   text,
   uniqueIndex,
-} from "drizzle-orm/sqlite-core"
+} from "drizzle-orm/sqlite-core";
 import {
   createInsertSchema,
   createSelectSchema,
   createUpdateSchema,
-} from "drizzle-zod"
-import z from "zod"
+} from "drizzle-zod";
+import z from "zod";
 
-import { db_created_at, db_id, db_updated_at } from "../db-utils"
-import { UserTable } from "./user"
+import { db_created_at, db_id, db_updated_at } from "../db-utils";
+import { UserTable } from "./user";
 
 export const AccountTable = sqliteTable(
   "accounts",
@@ -50,7 +50,7 @@ export const AccountTable = sqliteTable(
     ),
     index("account_userId_idx").on(table.userId),
   ]
-)
+);
 
 export const AccountRelations = relations(AccountTable, ({ one }) => ({
   user: one(UserTable, {
@@ -58,7 +58,7 @@ export const AccountRelations = relations(AccountTable, ({ one }) => ({
     references: [UserTable.id],
     relationName: "AccountToUser",
   }),
-}))
+}));
 
 export const insertAccountSchema = createInsertSchema(AccountTable, {
   userId: z.uuid(),
@@ -66,17 +66,17 @@ export const insertAccountSchema = createInsertSchema(AccountTable, {
   id: true,
   createdAt: true,
   updatedAt: true,
-})
+});
 export const selectAccountSchema = createSelectSchema(AccountTable, {
   id: z.uuid(),
   userId: z.uuid(),
-})
+});
 export const updateAccountSchema = createUpdateSchema(AccountTable, {
   id: z.uuid().optional(),
   userId: z.uuid().optional(),
-})
+});
 
-export type AccountDataModel = typeof AccountTable.$inferSelect
-export type InsertAccount = z.infer<typeof insertAccountSchema>
-export type SelectAccount = z.infer<typeof selectAccountSchema>
-export type UpdateAccount = z.infer<typeof updateAccountSchema>
+export type AccountDataModel = typeof AccountTable.$inferSelect;
+export type InsertAccount = z.infer<typeof insertAccountSchema>;
+export type SelectAccount = z.infer<typeof selectAccountSchema>;
+export type UpdateAccount = z.infer<typeof updateAccountSchema>;

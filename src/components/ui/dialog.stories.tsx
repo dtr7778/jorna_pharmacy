@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
+import { Button } from "./button";
 import {
   Dialog,
   DialogClose,
@@ -9,8 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./dialog"
-import { Button } from "./button"
+} from "./dialog";
 
 const meta = {
   title: "UI/Dialog",
@@ -19,10 +19,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Dialog>
+} satisfies Meta<typeof Dialog>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -47,4 +47,4 @@ export const Default: Story = {
       </DialogContent>
     </Dialog>
   ),
-}
+};

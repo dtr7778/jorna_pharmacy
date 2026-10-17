@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 
 const meta = {
   title: "UI/Tabs",
@@ -10,10 +10,10 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {},
-} satisfies Meta<typeof Tabs>
+} satisfies Meta<typeof Tabs>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -31,7 +31,7 @@ export const Default: Story = {
       <TabsContent value="password">Change your password here.</TabsContent>
     </Tabs>
   ),
-}
+};
 
 export const Line: Story = {
   render: () => (
@@ -46,4 +46,4 @@ export const Line: Story = {
       <TabsContent value="reports">Reports content.</TabsContent>
     </Tabs>
   ),
-}
+};

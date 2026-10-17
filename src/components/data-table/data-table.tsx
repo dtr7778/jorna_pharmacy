@@ -1,6 +1,6 @@
-import { flexRender, type Table as TanstackTable } from "@tanstack/react-table"
+import { flexRender, type Table as TanstackTable } from "@tanstack/react-table";
+import { cn } from "cn";
 
-import { DataTablePagination } from "./data-table-pagination"
 import {
   Table,
   TableBody,
@@ -8,14 +8,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
-import { cn } from "cn"
-import { getColumnStyles } from "./getColumnStyles"
+} from "../ui/table";
+import { DataTablePagination } from "./data-table-pagination";
+import { getColumnStyles } from "./getColumnStyles";
 
 interface DataTableProps<TData> extends React.ComponentProps<"div"> {
-  table: TanstackTable<TData>
-  actionBar?: React.ReactNode
-  showPagination?: boolean
+  table: TanstackTable<TData>;
+  actionBar?: React.ReactNode;
+  showPagination?: boolean;
 }
 
 export function DataTable<TData>({
@@ -26,7 +26,7 @@ export function DataTable<TData>({
   showPagination = true,
   ...props
 }: DataTableProps<TData>) {
-  "use no memo"
+  "use no memo";
   return (
     <div className={cn("flex w-full flex-col gap-2.5", className)} {...props}>
       {children}
@@ -99,5 +99,5 @@ export function DataTable<TData>({
           actionBar}
       </div>
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Status, StatusIndicator, StatusLabel } from "./status"
+import { Status, StatusIndicator, StatusLabel } from "./status";
 
 const meta = {
   title: "UI/Status",
@@ -15,10 +15,10 @@ const meta = {
       control: { type: "radio" },
     },
   },
-} satisfies Meta<typeof Status>
+} satisfies Meta<typeof Status>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const DefaultStatus: Story = {
   render: () => (
@@ -27,7 +27,7 @@ export const DefaultStatus: Story = {
       <StatusLabel>Draft</StatusLabel>
     </Status>
   ),
-}
+};
 
 export const Success: Story = {
   render: () => (
@@ -36,7 +36,7 @@ export const Success: Story = {
       <StatusLabel>Active</StatusLabel>
     </Status>
   ),
-}
+};
 
 export const Error: Story = {
   render: () => (
@@ -45,7 +45,7 @@ export const Error: Story = {
       <StatusLabel>Failed</StatusLabel>
     </Status>
   ),
-}
+};
 
 export const Warning: Story = {
   render: () => (
@@ -54,7 +54,7 @@ export const Warning: Story = {
       <StatusLabel>Pending</StatusLabel>
     </Status>
   ),
-}
+};
 
 export const Info: Story = {
   render: () => (
@@ -63,4 +63,4 @@ export const Info: Story = {
       <StatusLabel>In progress</StatusLabel>
     </Status>
   ),
-}
+};

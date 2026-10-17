@@ -1,7 +1,7 @@
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
 
-import { Skeleton } from "./skeleton"
-import { cn } from "cn"
+import { Skeleton } from "./skeleton";
 
 const buttonVariants = cva("inline-block", {
   variants: {
@@ -19,7 +19,7 @@ const buttonVariants = cva("inline-block", {
   defaultVariants: {
     size: "default",
   },
-})
+});
 
 function ButtonSkeleton({
   className,
@@ -33,7 +33,7 @@ function ButtonSkeleton({
       className={cn(buttonVariants({ size, className }))}
       {...props}
     />
-  )
+  );
 }
 
-export { ButtonSkeleton }
+export { ButtonSkeleton };

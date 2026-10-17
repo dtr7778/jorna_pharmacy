@@ -1,15 +1,15 @@
 export interface OgMetaOptions {
-  appName: string
-  title: string
-  description: string
-  url: string
-  imageUrl: string
+  appName: string;
+  title: string;
+  description: string;
+  url: string;
+  imageUrl: string;
 }
 
 export function buildOgMeta(
   options: OgMetaOptions
 ): Array<Record<string, string>> {
-  const { appName, title, description, url, imageUrl } = options
+  const { appName, title, description, url, imageUrl } = options;
 
   return [
     { property: "og:title", content: title },
@@ -27,5 +27,5 @@ export function buildOgMeta(
     { name: "twitter:description", content: description },
     { name: "twitter:image", content: imageUrl },
     { name: "twitter:image:alt", content: appName },
-  ]
+  ];
 }

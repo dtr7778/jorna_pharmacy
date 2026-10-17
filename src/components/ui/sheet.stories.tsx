@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
+import { Button } from "./button";
 import {
   Sheet,
   SheetContent,
@@ -8,8 +9,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./sheet"
-import { Button } from "./button"
+} from "./sheet";
 
 const meta = {
   title: "UI/Sheet",
@@ -18,10 +18,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Sheet>
+} satisfies Meta<typeof Sheet>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const RightSide: Story = {
   render: () => (
@@ -43,7 +43,7 @@ export const RightSide: Story = {
       </SheetContent>
     </Sheet>
   ),
-}
+};
 
 export const LeftSide: Story = {
   args: {
@@ -62,4 +62,4 @@ export const LeftSide: Story = {
       </SheetContent>
     </Sheet>
   ),
-}
+};

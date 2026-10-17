@@ -1,37 +1,37 @@
-import { useCallback, useId } from "react"
+import { useCallback, useId } from "react";
 
-import { Asterisk, Info } from "lucide-react"
+import { cn } from "cn";
+import { Asterisk, Info } from "lucide-react";
 import type {
   Control,
   ControllerFieldState,
   ControllerRenderProps,
   FieldValues,
   Path,
-} from "react-hook-form"
-import { Controller } from "react-hook-form"
+} from "react-hook-form";
+import { Controller } from "react-hook-form";
 
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field"
+import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
-import { cn } from "cn"
+} from "../ui/select";
 
 interface SelectFieldProps<TFieldValues extends FieldValues> {
-  name: Path<TFieldValues>
-  control: Control<TFieldValues>
-  className?: string
-  label?: string
-  description?: string
-  requiredField?: boolean
-  placeholder?: string
-  options: { value: string; label: string }[]
-  disabled?: boolean
-  isDescriptionInfoIconShow?: boolean
-  onValueChange?: (value: string) => void
+  name: Path<TFieldValues>;
+  control: Control<TFieldValues>;
+  className?: string;
+  label?: string;
+  description?: string;
+  requiredField?: boolean;
+  placeholder?: string;
+  options: { value: string; label: string }[];
+  disabled?: boolean;
+  isDescriptionInfoIconShow?: boolean;
+  onValueChange?: (value: string) => void;
 }
 
 function SelectField<TFieldValues extends FieldValues>({
@@ -47,7 +47,7 @@ function SelectField<TFieldValues extends FieldValues>({
   disabled,
   onValueChange,
 }: SelectFieldProps<TFieldValues>) {
-  const fieldId = useId()
+  const fieldId = useId();
 
   return (
     <Controller
@@ -86,18 +86,18 @@ function SelectField<TFieldValues extends FieldValues>({
         </Field>
       )}
     />
-  )
+  );
 }
 
 interface SelectFieldRenderProps<TFieldValues extends FieldValues> {
-  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>
-  fieldState: ControllerFieldState
-  id: string
-  className?: string
-  placeholder?: string
-  options: { value: string; label: string }[]
-  disabled?: boolean
-  onValueChange?: (value: string) => void
+  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>;
+  fieldState: ControllerFieldState;
+  id: string;
+  className?: string;
+  placeholder?: string;
+  options: { value: string; label: string }[];
+  disabled?: boolean;
+  onValueChange?: (value: string) => void;
 }
 
 function SelectFieldRender<TFieldValues extends FieldValues>({
@@ -112,11 +112,11 @@ function SelectFieldRender<TFieldValues extends FieldValues>({
 }: SelectFieldRenderProps<TFieldValues>) {
   const handleValueChange = useCallback(
     (value: never[] | null) => {
-      field.onChange(value)
-      onValueChange?.(value as unknown as string)
+      field.onChange(value);
+      onValueChange?.(value as unknown as string);
     },
     [field, onValueChange]
-  )
+  );
 
   return (
     <Select
@@ -141,7 +141,7 @@ function SelectFieldRender<TFieldValues extends FieldValues>({
         ))}
       </SelectContent>
     </Select>
-  )
+  );
 }
 
-export { SelectField }
+export { SelectField };

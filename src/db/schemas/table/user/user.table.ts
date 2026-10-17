@@ -1,11 +1,11 @@
-import { relations } from "drizzle-orm"
-import { sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core"
+import { relations } from "drizzle-orm";
+import { sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 import {
   createInsertSchema,
   createSelectSchema,
   createUpdateSchema,
-} from "drizzle-zod"
-import z from "zod"
+} from "drizzle-zod";
+import z from "zod";
 
 import {
   db_bool,
@@ -13,14 +13,14 @@ import {
   db_date,
   db_id,
   db_updated_at,
-} from "../../db-utils"
-import { RoleEnumSchema, type RoleEnumType } from "../../enums/zod-db-enums"
-import { AccountTable } from "../account.table"
-import { UserRoleTable } from "../role-permission"
-import { SessionTable } from "../session.table"
-import { UserDeviceTable } from "./userDevice.table"
-import { UserEventTable } from "./userEvent.table"
-import { UserSessionTable } from "./userSession.table"
+} from "../../db-utils";
+import { RoleEnumSchema, type RoleEnumType } from "../../enums/zod-db-enums";
+import { AccountTable } from "../account.table";
+import { UserRoleTable } from "../role-permission";
+import { SessionTable } from "../session.table";
+import { UserDeviceTable } from "./userDevice.table";
+import { UserEventTable } from "./userEvent.table";
+import { UserSessionTable } from "./userSession.table";
 
 export const UserTable = sqliteTable(
   "users",
@@ -44,7 +44,7 @@ export const UserTable = sqliteTable(
     updatedAt: db_updated_at,
   },
   (table) => [uniqueIndex("user_email_key").on(table.email)]
-)
+);
 
 export const UserRelations = relations(UserTable, ({ many }) => ({
   sessions: many(SessionTable, {
@@ -62,7 +62,7 @@ export const UserRelations = relations(UserTable, ({ many }) => ({
   }),
   devices: many(UserDeviceTable, { relationName: "UserDeviceToUser" }),
   events: many(UserEventTable, { relationName: "UserEventToUser" }),
-}))
+}));
 
 export const insertUserSchema = createInsertSchema(UserTable, {
   email: z.email(),
@@ -72,13 +72,13 @@ export const insertUserSchema = createInsertSchema(UserTable, {
   id: true,
   createdAt: true,
   updatedAt: true,
-})
+});
 export const selectUserSchema = createSelectSchema(UserTable, {
   email: z.email(),
   image: z.url().nullable(),
   role: RoleEnumSchema,
   id: z.uuid(),
-})
+});
 export const updateUserSchema = createUpdateSchema(UserTable, {
   email: z.email().optional(),
   image: z.url().nullable(),
@@ -87,9 +87,9 @@ export const updateUserSchema = createUpdateSchema(UserTable, {
   id: true,
   createdAt: true,
   updatedAt: true,
-})
+});
 
-export type UserDataModel = typeof UserTable.$inferSelect
-export type SelectUser = z.infer<typeof selectUserSchema>
-export type InsertUser = z.infer<typeof insertUserSchema>
-export type UpdateUser = z.infer<typeof updateUserSchema>
+export type UserDataModel = typeof UserTable.$inferSelect;
+export type SelectUser = z.infer<typeof selectUserSchema>;
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type UpdateUser = z.infer<typeof updateUserSchema>;

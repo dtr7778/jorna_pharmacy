@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Field } from "./field"
-import { Slider } from "./slider"
+import { Field } from "./field";
+import { Slider } from "./slider";
 
 const meta = {
   title: "UI/Slider",
@@ -21,10 +21,10 @@ const meta = {
       control: { type: "number" },
     },
   },
-} satisfies Meta<typeof Slider>
+} satisfies Meta<typeof Slider>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const SingleValue: Story = {
   args: {
@@ -37,9 +37,9 @@ export const SingleValue: Story = {
       <Field className="w-50">
         <Slider {...args} />
       </Field>
-    )
+    );
   },
-}
+};
 
 export const Range: Story = {
   args: {
@@ -52,6 +52,6 @@ export const Range: Story = {
       <Field className="w-50">
         <Slider {...args} />
       </Field>
-    )
+    );
   },
-}
+};

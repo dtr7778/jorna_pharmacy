@@ -1,9 +1,9 @@
-import type * as React from "react"
+import type * as React from "react";
 
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
 
-import { Separator } from "./separator"
-import { cn } from "cn"
+import { Separator } from "./separator";
 
 function Stat({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -18,7 +18,7 @@ function Stat({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function StatLabel({ className, ...props }: React.ComponentProps<"div">) {
@@ -28,7 +28,7 @@ function StatLabel({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("text-sm font-medium text-muted-foreground", className)}
       {...props}
     />
-  )
+  );
 }
 
 const statIndicatorVariants = cva(
@@ -58,7 +58,7 @@ const statIndicatorVariants = cva(
       color: "default",
     },
   }
-)
+);
 
 interface StatIndicatorProps
   extends
@@ -79,7 +79,7 @@ function StatIndicator({
       className={cn(statIndicatorVariants({ variant, color, className }))}
       {...props}
     />
-  )
+  );
 }
 
 function StatValue({ className, ...props }: React.ComponentProps<"div">) {
@@ -89,7 +89,7 @@ function StatValue({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("text-2xl font-semibold tracking-tight", className)}
       {...props}
     />
-  )
+  );
 }
 
 function StatTrend({
@@ -112,11 +112,11 @@ function StatTrend({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function StatSeparator({ ...props }: React.ComponentProps<typeof Separator>) {
-  return <Separator data-slot="stat-separator" className="my-2" {...props} />
+  return <Separator data-slot="stat-separator" className="my-2" {...props} />;
 }
 
 function StatDescription({ className, ...props }: React.ComponentProps<"div">) {
@@ -126,7 +126,7 @@ function StatDescription({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("text-xs text-muted-foreground", className)}
       {...props}
     />
-  )
+  );
 }
 
 export {
@@ -137,4 +137,4 @@ export {
   StatSeparator,
   StatTrend,
   StatValue,
-}
+};

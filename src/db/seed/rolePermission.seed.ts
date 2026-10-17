@@ -1,13 +1,13 @@
-import type { DatabaseType } from "../clients/drizzle-client"
+import type { DatabaseType } from "../clients/drizzle-client";
 import type {
   PermissionDataModel,
   RoleDataModel,
   RolePermissionDataModel,
-} from "../schemas"
-import { RolePermissionTable } from "../schemas"
-import type { RoleEnumType } from "../schemas/enums/zod-db-enums"
-import type { PermissionType } from "./permission.seed"
-import { insertChunkedReturning } from "./seed-utils"
+} from "../schemas";
+import { RolePermissionTable } from "../schemas";
+import type { RoleEnumType } from "../schemas/enums/zod-db-enums";
+import type { PermissionType } from "./permission.seed";
+import { insertChunkedReturning } from "./seed-utils";
 
 /**
  * Regular user: manages their own account only. `self` permissions are scope
@@ -18,7 +18,7 @@ const userPermissions: Array<PermissionType> = [
   { level: "self", resource: "user", action: "update" },
   { level: "self", resource: "customer", action: "read" },
   { level: "self", resource: "customer", action: "update" },
-]
+];
 
 /**
  * Employee: counter staff. Runs sales and sale returns, keeps customer records
@@ -49,7 +49,7 @@ const employeePermissions: Array<PermissionType> = [
   { level: "system", resource: "customer_payment", action: "create" },
   { level: "system", resource: "customer_payment", action: "read" },
   { level: "system", resource: "customer_payment", action: "list" },
-]
+];
 
 /**
  * Admin: runs the pharmacy. Full access to every business resource and report
@@ -79,7 +79,7 @@ const adminPermissions: Array<PermissionType> = [
   { level: "system", resource: "sale", action: "manage" },
   { level: "system", resource: "sale_return", action: "manage" },
   { level: "system", resource: "salary", action: "manage" },
-]
+];
 
 /**
  * Super admin: everything an admin can do, plus system-level operations —
@@ -93,11 +93,11 @@ const superAdminPermissions: Array<PermissionType> = [
   // System-level operations
   { level: "system", resource: "user", action: "manage" },
   { level: "system", resource: "role_permission", action: "manage" },
-]
+];
 
 export const rolesAndPermissionData: Array<{
-  roleName: RoleEnumType
-  permissions: Array<PermissionType>
+  roleName: RoleEnumType;
+  permissions: Array<PermissionType>;
 }> = [
   {
     roleName: "USER",
@@ -115,19 +115,19 @@ export const rolesAndPermissionData: Array<{
     roleName: "SUPER_ADMIN",
     permissions: superAdminPermissions,
   },
-]
+];
 
 export async function seedRolePermission(
   db: DatabaseType,
   roles: Array<RoleDataModel>,
   permissions: Array<PermissionDataModel>
 ): Promise<Array<RolePermissionDataModel>> {
-  console.log("🌱 Seeding role permissions...")
+  console.log("🌱 Seeding role permissions...");
 
   const rolePermissionRows = rolesAndPermissionData.flatMap((r) => {
-    const role = roles.find(({ roleName }) => roleName === r.roleName)
+    const role = roles.find(({ roleName }) => roleName === r.roleName);
 
-    if (!role) return []
+    if (!role) return [];
 
     const permissionsForRole = permissions
       .filter((permission) =>
@@ -141,20 +141,20 @@ export async function seedRolePermission(
       .map(({ id }) => ({
         roleId: role.id,
         permissionId: id,
-      }))
+      }));
 
     console.log(
       `📝 Assigning ${permissionsForRole.length} permissions to ${r.roleName}`
-    )
+    );
 
-    return permissionsForRole
-  })
+    return permissionsForRole;
+  });
 
   const rolesAndPermissions = await insertChunkedReturning(
     rolePermissionRows,
     (chunk) => db.insert(RolePermissionTable).values(chunk).returning()
-  )
+  );
 
-  console.log(`✅ ${rolesAndPermissions.length} Role permissions seeded`)
-  return rolesAndPermissions
+  console.log(`✅ ${rolesAndPermissions.length} Role permissions seeded`);
+  return rolesAndPermissions;
 }

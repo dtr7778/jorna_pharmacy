@@ -1,15 +1,15 @@
-import { settingsMenuLinks } from "@/constants/sidebarLinks"
-import { Link, useLocation } from "@tanstack/react-router"
+import { Link, useLocation } from "@tanstack/react-router";
 
 import {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { settingsMenuLinks } from "@/constants/sidebarLinks";
 
 export function SettingsSidebar() {
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
 
   return (
     <aside className="lg:w-1/5">
@@ -31,5 +31,5 @@ export function SettingsSidebar() {
         </SidebarMenu>
       </SidebarGroup>
     </aside>
-  )
+  );
 }

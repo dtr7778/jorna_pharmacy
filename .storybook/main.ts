@@ -1,4 +1,4 @@
-import type { StorybookConfig } from "@storybook/tanstack-react"
+import type { StorybookConfig } from "@storybook/tanstack-react";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(ts|tsx)"],
@@ -10,5 +10,5 @@ const config: StorybookConfig = {
     "@storybook/addon-mcp",
   ],
   framework: "@storybook/tanstack-react",
-}
-export default config
+};
+export default config;

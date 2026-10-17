@@ -1,35 +1,35 @@
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import type { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
-} from "@tanstack/react-router"
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
-import { TanStackDevtools } from "@tanstack/react-devtools"
+} from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { Toaster } from "react-hot-toast";
 
-import { globalHead } from "@/lib/head"
-import { requireSessions } from "@/features/auth/auth.functions"
-import { DevPanel } from "@/components/dev-panel"
-import { env } from "@/lib/env"
-import { ThemeProvider } from "@/components/providers/theme-provider"
-import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools"
-import { Toaster } from "react-hot-toast"
-import type { QueryClient } from "@tanstack/react-query"
-import { TanstackQueryProvider } from "@/components/tanstack-query/tanstack-query-provider"
+import { DevPanel } from "@/components/dev-panel";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { TanstackQueryProvider } from "@/components/tanstack-query/tanstack-query-provider";
+import { requireSessions } from "@/features/auth/auth.functions";
+import { env } from "@/lib/env";
+import { globalHead } from "@/lib/head";
 
 interface RouterContextProps {
-  queryClient: QueryClient
+  queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<RouterContextProps>()({
   beforeLoad: async () => {
-    const result = await requireSessions()
+    const result = await requireSessions();
 
     return {
       user: result?.user,
       session: result?.session,
       roles: result?.roles,
       permissions: result?.permissions,
-    }
+    };
   },
   head: () => globalHead(),
   notFoundComponent: () => (
@@ -39,10 +39,10 @@ export const Route = createRootRouteWithContext<RouterContextProps>()({
     </main>
   ),
   shellComponent: RootDocument,
-})
+});
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const context = Route.useRouteContext()
+  const context = Route.useRouteContext();
 
   return (
     <html lang="en">
@@ -89,5 +89,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  )
+  );
 }

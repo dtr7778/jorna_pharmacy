@@ -1,30 +1,30 @@
-import type { Table } from "@tanstack/react-table"
+import type { Table } from "@tanstack/react-table";
+import { cn } from "cn";
 import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-} from "lucide-react"
+} from "lucide-react";
 
-import { Button } from "../ui/button"
+import { Button } from "../ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
+} from "../ui/select";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip"
-import { cn } from "cn"
+} from "../ui/tooltip";
 
 interface DataTablePaginationProps<TData> extends React.ComponentProps<"div"> {
-  table: Table<TData>
-  pageSizeOptions?: number[]
+  table: Table<TData>;
+  pageSizeOptions?: number[];
 }
 
 export function DataTablePagination<TData>({
@@ -33,7 +33,7 @@ export function DataTablePagination<TData>({
   className,
   ...props
 }: DataTablePaginationProps<TData>) {
-  "use no memo"
+  "use no memo";
   return (
     <div
       className={cn(
@@ -48,7 +48,7 @@ export function DataTablePagination<TData>({
             <Select
               value={`${table.getState().pagination.pageSize}`}
               onValueChange={(value) => {
-                table.setPageSize(Number(value))
+                table.setPageSize(Number(value));
               }}
             >
               <TooltipTrigger
@@ -165,5 +165,5 @@ export function DataTablePagination<TData>({
         </div>
       </TooltipProvider>
     </div>
-  )
+  );
 }

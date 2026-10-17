@@ -1,25 +1,29 @@
-import type { Column } from "@tanstack/react-table"
+import type { Column } from "@tanstack/react-table";
 
-import { DataTableDateFilter } from "./data-table-date-filter"
-import { DataTableFacetedFilter } from "./data-table-faceted-filter"
-import { DataTableSliderFilter } from "./data-table-slider-filter"
-import { Input } from "../ui/input"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "../ui/input-group"
+import { Input } from "../ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
+import { DataTableDateFilter } from "./data-table-date-filter";
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { DataTableSliderFilter } from "./data-table-slider-filter";
 
 interface DataTableFilterItemProps<TData> {
-  column: Column<TData>
-  timezone?: string | null | undefined
+  column: Column<TData>;
+  timezone?: string | null | undefined;
 }
 
 export function DataTableFilterItems<TData>({
   column,
   timezone,
 }: DataTableFilterItemProps<TData>) {
-  "use no memo"
-  const columnMeta = column.columnDef.meta
-  const columnVariant = columnMeta?.variant
+  "use no memo";
+  const columnMeta = column.columnDef.meta;
+  const columnVariant = columnMeta?.variant;
 
-  if (!columnVariant) return null
+  if (!columnVariant) return null;
 
   if (columnVariant === "text") {
     return (
@@ -33,7 +37,7 @@ export function DataTableFilterItems<TData>({
         onChange={(event) => column.setFilterValue(event.target.value)}
         className="w-40 lg:w-56"
       />
-    )
+    );
   }
 
   if (columnVariant === "number") {
@@ -54,7 +58,7 @@ export function DataTableFilterItems<TData>({
           </InputGroupAddon>
         )}
       </InputGroup>
-    )
+    );
   }
 
   if (columnVariant === "range") {
@@ -63,7 +67,7 @@ export function DataTableFilterItems<TData>({
         column={column}
         placeholder={columnMeta.placeholder ?? columnMeta.label ?? column.id}
       />
-    )
+    );
   }
 
   if (columnVariant === "date" || columnVariant === "dateRange") {
@@ -74,7 +78,7 @@ export function DataTableFilterItems<TData>({
         placeholder={columnMeta.placeholder ?? columnMeta.label ?? column.id}
         timezone={timezone}
       />
-    )
+    );
   }
 
   if (columnVariant === "select" || columnVariant === "multiSelect") {
@@ -85,8 +89,8 @@ export function DataTableFilterItems<TData>({
         isMultiple={columnMeta.variant === "multiSelect"}
         placeholder={columnMeta.placeholder ?? columnMeta.label ?? column.id}
       />
-    )
+    );
   }
 
-  return null
+  return null;
 }

@@ -1,15 +1,4 @@
-import { QueryStateBoundary } from "@/components/tanstack-query/query-state-boundary"
-import { Skeleton } from "@/components/ui/skeleton"
-import {
-  Stat,
-  StatIndicator,
-  StatLabel,
-  StatTrend,
-  StatValue,
-} from "@/components/ui/stat"
-import { Status, StatusIndicator, StatusLabel } from "@/components/ui/status"
-import { orpcTQClient } from "@/server/orpc"
-import { useSuspenseQuery } from "@tanstack/react-query"
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   Activity,
   CalendarDays,
@@ -19,36 +8,48 @@ import {
   ShieldAlert,
   Smartphone,
   UsersRound,
-} from "lucide-react"
-import type { LucideIcon } from "lucide-react"
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-type Trend = "up" | "down" | "neutral"
-type IndicatorColor = "default" | "success" | "info" | "warning" | "error"
+import { QueryStateBoundary } from "@/components/tanstack-query/query-state-boundary";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Stat,
+  StatIndicator,
+  StatLabel,
+  StatTrend,
+  StatValue,
+} from "@/components/ui/stat";
+import { Status, StatusIndicator, StatusLabel } from "@/components/ui/status";
+import { orpcTQClient } from "@/server/orpc";
+
+type Trend = "up" | "down" | "neutral";
+type IndicatorColor = "default" | "success" | "info" | "warning" | "error";
 
 interface StatCard {
-  key: string
-  label: string
-  value: number
-  icon: LucideIcon
-  color: IndicatorColor
-  trend: { label: string; trend: Trend }
-  live?: boolean
+  key: string;
+  label: string;
+  value: number;
+  icon: LucideIcon;
+  color: IndicatorColor;
+  trend: { label: string; trend: Trend };
+  live?: boolean;
 }
 
 function formatGrowth(growth: number | null): {
-  label: string
-  trend: Trend
+  label: string;
+  trend: Trend;
 } {
-  if (growth === null) return { label: "No prior data", trend: "neutral" }
-  const sign = growth >= 0 ? "+" : ""
-  const trend = growth > 0 ? "up" : growth < 0 ? "down" : "neutral"
-  return { label: `${sign}${growth}% vs last period`, trend }
+  if (growth === null) return { label: "No prior data", trend: "neutral" };
+  const sign = growth >= 0 ? "+" : "";
+  const trend = growth > 0 ? "up" : growth < 0 ? "down" : "neutral";
+  return { label: `${sign}${growth}% vs last period`, trend };
 }
 
 export function UserStats() {
   const { data, isLoading, isError, error } = useSuspenseQuery(
     orpcTQClient.user.stats.queryOptions()
-  )
+  );
 
   return (
     <QueryStateBoundary
@@ -135,12 +136,12 @@ export function UserStats() {
               trend: statsData.failedLogins > 0 ? "down" : "neutral",
             },
           },
-        ]
+        ];
 
         return (
           <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
             {cards.map((card) => {
-              const Icon = card.icon
+              const Icon = card.icon;
               return (
                 <Stat key={card.key}>
                   <StatLabel>
@@ -161,11 +162,11 @@ export function UserStats() {
                     {card.trend.label}
                   </StatTrend>
                 </Stat>
-              )
+              );
             })}
           </div>
-        )
+        );
       }}
     </QueryStateBoundary>
-  )
+  );
 }

@@ -1,21 +1,13 @@
-import { useCallback } from "react"
+import { useCallback } from "react";
 
-import { Check, PlusCircle, X } from "lucide-react"
-import { Button, type ButtonProps } from "./button"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { useControllableState } from "@/hooks/use-controllable-state"
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "./drawer"
-import { Popover, PopoverContent, PopoverTrigger } from "./popover"
-import { cn } from "cn"
-import { Separator } from "./separator"
-import { Badge } from "./badge"
+import { cn } from "cn";
+import { Check, PlusCircle, X } from "lucide-react";
+
+import { useControllableState } from "@/hooks/use-controllable-state";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+import { Badge } from "./badge";
+import { Button, type ButtonProps } from "./button";
 import {
   Command,
   CommandEmpty,
@@ -24,26 +16,36 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "./command"
+} from "./command";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "./drawer";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Separator } from "./separator";
 
 export interface Option {
-  label: string
-  value: string
-  count?: number
+  label: string;
+  value: string;
+  count?: number;
 }
 
 export interface FacetedFilterProps {
-  selectedValues?: Set<string>
-  onSelect?: (option: Option, isSelected: boolean) => void
-  onReset?: () => void
-  options: Option[]
-  isMultiple?: boolean
-  placeholder?: string
-  variant?: ButtonProps["variant"]
-  size?: ButtonProps["size"]
-  className?: string
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
+  selectedValues?: Set<string>;
+  onSelect?: (option: Option, isSelected: boolean) => void;
+  onReset?: () => void;
+  options: Option[];
+  isMultiple?: boolean;
+  placeholder?: string;
+  variant?: ButtonProps["variant"];
+  size?: ButtonProps["size"];
+  className?: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function FacetedFilter({
@@ -59,24 +61,24 @@ export function FacetedFilter({
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
 }: FacetedFilterProps) {
-  "use no memo"
-  const isMobile = useIsMobile()
+  "use no memo";
+  const isMobile = useIsMobile();
 
   const [open, setOpen] = useControllableState<boolean>({
     prop: controlledOpen,
     defaultProp: false,
     onChange: controlledOnOpenChange,
-  })
+  });
 
   const handleSelect = useCallback(
     (option: Option, isSelected: boolean) => {
-      onSelect?.(option, isSelected)
+      onSelect?.(option, isSelected);
       if (!isMultiple) {
-        setOpen(false)
+        setOpen(false);
       }
     },
     [onSelect, isMultiple, setOpen]
-  )
+  );
 
   const content = (
     <FacetedFilterContent
@@ -87,7 +89,7 @@ export function FacetedFilter({
       onSelect={handleSelect}
       onReset={onReset}
     />
-  )
+  );
 
   const trigger = (
     <FacetedFilterTrigger
@@ -98,7 +100,7 @@ export function FacetedFilter({
       size={size}
       className={className}
     />
-  )
+  );
 
   if (isMobile) {
     return (
@@ -116,7 +118,7 @@ export function FacetedFilter({
           <div className="flex flex-col gap-2 border-t pt-2">{content}</div>
         </DrawerContent>
       </Drawer>
-    )
+    );
   }
 
   return (
@@ -126,13 +128,13 @@ export function FacetedFilter({
         {content}
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
 interface FacetedFilterTriggerProps extends ButtonProps {
-  selectedValues: Set<string>
-  options: Option[]
-  placeholder?: string
+  selectedValues: Set<string>;
+  options: Option[];
+  placeholder?: string;
 }
 
 function FacetedFilterTrigger({
@@ -182,19 +184,19 @@ function FacetedFilterTrigger({
         </>
       )}
     </Button>
-  )
+  );
 }
 
 interface FacetedFilterContentProps extends Omit<
   React.ComponentPropsWithoutRef<typeof Command>,
   "onSelect"
 > {
-  isMultiple?: boolean
-  placeholder?: string
-  options: Option[]
-  selectedValues: Set<string>
-  onSelect: (option: Option, isSelected: boolean) => void
-  onReset?: () => void
+  isMultiple?: boolean;
+  placeholder?: string;
+  options: Option[];
+  selectedValues: Set<string>;
+  onSelect: (option: Option, isSelected: boolean) => void;
+  onReset?: () => void;
 }
 
 function FacetedFilterContent({
@@ -214,7 +216,7 @@ function FacetedFilterContent({
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup className="max-h-50 scroll-py-1 overflow-x-hidden overflow-y-auto">
           {options.map((option) => {
-            const isSelected = selectedValues.has(option.value)
+            const isSelected = selectedValues.has(option.value);
 
             return (
               <CommandItem
@@ -240,7 +242,7 @@ function FacetedFilterContent({
                   </span>
                 )}
               </CommandItem>
-            )
+            );
           })}
         </CommandGroup>
         {selectedValues.size > 0 && onReset && (
@@ -259,5 +261,5 @@ function FacetedFilterContent({
         )}
       </CommandList>
     </Command>
-  )
+  );
 }

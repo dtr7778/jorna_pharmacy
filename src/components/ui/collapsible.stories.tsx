@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
+import { Button } from "./button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "./collapsible"
-import { Button } from "./button"
+} from "./collapsible";
 
 const meta = {
   title: "UI/Collapsible",
@@ -14,10 +14,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Collapsible>
+} satisfies Meta<typeof Collapsible>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -30,7 +30,7 @@ export const Default: Story = {
       </CollapsibleContent>
     </Collapsible>
   ),
-}
+};
 
 export const OpenByDefault: Story = {
   args: {
@@ -46,4 +46,4 @@ export const OpenByDefault: Story = {
       </CollapsibleContent>
     </Collapsible>
   ),
-}
+};

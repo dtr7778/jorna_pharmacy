@@ -1,45 +1,46 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import { RESET_PASSWORD_PATH } from "@/constants"
-import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext"
-import { createClientOnlyFn } from "@tanstack/react-start"
-import toast from "react-hot-toast"
+import { createClientOnlyFn } from "@tanstack/react-start";
+import toast from "react-hot-toast";
 
-import { authClient } from "../auth.client"
-import type { ButtonProps } from "@/components/ui/button"
-import { ButtonSpinner } from "@/components/ui/button-spinner"
+import type { ButtonProps } from "@/components/ui/button";
+import { ButtonSpinner } from "@/components/ui/button-spinner";
+import { RESET_PASSWORD_PATH } from "@/constants";
+import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext";
+
+import { authClient } from "../auth.client";
 
 export default function SetPasswordButton({
   variant = "outline",
   ...props
 }: ButtonProps) {
-  const [isLoading, setIsLoading] = useState(false)
-  const user = useAuthStore((state) => state.user)
+  const [isLoading, setIsLoading] = useState(false);
+  const user = useAuthStore((state) => state.user);
 
   const handleClick = createClientOnlyFn(() => {
-    const toastId = "revoke_other_sessions_toast_message"
+    const toastId = "revoke_other_sessions_toast_message";
 
     return authClient.requestPasswordReset({
       email: user.email,
       redirectTo: RESET_PASSWORD_PATH,
       fetchOptions: {
         onRequest: () => {
-          setIsLoading(true)
-          toast.loading("Loading...", { id: toastId })
+          setIsLoading(true);
+          toast.loading("Loading...", { id: toastId });
         },
         onSuccess: () => {
-          setIsLoading(false)
-          toast.success("Password reset email sent", { id: toastId })
+          setIsLoading(false);
+          toast.success("Password reset email sent", { id: toastId });
         },
         onError: ({ error }) => {
-          setIsLoading(false)
+          setIsLoading(false);
           toast.error(error.message, {
             id: toastId,
-          })
+          });
         },
       },
-    })
-  })
+    });
+  });
 
   return (
     <ButtonSpinner
@@ -50,5 +51,5 @@ export default function SetPasswordButton({
     >
       Send Password Reset Email
     </ButtonSpinner>
-  )
+  );
 }

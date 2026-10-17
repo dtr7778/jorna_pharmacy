@@ -1,27 +1,28 @@
-import { env } from "@/lib/env"
-import { create } from "zustand"
-import { createJSONStorage, devtools, persist } from "zustand/middleware"
+import { create } from "zustand";
+import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-const STORAGE_KEY = "settings"
+import { env } from "@/lib/env";
+
+const STORAGE_KEY = "settings";
 
 export interface SettingState {
   sidebar: {
-    open: boolean
-  }
+    open: boolean;
+  };
 }
 
 export interface SettingAction {
-  setSidebarOpen: (open: boolean) => void
-  toggleSidebarOpen: () => void
+  setSidebarOpen: (open: boolean) => void;
+  toggleSidebarOpen: () => void;
 }
 
-export type SettingStore = SettingState & SettingAction
+export type SettingStore = SettingState & SettingAction;
 
 const initialState: SettingState = {
   sidebar: {
     open: true,
   },
-}
+};
 
 export const useSettingStore = create<SettingStore>()(
   devtools(
@@ -56,4 +57,4 @@ export const useSettingStore = create<SettingStore>()(
       enabled: env.VITE_ENVIRONMENT === "development",
     }
   )
-)
+);

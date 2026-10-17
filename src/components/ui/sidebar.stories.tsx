@@ -1,6 +1,5 @@
-import { CalendarIcon, HomeIcon, InboxIcon, SettingsIcon } from "lucide-react"
-
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { CalendarIcon, HomeIcon, InboxIcon, SettingsIcon } from "lucide-react";
 
 import {
   Sidebar,
@@ -18,7 +17,7 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "./sidebar"
+} from "./sidebar";
 
 const meta = {
   title: "UI/Sidebar",
@@ -27,16 +26,16 @@ const meta = {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Sidebar>
+} satisfies Meta<typeof Sidebar>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 const items = [
   { title: "Home", icon: HomeIcon },
   { title: "Inbox", icon: InboxIcon },
   { title: "Calendar", icon: CalendarIcon },
-]
+];
 
 export const Default: Story = {
   render: () => (
@@ -88,4 +87,4 @@ export const Default: Story = {
       </SidebarInset>
     </SidebarProvider>
   ),
-}
+};

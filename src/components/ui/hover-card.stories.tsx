@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card"
-import { Button } from "./button"
+import { Button } from "./button";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
 
 const meta = {
   title: "UI/HoverCard",
@@ -10,10 +10,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof HoverCard>
+} satisfies Meta<typeof HoverCard>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -31,4 +31,4 @@ export const Default: Story = {
       </HoverCardContent>
     </HoverCard>
   ),
-}
+};

@@ -1,6 +1,7 @@
-import { ButtonSkeleton } from "../ui/button-skeleton"
-import { SelectSkeleton } from "../ui/select-skeleton"
-import { cn } from "cn"
+import { cn } from "cn";
+
+import { ButtonSkeleton } from "../ui/button-skeleton";
+import { SelectSkeleton } from "../ui/select-skeleton";
 
 export function DataTablePaginationSkeleton({
   className,
@@ -29,5 +30,5 @@ export function DataTablePaginationSkeleton({
         </div>
       </div>
     </div>
-  )
+  );
 }

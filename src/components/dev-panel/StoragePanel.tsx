@@ -22,7 +22,7 @@ export function StoragePanel() {
   }, [activeTab]);
 
   return (
-    <div className="flex-1 overflow-y-auto p-3.5 space-y-1.5">
+    <div className="flex-1 space-y-1.5 overflow-y-auto p-3.5">
       {Object.keys(storage).length === 0 ? (
         <p className="mt-10 text-center text-[10px] text-neutral-700">
           localStorage is empty
@@ -47,13 +47,13 @@ export function StoragePanel() {
                     return n;
                   });
                 }}
-                className="text-[10px] text-neutral-700 transition-colors hover:text-red-400 leading-none"
+                className="text-[10px] leading-none text-neutral-700 transition-colors hover:text-red-400"
                 title="Delete"
               >
                 ✕
               </button>
             </div>
-            <p className="max-h-14 overflow-hidden break-all text-[10px] text-neutral-400">
+            <p className="max-h-14 overflow-hidden text-[10px] break-all text-neutral-400">
               {value}
             </p>
           </div>

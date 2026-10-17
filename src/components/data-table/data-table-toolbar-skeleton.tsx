@@ -1,5 +1,6 @@
-import { ButtonSkeleton } from "../ui/button-skeleton"
-import { cn } from "cn"
+import { cn } from "cn";
+
+import { ButtonSkeleton } from "../ui/button-skeleton";
 
 export function DataTableToolbarSkeleton({
   className,
@@ -19,5 +20,5 @@ export function DataTableToolbarSkeleton({
         <ButtonSkeleton />
       </div>
     </div>
-  )
+  );
 }

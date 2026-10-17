@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { ButtonSpinner } from "./button-spinner"
+import { ButtonSpinner } from "./button-spinner";
 
 const meta = {
   title: "UI/Button/ButtonSpinner",
@@ -38,10 +38,10 @@ const meta = {
       control: { type: "radio" },
     },
   },
-} satisfies Meta<typeof ButtonSpinner>
+} satisfies Meta<typeof ButtonSpinner>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 /**
  * Primary Button
@@ -53,4 +53,4 @@ export const Primary: Story = {
     children: "Button",
     isLoading: true,
   },
-}
+};

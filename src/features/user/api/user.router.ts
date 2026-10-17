@@ -6,7 +6,7 @@ import {
   userDetailsProcedure,
   userImpl,
   userStatsProcedure,
-} from "./user.procedure"
+} from "./user.procedure";
 
 export const userRouter = userImpl.router({
   list: listUserProcedure,
@@ -15,4 +15,4 @@ export const userRouter = userImpl.router({
   updateRole: updateUserRoleProcedure,
   updateProfile: profileUpdateProcedure,
   details: userDetailsProcedure,
-})
+});

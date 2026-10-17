@@ -1,8 +1,8 @@
-import { Button, type ButtonProps } from "./button"
-import { Spinner } from "./spinner"
+import { Button, type ButtonProps } from "./button";
+import { Spinner } from "./spinner";
 
 interface ButtonSpinnerProps extends Omit<ButtonProps, "render"> {
-  isLoading: boolean
+  isLoading: boolean;
 }
 
 function ButtonSpinner({
@@ -12,7 +12,7 @@ function ButtonSpinner({
   disabled,
   ...props
 }: ButtonSpinnerProps) {
-  const isDisabled = isLoading || disabled
+  const isDisabled = isLoading || disabled;
 
   return (
     <Button
@@ -24,7 +24,7 @@ function ButtonSpinner({
       {isLoading && <Spinner />}
       {isLoading && size?.startsWith("icon") ? null : children}
     </Button>
-  )
+  );
 }
 
-export { ButtonSpinner }
+export { ButtonSpinner };

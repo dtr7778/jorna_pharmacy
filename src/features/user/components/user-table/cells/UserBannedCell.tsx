@@ -1,16 +1,17 @@
-import { FormatDateCell } from "@/components/FormatDateCell"
-import { Badge } from "@/components/ui/badge"
+import { Info } from "lucide-react";
+
+import { FormatDateCell } from "@/components/FormatDateCell";
+import { Badge } from "@/components/ui/badge";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card"
-import { Info } from "lucide-react"
+} from "@/components/ui/hover-card";
 
 interface UserBannedProps {
-  banned: boolean
-  banReason: string | null | undefined
-  banExpires: Date | null | undefined
+  banned: boolean;
+  banReason: string | null | undefined;
+  banExpires: Date | null | undefined;
 }
 
 export function UserBannedCell({
@@ -18,7 +19,7 @@ export function UserBannedCell({
   banExpires,
   banReason,
 }: UserBannedProps) {
-  if (!banned) return null
+  if (!banned) return null;
 
   return (
     <HoverCard>
@@ -42,5 +43,5 @@ export function UserBannedCell({
         )}
       </HoverCardContent>
     </HoverCard>
-  )
+  );
 }

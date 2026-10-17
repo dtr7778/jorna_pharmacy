@@ -1,9 +1,8 @@
-import type * as React from "react"
+import type * as React from "react";
 
-import { mergeProps, useRender } from "@base-ui/react"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "cn"
+import { mergeProps, useRender } from "@base-ui/react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
 
 const statusVariants = cva(
   "inline-flex w-fit shrink-0 items-center gap-1.5 overflow-hidden rounded-full border px-2.5 py-1 text-xs font-medium whitespace-nowrap transition-colors",
@@ -25,11 +24,11 @@ const statusVariants = cva(
       variant: "default",
     },
   }
-)
+);
 
 export type StatusVariant = NonNullable<
   VariantProps<typeof statusVariants>["variant"]
->
+>;
 
 interface StatusProps
   extends
@@ -37,26 +36,26 @@ interface StatusProps
     useRender.ComponentProps<"div"> {}
 
 function Status(props: StatusProps) {
-  const { className, variant = "default", render, ...rootProps } = props
+  const { className, variant = "default", render, ...rootProps } = props;
 
   const defaultProps: React.ComponentProps<"div"> &
     Record<`data-${string}`, string | null | undefined> = {
     "data-slot": "status",
     "data-variant": variant,
     className: cn(statusVariants({ variant }), className),
-  }
+  };
 
   const element = useRender({
     defaultTagName: "div",
     render,
     props: mergeProps<"div">(defaultProps, rootProps),
-  })
+  });
 
-  return element
+  return element;
 }
 
 function StatusIndicator(props: React.ComponentProps<"div">) {
-  const { className, ...indicatorProps } = props
+  const { className, ...indicatorProps } = props;
 
   return (
     <div
@@ -69,11 +68,11 @@ function StatusIndicator(props: React.ComponentProps<"div">) {
         className
       )}
     />
-  )
+  );
 }
 
 function StatusLabel(props: React.ComponentProps<"div">) {
-  const { className, ...labelProps } = props
+  const { className, ...labelProps } = props;
 
   return (
     <div
@@ -81,7 +80,7 @@ function StatusLabel(props: React.ComponentProps<"div">) {
       {...labelProps}
       className={cn("leading-none", className)}
     />
-  )
+  );
 }
 
-export { Status, StatusIndicator, StatusLabel, statusVariants }
+export { Status, StatusIndicator, StatusLabel, statusVariants };

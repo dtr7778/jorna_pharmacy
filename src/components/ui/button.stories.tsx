@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
-import { Edit } from "lucide-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { Edit } from "lucide-react";
 
-import { Button } from "./button"
+import { Button } from "./button";
 
 const meta = {
   title: "UI/Button",
@@ -39,10 +39,10 @@ const meta = {
       control: { type: "boolean" },
     },
   },
-} satisfies Meta<typeof Button>
+} satisfies Meta<typeof Button>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 /**
  * Primary Button
@@ -53,7 +53,7 @@ export const Primary: Story = {
     size: "default",
     children: "Button",
   },
-}
+};
 
 /**
  * Icon Button
@@ -64,4 +64,4 @@ export const Icon: Story = {
     size: "icon",
     children: <Edit />,
   },
-}
+};

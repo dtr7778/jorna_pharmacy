@@ -1,8 +1,9 @@
-import { env } from "@/lib/env"
-import { emailField, passwordField } from "@/lib/zod-schemas/baseZodSchema"
-import z from "zod"
+import z from "zod";
 
-const restrict = env.VITE_ENVIRONMENT === "production"
+import { env } from "@/lib/env";
+import { emailField, passwordField } from "@/lib/zod-schemas/baseZodSchema";
+
+const restrict = env.VITE_ENVIRONMENT === "production";
 
 export const signUpSchema = z
   .object({
@@ -16,25 +17,25 @@ export const signUpSchema = z
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
     message: "Password and confirmPassword not matched",
-  })
-export type SignUpType = z.infer<typeof signUpSchema>
+  });
+export type SignUpType = z.infer<typeof signUpSchema>;
 
 export const signInSchema = z.object({
   email: emailField({ fieldName: "email" }),
   password: passwordField({ fieldName: "password", restrict }),
   rememberMe: z.boolean().optional(),
-})
-export type SignInType = z.infer<typeof signInSchema>
+});
+export type SignInType = z.infer<typeof signInSchema>;
 
 export const magicLinkSchema = z.object({
   email: emailField({ fieldName: "email" }),
-})
-export type MagicLinkType = z.infer<typeof magicLinkSchema>
+});
+export type MagicLinkType = z.infer<typeof magicLinkSchema>;
 
 export const forgetPasswordSchema = z.object({
   email: emailField({ fieldName: "email" }),
-})
-export type ForgetPasswordType = z.infer<typeof forgetPasswordSchema>
+});
+export type ForgetPasswordType = z.infer<typeof forgetPasswordSchema>;
 
 export const resetPasswordSchema = z
   .object({
@@ -43,8 +44,8 @@ export const resetPasswordSchema = z
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
     message: "Password and confirmPassword not matched",
-  })
-export type ResetPasswordType = z.infer<typeof resetPasswordSchema>
+  });
+export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;
 
 export const updatePasswordSchema = z
   .object({
@@ -61,13 +62,13 @@ export const updatePasswordSchema = z
     {
       message: "Password and confirmPassword not matched",
     }
-  )
-export type UpdatePasswordType = z.infer<typeof updatePasswordSchema>
+  );
+export type UpdatePasswordType = z.infer<typeof updatePasswordSchema>;
 
 export const userBannedSchema = z.object({
   userId: z.uuid(),
   banned: z.boolean().optional(),
   banReason: z.string().optional(),
   banExpires: z.date().optional(),
-})
-export type UserBannedType = z.infer<typeof userBannedSchema>
+});
+export type UserBannedType = z.infer<typeof userBannedSchema>;

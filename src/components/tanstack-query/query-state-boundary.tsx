@@ -1,5 +1,6 @@
-import { AlertCircle } from "lucide-react"
-import { Skeleton } from "../ui/skeleton"
+import { AlertCircle } from "lucide-react";
+
+import { Skeleton } from "../ui/skeleton";
 
 function DefaultSkeleton() {
   return (
@@ -8,7 +9,7 @@ function DefaultSkeleton() {
         <Skeleton key={i} className="h-10 w-full" />
       ))}
     </div>
-  )
+  );
 }
 
 function DefaultEmpty() {
@@ -16,7 +17,7 @@ function DefaultEmpty() {
     <div className="mx-auto max-w-xl px-4 py-12 text-center text-muted-foreground">
       No results found.
     </div>
-  )
+  );
 }
 
 function DefaultError({ error }: { error?: Error | null }) {
@@ -39,19 +40,19 @@ function DefaultError({ error }: { error?: Error | null }) {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 interface QueryStateBoundaryProps<T> {
-  isLoading: boolean
-  isError: boolean
-  error?: Error | null
-  data: T | undefined
-  isEmpty: (data: T) => boolean
-  loadingFallback?: React.ReactNode
-  emptyFallback?: React.ReactNode
-  errorFallback?: (error: Error) => React.ReactNode
-  children: (data: T) => React.ReactNode
+  isLoading: boolean;
+  isError: boolean;
+  error?: Error | null;
+  data: T | undefined;
+  isEmpty: (data: T) => boolean;
+  loadingFallback?: React.ReactNode;
+  emptyFallback?: React.ReactNode;
+  errorFallback?: (error: Error) => React.ReactNode;
+  children: (data: T) => React.ReactNode;
 }
 
 export function QueryStateBoundary<T>({
@@ -66,17 +67,17 @@ export function QueryStateBoundary<T>({
   children,
 }: QueryStateBoundaryProps<T>) {
   if (isLoading) {
-    return <>{loadingFallback}</>
+    return <>{loadingFallback}</>;
   }
 
   if (isError) {
-    const err = error ?? new Error("Unknown error")
-    return errorFallback ? errorFallback(err) : <DefaultError error={err} />
+    const err = error ?? new Error("Unknown error");
+    return errorFallback ? errorFallback(err) : <DefaultError error={err} />;
   }
 
   if (!data || isEmpty(data)) {
-    return <>{emptyFallback}</>
+    return <>{emptyFallback}</>;
   }
 
-  return <>{children(data)}</>
+  return <>{children(data)}</>;
 }

@@ -1,10 +1,11 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { authErrors } from "@/features/auth/authErrors"
-import { head } from "@/lib/head"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import { AlertCircle } from "lucide-react"
-import z from "zod"
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { AlertCircle } from "lucide-react";
+import z from "zod";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { authErrors } from "@/features/auth/authErrors";
+import { head } from "@/lib/head";
 
 export const Route = createFileRoute("/(auth)/_authLayout/auth-error")({
   head: ({ match }) =>
@@ -16,10 +17,10 @@ export const Route = createFileRoute("/(auth)/_authLayout/auth-error")({
     error: z.string().optional(),
   }),
   component: AuthErrorPage,
-})
+});
 
 function AuthErrorPage() {
-  const { error } = Route.useSearch()
+  const { error } = Route.useSearch();
 
   const errorInfo = error
     ? (authErrors[error] ?? {
@@ -29,7 +30,7 @@ function AuthErrorPage() {
     : {
         title: "Authentication Error",
         message: "An unexpected error occurred during authentication.",
-      }
+      };
 
   return (
     <Card>
@@ -57,5 +58,5 @@ function AuthErrorPage() {
         />
       </CardFooter>
     </Card>
-  )
+  );
 }

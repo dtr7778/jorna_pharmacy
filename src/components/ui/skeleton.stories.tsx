@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Skeleton } from "./skeleton"
+import { Skeleton } from "./skeleton";
 
 const meta = {
   title: "UI/Skeleton",
@@ -9,16 +9,16 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Skeleton>
+} satisfies Meta<typeof Skeleton>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     className: "h-6 w-40",
   },
-}
+};
 
 export const CardSkeleton: Story = {
   render: () => (
@@ -28,4 +28,4 @@ export const CardSkeleton: Story = {
       <Skeleton className="h-4 w-1/2" />
     </div>
   ),
-}
+};

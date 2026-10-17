@@ -1,9 +1,10 @@
-import { FormatDateCell } from "@/components/FormatDateCell"
-import { QueryStateBoundary } from "@/components/tanstack-query/query-state-boundary"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { orpcTQClient } from "@/server/orpc"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query";
+
+import { FormatDateCell } from "@/components/FormatDateCell";
+import { QueryStateBoundary } from "@/components/tanstack-query/query-state-boundary";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { orpcTQClient } from "@/server/orpc";
 
 export function DetailsStep({ userId }: { userId: string }) {
   const { data, isLoading, isError, error } = useQuery(
@@ -12,7 +13,7 @@ export function DetailsStep({ userId }: { userId: string }) {
         userId,
       },
     })
-  )
+  );
 
   return (
     <QueryStateBoundary
@@ -56,20 +57,20 @@ export function DetailsStep({ userId }: { userId: string }) {
         </Card>
       )}
     </QueryStateBoundary>
-  )
+  );
 }
 
 function DetailsItem({
   title,
   children,
 }: {
-  title: string
-  children: React.ReactNode
+  title: string;
+  children: React.ReactNode;
 }) {
   return (
     <div>
       <div className="font-medium text-muted-foreground">{title}</div>
       <div className="flex items-center gap-2">{children}</div>
     </div>
-  )
+  );
 }

@@ -1,8 +1,8 @@
-import * as React from "react"
+import * as React from "react";
 
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { PasswordInput } from "./password-input"
+import { PasswordInput } from "./password-input";
 
 const meta = {
   title: "UI/PasswordInput",
@@ -11,14 +11,14 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof PasswordInput>
+} satisfies Meta<typeof PasswordInput>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => {
-    const [value, setValue] = React.useState("")
+    const [value, setValue] = React.useState("");
     return (
       <PasswordInput
         {...args}
@@ -26,9 +26,9 @@ export const Default: Story = {
         onChange={(e) => setValue(e.target.value)}
         className="w-64"
       />
-    )
+    );
   },
-}
+};
 
 export const Disabled: Story = {
   args: {
@@ -36,4 +36,4 @@ export const Disabled: Story = {
     disabled: true,
     className: "w-64",
   },
-}
+};

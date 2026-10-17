@@ -15,5 +15,5 @@ export function buildFaviconLinks(): Array<Record<string, string>> {
       sizes: "180x180",
       type: "image/png",
     },
-  ]
+  ];
 }

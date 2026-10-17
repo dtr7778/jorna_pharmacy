@@ -1,19 +1,20 @@
-import type { DatabaseType } from "@/db/clients/drizzle-client"
+import { eq, inArray } from "drizzle-orm";
+
+import type { DatabaseType } from "@/db/clients/drizzle-client";
 import {
   PermissionTable,
   RolePermissionTable,
   RoleTable,
   UserRoleTable,
-} from "@/db/schemas"
-import type { PermissionType, RoleType } from "@/types"
-import { eq, inArray } from "drizzle-orm"
+} from "@/db/schemas";
+import type { PermissionType, RoleType } from "@/types";
 
 export async function getUserRolesAndPermission(
   userId: string,
   database: DatabaseType
 ): Promise<{
-  roles: RoleType[]
-  permissions: PermissionType[]
+  roles: RoleType[];
+  permissions: PermissionType[];
 }> {
   const systemRoles = await database
     .select({
@@ -22,10 +23,10 @@ export async function getUserRolesAndPermission(
     })
     .from(RoleTable)
     .innerJoin(UserRoleTable, eq(RoleTable.id, UserRoleTable.roleId))
-    .where(eq(UserRoleTable.userId, userId))
+    .where(eq(UserRoleTable.userId, userId));
 
   if (systemRoles.length === 0) {
-    throw new Error("User has no system role")
+    throw new Error("User has no system role");
   }
 
   const systemRolePermissions = await database
@@ -44,18 +45,18 @@ export async function getUserRolesAndPermission(
         RolePermissionTable.roleId,
         systemRoles.map(({ id }) => id)
       )
-    )
+    );
 
-  const roleMap = new Map<string, RoleType>()
+  const roleMap = new Map<string, RoleType>();
 
   systemRoles.forEach((systemRole) => {
     roleMap.set(systemRole.roleName, {
       roleName: systemRole.roleName,
-    })
-  })
+    });
+  });
 
   return {
     roles: Array.from(roleMap.values()),
     permissions: systemRolePermissions,
-  }
+  };
 }

@@ -48,31 +48,31 @@ export default function NewDeviceLoginMail({
       <EmailInfoCard>
         <Row className="mb-2">
           <Column className="text-xs text-muted-foreground">When</Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {loginTimestamp}
           </Column>
         </Row>
         <Row className="mb-2">
           <Column className="text-xs text-muted-foreground">Device</Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {deviceInfo}
           </Column>
         </Row>
         <Row className="mb-2">
           <Column className="text-xs text-muted-foreground">Browser/OS</Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {browser}
           </Column>
         </Row>
         <Row className="mb-2">
           <Column className="text-xs text-muted-foreground">Location</Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {approximateLocation}
           </Column>
         </Row>
         <Row>
           <Column className="text-xs text-muted-foreground">IP Address</Column>
-          <Column className="text-xs font-bold text-right font-mono text-foreground">
+          <Column className="text-right font-mono text-xs font-bold text-foreground">
             {ipAddress}
           </Column>
         </Row>
@@ -83,7 +83,7 @@ export default function NewDeviceLoginMail({
         your account. Please secure it now.
       </Text>
 
-      <Section className="text-center my-6">
+      <Section className="my-6 text-center">
         <EmailButton href={secureAccountUrl}>Secure Your Account</EmailButton>
       </Section>
 

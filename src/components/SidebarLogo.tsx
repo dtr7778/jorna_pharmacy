@@ -1,7 +1,8 @@
-import { Link } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router";
 
-import { SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar"
-import { env } from "@/lib/env"
+import { env } from "@/lib/env";
+
+import { SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
 
 export function SidebarLogo() {
   return (
@@ -24,5 +25,5 @@ export function SidebarLogo() {
         }
       />
     </SidebarMenuItem>
-  )
+  );
 }

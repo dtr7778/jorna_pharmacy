@@ -30,4 +30,4 @@ export const API_MESSAGES = {
       NOT_FOUND: "Role not found.",
     },
   },
-}
+};

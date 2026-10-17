@@ -1,31 +1,35 @@
-import { useCallback, useId, useMemo } from "react"
+import { useCallback, useId, useMemo } from "react";
 
-import { Asterisk, Info } from "lucide-react"
+import { Asterisk, Info } from "lucide-react";
 import type {
   Control,
   ControllerFieldState,
   ControllerRenderProps,
   FieldValues,
   Path,
-} from "react-hook-form"
-import { Controller } from "react-hook-form"
+} from "react-hook-form";
+import { Controller } from "react-hook-form";
 
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "../ui/input-group"
+import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
 
 interface InputAddonFieldProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"input"> {
-  name: Path<TFieldValues>
-  control: Control<TFieldValues>
-  label?: string
-  description?: string
-  isDescriptionInfoIconShow?: boolean
-  requiredField?: boolean
-  firstAddon?: React.ReactNode
-  secondAddon?: React.ReactNode
-  onValueChange?: (value: string) => void
-  valueModifier?: (value: string) => string
+  name: Path<TFieldValues>;
+  control: Control<TFieldValues>;
+  label?: string;
+  description?: string;
+  isDescriptionInfoIconShow?: boolean;
+  requiredField?: boolean;
+  firstAddon?: React.ReactNode;
+  secondAddon?: React.ReactNode;
+  onValueChange?: (value: string) => void;
+  valueModifier?: (value: string) => string;
 }
 
 function InputAddonField<TFieldValues extends FieldValues>({
@@ -42,7 +46,7 @@ function InputAddonField<TFieldValues extends FieldValues>({
   valueModifier,
   ...props
 }: InputAddonFieldProps<TFieldValues>) {
-  const fieldId = useId()
+  const fieldId = useId();
   return (
     <Controller
       name={name}
@@ -81,19 +85,19 @@ function InputAddonField<TFieldValues extends FieldValues>({
         </Field>
       )}
     />
-  )
+  );
 }
 
 interface InputAddonFieldRenderProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"input"> {
-  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>
-  fieldState: ControllerFieldState
-  id: string
-  onValueChange?: (value: string) => void
-  valueModifier?: (value: string) => string
-  firstAddon?: React.ReactNode
-  secondAddon?: React.ReactNode
+  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>;
+  fieldState: ControllerFieldState;
+  id: string;
+  onValueChange?: (value: string) => void;
+  valueModifier?: (value: string) => string;
+  firstAddon?: React.ReactNode;
+  secondAddon?: React.ReactNode;
 }
 
 function InputAddonFieldRender<TFieldValues extends FieldValues>({
@@ -110,20 +114,20 @@ function InputAddonFieldRender<TFieldValues extends FieldValues>({
   const filedValue = useMemo(
     () => (valueModifier ? valueModifier(field.value) : field.value),
     [field, valueModifier]
-  )
+  );
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      event.preventDefault()
-      event.stopPropagation()
+      event.preventDefault();
+      event.stopPropagation();
 
-      const value = event.target.value
+      const value = event.target.value;
 
-      field.onChange(value)
-      onValueChange?.(value)
+      field.onChange(value);
+      onValueChange?.(value);
     },
     [field, onValueChange]
-  )
+  );
 
   return (
     <InputGroup>
@@ -143,7 +147,7 @@ function InputAddonFieldRender<TFieldValues extends FieldValues>({
         <InputGroupAddon align="inline-end">{secondAddon}</InputGroupAddon>
       )}
     </InputGroup>
-  )
+  );
 }
 
-export { InputAddonField }
+export { InputAddonField };

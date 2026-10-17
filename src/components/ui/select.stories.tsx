@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
 import {
   Select,
@@ -8,13 +8,13 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./select"
+} from "./select";
 
 const items = [
   { value: "apple", label: "Apple" },
   { value: "banana", label: "Banana" },
   { value: "cherry", label: "Cherry" },
-]
+];
 
 const meta = {
   title: "UI/Select",
@@ -24,10 +24,10 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {},
-} satisfies Meta<typeof Select>
+} satisfies Meta<typeof Select>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -44,7 +44,7 @@ export const Default: Story = {
       </SelectContent>
     </Select>
   ),
-}
+};
 
 export const Grouped: Story = {
   render: () => (
@@ -64,4 +64,4 @@ export const Grouped: Story = {
       </SelectContent>
     </Select>
   ),
-}
+};

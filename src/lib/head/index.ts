@@ -1,8 +1,8 @@
-import { env } from "../env"
-import { buildHead } from "./buildHead"
+import { SITE_DESCRIPTION, THEME_COLOR } from "@/constants";
 
-import appCss from "../../styles.css?url"
-import { SITE_DESCRIPTION, THEME_COLOR } from "@/constants"
+import appCss from "../../styles.css?url";
+import { env } from "../env";
+import { buildHead } from "./buildHead";
 
 export const { globalHead, head } = buildHead({
   appName: env.VITE_APP_NAME,
@@ -14,4 +14,4 @@ export const { globalHead, head } = buildHead({
   robots: "noindex, nofollow",
   social: true,
   stylesheets: [appCss],
-})
+});

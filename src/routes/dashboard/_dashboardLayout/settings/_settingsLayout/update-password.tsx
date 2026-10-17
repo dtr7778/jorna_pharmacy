@@ -1,22 +1,23 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeaders } from "@tanstack/react-start/server";
+
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Spinner } from "@/components/ui/spinner"
-import { auth } from "@/features/auth/auth.server"
-import UpdatePasswordForm from "@/features/auth/components/forms/UpdatePasswordForm"
-import SetPasswordButton from "@/features/auth/components/SetPasswordButton"
-import { createFileRoute } from "@tanstack/react-router"
-import { createServerFn } from "@tanstack/react-start"
-import { getRequestHeaders } from "@tanstack/react-start/server"
+} from "@/components/ui/card";
+import { Spinner } from "@/components/ui/spinner";
+import { auth } from "@/features/auth/auth.server";
+import SetPasswordButton from "@/features/auth/components/SetPasswordButton";
+import UpdatePasswordForm from "@/features/auth/components/forms/UpdatePasswordForm";
 
 const getAccounts = createServerFn({ method: "GET" }).handler(async () => {
-  const headers = getRequestHeaders()
-  return auth.api.listUserAccounts({ headers })
-})
+  const headers = getRequestHeaders();
+  return auth.api.listUserAccounts({ headers });
+});
 
 export const Route = createFileRoute(
   "/dashboard/_dashboardLayout/settings/_settingsLayout/update-password"
@@ -24,12 +25,14 @@ export const Route = createFileRoute(
   loader: () => getAccounts(),
   pendingComponent: LoadingComponent,
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const accounts = Route.useLoaderData()
+  const accounts = Route.useLoaderData();
 
-  const hasPasswordAccount = accounts.some((a) => a.providerId === "credential")
+  const hasPasswordAccount = accounts.some(
+    (a) => a.providerId === "credential"
+  );
 
   return (
     <div>
@@ -59,7 +62,7 @@ function RouteComponent() {
         </Card>
       )}
     </div>
-  )
+  );
 }
 
 function LoadingComponent() {
@@ -67,5 +70,5 @@ function LoadingComponent() {
     <div className="flex w-full items-center justify-center p-4">
       <Spinner className="size-14 text-primary" strokeWidth={1} />
     </div>
-  )
+  );
 }

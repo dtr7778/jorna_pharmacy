@@ -1,42 +1,4 @@
-import { FormatDateCell } from "@/components/FormatDateCell"
-import { DashboardShell } from "@/components/shared/dashboard-shell"
-import {
-  DashboardShellDescription,
-  DashboardShellHeader,
-  DashboardShellTitle,
-} from "@/components/shared/dashboard-shell/DashboardShellHeader"
-import {
-  DashboardShellDescriptionSkeleton,
-  DashboardShellTitleSkeleton,
-} from "@/components/shared/dashboard-shell/DashboardShellHeaderSkeleton"
-import { DashboardShellSkeleton } from "@/components/shared/dashboard-shell/DashboardShellSkeleton"
-import {
-  TabNavigation,
-  TabNavigationContent,
-  TabNavigationList,
-  TabNavigationTrigger,
-} from "@/components/tab-navigation"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { Spinner } from "@/components/ui/spinner"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { formatEnumValue } from "@/utils/formatEnum"
-import { resolveUserImage } from "@/utils/resolveUserImage"
-import { strInitials } from "@/utils/strInitials"
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Building2,
   CalendarDays,
@@ -45,8 +7,47 @@ import {
   Pencil,
   Shield,
   User,
-} from "lucide-react"
-import z from "zod"
+} from "lucide-react";
+import z from "zod";
+
+import { FormatDateCell } from "@/components/FormatDateCell";
+import { DashboardShell } from "@/components/shared/dashboard-shell";
+import {
+  DashboardShellDescription,
+  DashboardShellHeader,
+  DashboardShellTitle,
+} from "@/components/shared/dashboard-shell/DashboardShellHeader";
+import {
+  DashboardShellDescriptionSkeleton,
+  DashboardShellTitleSkeleton,
+} from "@/components/shared/dashboard-shell/DashboardShellHeaderSkeleton";
+import { DashboardShellSkeleton } from "@/components/shared/dashboard-shell/DashboardShellSkeleton";
+import {
+  TabNavigation,
+  TabNavigationContent,
+  TabNavigationList,
+  TabNavigationTrigger,
+} from "@/components/tab-navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { formatEnumValue } from "@/utils/formatEnum";
+import { resolveUserImage } from "@/utils/resolveUserImage";
+import { strInitials } from "@/utils/strInitials";
 
 export const Route = createFileRoute("/dashboard/_dashboardLayout/profile")({
   validateSearch: z.object({
@@ -57,10 +58,10 @@ export const Route = createFileRoute("/dashboard/_dashboardLayout/profile")({
   }),
   pendingComponent: LoadingComponent,
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const { user, roles, permissions } = Route.useRouteContext()
+  const { user, roles, permissions } = Route.useRouteContext();
 
   return (
     <DashboardShell
@@ -228,7 +229,7 @@ function RouteComponent() {
         </TabNavigationContent>
       </TabNavigation>
     </DashboardShell>
-  )
+  );
 }
 
 function LoadingComponent() {
@@ -245,5 +246,5 @@ function LoadingComponent() {
         <Spinner className="size-14 text-primary" strokeWidth={1} />
       </div>
     </DashboardShellSkeleton>
-  )
+  );
 }

@@ -1,13 +1,14 @@
-import { Checkbox } from "@/components/ui/checkbox"
-import { Field, FieldLabel } from "@/components/ui/field"
-import { Controller } from "react-hook-form"
-import type { Control, FieldValues, Path } from "react-hook-form"
+import { Controller } from "react-hook-form";
+import type { Control, FieldValues, Path } from "react-hook-form";
+
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldLabel } from "@/components/ui/field";
 
 interface RememberMeProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"input"> {
-  name: Path<TFieldValues>
-  control: Control<TFieldValues>
+  name: Path<TFieldValues>;
+  control: Control<TFieldValues>;
 }
 
 export function RememberMe<TFieldValues extends FieldValues>({
@@ -39,5 +40,5 @@ export function RememberMe<TFieldValues extends FieldValues>({
         </Field>
       )}
     />
-  )
+  );
 }

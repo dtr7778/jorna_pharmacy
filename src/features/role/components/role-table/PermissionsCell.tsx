@@ -1,35 +1,36 @@
-import type {
-  ActionTypeEnumType,
-  ResourceTypeEnumType,
-} from "@/db/schemas/enums/zod-db-enums"
-import type { ListRoleContractType } from "../../api/role.contract"
-import { formatEnumValue } from "@/utils/formatEnum"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import type {
+  ActionTypeEnumType,
+  ResourceTypeEnumType,
+} from "@/db/schemas/enums/zod-db-enums";
+import { formatEnumValue } from "@/utils/formatEnum";
+
+import type { ListRoleContractType } from "../../api/role.contract";
 
 type Permission =
-  ListRoleContractType["output"]["data"][number]["permissions"][number]
+  ListRoleContractType["output"]["data"][number]["permissions"][number];
 
 function PermissionBadge({
   resource,
   action,
   description,
 }: {
-  resource: ResourceTypeEnumType
-  action: ActionTypeEnumType
-  description: string | null
+  resource: ResourceTypeEnumType;
+  action: ActionTypeEnumType;
+  description: string | null;
 }) {
-  const label = `${formatEnumValue(resource)} - ${action}`
+  const label = `${formatEnumValue(resource)} - ${action}`;
 
   if (description) {
     return (
@@ -43,25 +44,25 @@ function PermissionBadge({
           <p>{description}</p>
         </TooltipContent>
       </Tooltip>
-    )
+    );
   }
 
   return (
     <Badge variant="secondary" className="capitalize">
       {label}
     </Badge>
-  )
+  );
 }
 
-const MAX_VISIBLE = 4
+const MAX_VISIBLE = 4;
 
 export function PermissionsCell({
   permissions,
 }: {
-  permissions: Permission[]
+  permissions: Permission[];
 }) {
   if (permissions.length === 0) {
-    return <Badge variant="secondary">Empty</Badge>
+    return <Badge variant="secondary">Empty</Badge>;
   }
 
   if (permissions.length <= MAX_VISIBLE) {
@@ -76,11 +77,11 @@ export function PermissionsCell({
           />
         ))}
       </div>
-    )
+    );
   }
 
-  const visiblePerm = permissions.slice(0, MAX_VISIBLE)
-  const hiddenPerm = permissions.slice(MAX_VISIBLE)
+  const visiblePerm = permissions.slice(0, MAX_VISIBLE);
+  const hiddenPerm = permissions.slice(MAX_VISIBLE);
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -113,5 +114,5 @@ export function PermissionsCell({
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-import { cn } from "cn"
+import { cn } from "cn";
 
 interface DashboardShellProps extends React.ComponentProps<"div"> {
-  header?: React.ReactNode
+  header?: React.ReactNode;
 }
 
 export function DashboardShell({
@@ -20,5 +20,5 @@ export function DashboardShell({
         <div className="space-y-4 md:space-y-6">{children}</div>
       </div>
     </div>
-  )
+  );
 }

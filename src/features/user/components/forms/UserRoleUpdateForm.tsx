@@ -1,29 +1,30 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-import { useRoleUpdate } from "../../api/user.api.hook"
-import type { RoleUpdateType } from "../../user.schema"
-import { roleUpdateSchema } from "../../user.schema"
+import { SelectField } from "@/components/form-fields/SelectField";
+import { Button } from "@/components/ui/button";
+import { FieldGroup } from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
 import {
   RoleEnumSchema,
   type RoleEnumType,
-} from "@/db/schemas/enums/zod-db-enums"
-import { FieldGroup } from "@/components/ui/field"
-import { formatEnumValue } from "@/utils/formatEnum"
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
-import { SelectField } from "@/components/form-fields/SelectField"
+} from "@/db/schemas/enums/zod-db-enums";
+import { formatEnumValue } from "@/utils/formatEnum";
+
+import { useRoleUpdate } from "../../api/user.api.hook";
+import type { RoleUpdateType } from "../../user.schema";
+import { roleUpdateSchema } from "../../user.schema";
 
 export function UserRoleUpdateForm({
   userId,
   roleName,
   onSuccess,
 }: {
-  userId: string
-  roleName: RoleEnumType
-  onSuccess?: () => void
+  userId: string;
+  roleName: RoleEnumType;
+  onSuccess?: () => void;
 }) {
-  "use no memo"
+  "use no memo";
 
   const form = useForm<RoleUpdateType>({
     resolver: zodResolver(roleUpdateSchema),
@@ -31,24 +32,24 @@ export function UserRoleUpdateForm({
       userId,
       roleName,
     },
-  })
+  });
 
   const { mutate, isPending } = useRoleUpdate<keyof RoleUpdateType>({
     onSuccess: () => {
-      onSuccess?.()
+      onSuccess?.();
     },
     onValidationErrors: (fields) => {
       fields.forEach(({ fieldName, message }) => {
         form.setError(fieldName, {
           message,
-        })
-      })
+        });
+      });
     },
-  })
+  });
 
   const handleSubmit = async (e: RoleUpdateType) => {
-    mutate(e)
-  }
+    mutate(e);
+  };
 
   return (
     <div className="rounded-md border p-3 pt-0 shadow">
@@ -80,5 +81,5 @@ export function UserRoleUpdateForm({
         </FieldGroup>
       </form>
     </div>
-  )
+  );
 }

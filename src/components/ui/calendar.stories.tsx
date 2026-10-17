@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
-import { Calendar } from "./calendar"
+import { Calendar } from "./calendar";
 
 const meta = {
   title: "UI/Calendar",
@@ -9,17 +9,17 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Calendar>
+} satisfies Meta<typeof Calendar>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Single: Story = {
   args: {
     mode: "single",
     className: "rounded-lg border shadow-sm",
   },
-}
+};
 
 export const MultipleMonths: Story = {
   args: {
@@ -27,4 +27,4 @@ export const MultipleMonths: Story = {
     numberOfMonths: 2,
     className: "rounded-lg border shadow-sm",
   },
-}
+};

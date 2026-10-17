@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
+import { Button } from "./button";
 import {
   Popover,
   PopoverContent,
@@ -7,8 +8,7 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "./popover"
-import { Button } from "./button"
+} from "./popover";
 
 const meta = {
   title: "UI/Popover",
@@ -17,10 +17,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Popover>
+} satisfies Meta<typeof Popover>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -38,4 +38,4 @@ export const Default: Story = {
       </PopoverContent>
     </Popover>
   ),
-}
+};

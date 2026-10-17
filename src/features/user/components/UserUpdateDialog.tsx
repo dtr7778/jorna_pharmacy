@@ -1,11 +1,8 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext"
-import { Pen } from "lucide-react"
+import { Pen } from "lucide-react";
 
-import type { ListUserContractType } from "../api/user.contract"
-import { UserBannedForm } from "./forms/UserBannedForm"
-import { UserRoleUpdateForm } from "./forms/UserRoleUpdateForm"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogDescription,
@@ -14,22 +11,26 @@ import {
   DialogStickyHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/tooltip";
+import { useAuthStore } from "@/stores/zustand/auth/AuthStoreContext";
+
+import type { ListUserContractType } from "../api/user.contract";
+import { UserBannedForm } from "./forms/UserBannedForm";
+import { UserRoleUpdateForm } from "./forms/UserRoleUpdateForm";
 
 export function UserUpdateDialog({
   userData,
 }: {
-  userData: ListUserContractType["output"]["data"]["data"][number]
+  userData: ListUserContractType["output"]["data"]["data"][number];
 }) {
-  "use no memo"
-  const [open, setOpen] = useState<boolean>(false)
-  const authUser = useAuthStore((state) => state.user)
+  "use no memo";
+  const [open, setOpen] = useState<boolean>(false);
+  const authUser = useAuthStore((state) => state.user);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -75,5 +76,5 @@ export function UserUpdateDialog({
         </DialogResponsiveBody>
       </DialogResponsiveContent>
     </Dialog>
-  )
+  );
 }

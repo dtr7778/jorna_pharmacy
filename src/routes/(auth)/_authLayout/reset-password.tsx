@@ -1,8 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ResetPasswordForm } from "@/features/auth/components/forms/ResetPasswordForm"
-import { head } from "@/lib/head"
-import { createFileRoute } from "@tanstack/react-router"
-import z from "zod"
+import { createFileRoute } from "@tanstack/react-router";
+import z from "zod";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ResetPasswordForm } from "@/features/auth/components/forms/ResetPasswordForm";
+import { head } from "@/lib/head";
 
 export const Route = createFileRoute("/(auth)/_authLayout/reset-password")({
   head: ({ match }) =>
@@ -15,10 +16,10 @@ export const Route = createFileRoute("/(auth)/_authLayout/reset-password")({
     token: z.string().optional(),
   }),
   component: ResetPassword,
-})
+});
 
 function ResetPassword() {
-  const { error, token } = Route.useSearch()
+  const { error, token } = Route.useSearch();
 
   if (error) {
     return (
@@ -29,7 +30,7 @@ function ResetPassword() {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (!token) {
@@ -41,7 +42,7 @@ function ResetPassword() {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -53,5 +54,5 @@ function ResetPassword() {
         <ResetPasswordForm token={token} />
       </CardContent>
     </Card>
-  )
+  );
 }

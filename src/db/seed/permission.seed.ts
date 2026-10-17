@@ -1,24 +1,24 @@
-import type { DatabaseType } from "../clients/drizzle-client"
-import type { PermissionDataModel } from "../schemas"
-import { PermissionTable } from "../schemas"
+import type { DatabaseType } from "../clients/drizzle-client";
+import type { PermissionDataModel } from "../schemas";
+import { PermissionTable } from "../schemas";
 import type {
   ActionTypeEnumType,
   PermissionLevelEnumType,
   ResourceTypeEnumType,
-} from "../schemas/enums/zod-db-enums"
-import { insertChunkedReturning } from "./seed-utils"
+} from "../schemas/enums/zod-db-enums";
+import { insertChunkedReturning } from "./seed-utils";
 
 export type PermissionType = Pick<
   PermissionDataModel,
   "level" | "resource" | "action"
->
+>;
 
 type CreatePermissionType = {
-  level: PermissionLevelEnumType
-  resource: ResourceTypeEnumType
-  action: ActionTypeEnumType
-  description?: string | null | undefined
-}
+  level: PermissionLevelEnumType;
+  resource: ResourceTypeEnumType;
+  action: ActionTypeEnumType;
+  description?: string | null | undefined;
+};
 
 const selfPermissions: CreatePermissionType[] = [
   // User
@@ -56,7 +56,7 @@ const selfPermissions: CreatePermissionType[] = [
     action: "read",
     description: "View own salary slips and payment history",
   },
-]
+];
 
 const systemPermissions: CreatePermissionType[] = [
   // User
@@ -556,17 +556,17 @@ const systemPermissions: CreatePermissionType[] = [
     action: "export",
     description: "Export salary records",
   },
-]
+];
 
 export const permissionsData: CreatePermissionType[] = [
   ...selfPermissions,
   ...systemPermissions,
-]
+];
 
 export async function seedPermission(
   db: DatabaseType
 ): Promise<Array<PermissionDataModel>> {
-  console.log("🌱 Seeding permissions...")
+  console.log("🌱 Seeding permissions...");
 
   const permissions = await insertChunkedReturning(
     permissionsData.map((p) => ({
@@ -576,8 +576,8 @@ export async function seedPermission(
       action: p.action,
     })),
     (chunk) => db.insert(PermissionTable).values(chunk).returning()
-  )
+  );
 
-  console.log(`✅ ${permissions.length} Permissions seeded`)
-  return permissions
+  console.log(`✅ ${permissions.length} Permissions seeded`);
+  return permissions;
 }

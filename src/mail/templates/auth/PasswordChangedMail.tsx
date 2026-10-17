@@ -40,25 +40,25 @@ export default function PasswordChangedMail({
       <EmailInfoCard>
         <Row className="mb-2">
           <Column className="text-xs text-muted-foreground">Time</Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {changeTimestamp}
           </Column>
         </Row>
         <Row className="mb-2">
           <Column className="text-xs text-muted-foreground">Device</Column>
-          <Column className="text-xs font-bold text-right text-foreground">
+          <Column className="text-right text-xs font-bold text-foreground">
             {deviceInfo}
           </Column>
         </Row>
         <Row>
           <Column className="text-xs text-muted-foreground">IP Address</Column>
-          <Column className="text-xs font-bold text-right font-mono text-foreground">
+          <Column className="text-right font-mono text-xs font-bold text-foreground">
             {ipAddress}
           </Column>
         </Row>
       </EmailInfoCard>
 
-      <Text className="text-sm text-destructive font-semibold">
+      <Text className="text-sm font-semibold text-destructive">
         If you did not make this change, your account may be compromised. Please
         contact our support team immediately.
       </Text>

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
 import {
   Command,
@@ -9,7 +9,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "./command"
+} from "./command";
 
 const meta = {
   title: "UI/Command",
@@ -18,10 +18,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Command>
+} satisfies Meta<typeof Command>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
@@ -46,4 +46,4 @@ export const Default: Story = {
       </CommandList>
     </Command>
   ),
-}
+};

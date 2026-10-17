@@ -1,44 +1,45 @@
-import { formatBytes } from "@/utils/formatBytes"
-import { formatDuration } from "@/utils/formatDuration"
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+
+import { formatBytes } from "@/utils/formatBytes";
+import { formatDuration } from "@/utils/formatDuration";
 
 export interface PerfEntry {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 export function PerformancePanel() {
-  const [perf, setPerf] = useState<Array<PerfEntry>>([])
+  const [perf, setPerf] = useState<Array<PerfEntry>>([]);
 
   useEffect(() => {
     const calculatePerf = () => {
       const nav = window.performance.getEntriesByType("navigation")[0] as
-        PerformanceNavigationTiming | undefined
+        PerformanceNavigationTiming | undefined;
 
       const mem = (
         window.performance as unknown as {
-          memory?: { usedJSHeapSize: number }
+          memory?: { usedJSHeapSize: number };
         }
-      ).memory
+      ).memory;
 
       // ✅ JS resource calculation
       const resources = window.performance.getEntriesByType(
         "resource"
-      ) as PerformanceResourceTiming[]
+      ) as PerformanceResourceTiming[];
 
       const jsResources = resources.filter(
         (r) => r.initiatorType === "script" || r.name.endsWith(".js")
-      )
+      );
 
       const jsTotals = jsResources.reduce(
         (acc, r) => {
-          acc.transfer += r.transferSize || 0
-          acc.encoded += r.encodedBodySize || 0
-          acc.decoded += r.decodedBodySize || 0
-          return acc
+          acc.transfer += r.transferSize || 0;
+          acc.encoded += r.encodedBodySize || 0;
+          acc.decoded += r.decodedBodySize || 0;
+          return acc;
         },
         { transfer: 0, encoded: 0, decoded: 0 }
-      )
+      );
 
       setPerf([
         {
@@ -89,17 +90,17 @@ export function PerformancePanel() {
           label: "Viewport",
           value: `${window.innerWidth} × ${window.innerHeight}px · ${window.devicePixelRatio}x`,
         },
-      ])
-    }
+      ]);
+    };
 
     // Run after full load for better accuracy
     if (document.readyState === "complete") {
-      calculatePerf()
+      calculatePerf();
     } else {
-      window.addEventListener("load", calculatePerf)
-      return () => window.removeEventListener("load", calculatePerf)
+      window.addEventListener("load", calculatePerf);
+      return () => window.removeEventListener("load", calculatePerf);
     }
-  }, [])
+  }, []);
 
   return (
     <div className="flex-1 space-y-1.5 overflow-y-auto p-3.5 text-muted-foreground">
@@ -120,5 +121,5 @@ export function PerformancePanel() {
         </p>
       </div>
     </div>
-  )
+  );
 }

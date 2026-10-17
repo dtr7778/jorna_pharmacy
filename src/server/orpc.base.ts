@@ -1,7 +1,8 @@
-import { API_MESSAGES } from "@/constants/apiMessage"
-import type { ORPCContext } from "@/types/orpc.types"
-import { os } from "@orpc/server"
-import z from "zod"
+import { os } from "@orpc/server";
+import z from "zod";
+
+import { API_MESSAGES } from "@/constants/apiMessage";
+import type { ORPCContext } from "@/types/orpc.types";
 
 export const baseOs = os.$context<ORPCContext>().errors({
   UNAUTHORIZED: {
@@ -33,4 +34,4 @@ export const baseOs = os.$context<ORPCContext>().errors({
       fieldErrors: z.record(z.string(), z.array(z.string()).optional()),
     }),
   },
-})
+});

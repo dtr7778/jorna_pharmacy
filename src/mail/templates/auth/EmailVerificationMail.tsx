@@ -39,7 +39,7 @@ export default function EmailVerificationMail({
         address by clicking the button below.
       </Text>
 
-      <Section className="text-center my-6">
+      <Section className="my-6 text-center">
         <EmailButton href={verifyUrl}>Verify Email</EmailButton>
       </Section>
 
@@ -53,26 +53,26 @@ export default function EmailVerificationMail({
       {/* Security Context Block */}
       {(userAgent || ipAddress) && (
         <EmailInfoCard>
-          <Text className="text-xs text-muted-foreground m-0 mb-1 font-bold">
+          <Text className="m-0 mb-1 text-xs font-bold text-muted-foreground">
             Security Details
           </Text>
           {ipAddress && (
-            <Text className="text-xs text-muted-foreground m-0">
+            <Text className="m-0 text-xs text-muted-foreground">
               IP Address: {ipAddress}
             </Text>
           )}
           {userAgent && (
-            <Text className="text-xs text-muted-foreground m-0">
+            <Text className="m-0 text-xs text-muted-foreground">
               Device: {userAgent}
             </Text>
           )}
-          <Text className="text-xs text-muted-foreground m-0 mt-1">
+          <Text className="m-0 mt-1 text-xs text-muted-foreground">
             This link expires in 24 hours.
           </Text>
         </EmailInfoCard>
       )}
 
-      <Text className="text-sm text-muted-foreground mt-4">
+      <Text className="mt-4 text-sm text-muted-foreground">
         If you did not create an account with us, you can safely ignore this
         email.
       </Text>

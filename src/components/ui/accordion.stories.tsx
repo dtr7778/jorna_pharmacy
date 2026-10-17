@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/tanstack-react"
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./accordion"
+} from "./accordion";
 
 const meta = {
   title: "UI/Accordion",
@@ -14,10 +14,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Accordion>
+} satisfies Meta<typeof Accordion>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => (
@@ -42,7 +42,7 @@ export const Default: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const Multiple: Story = {
   args: {
@@ -60,7 +60,7 @@ export const Multiple: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const DefaultOpen: Story = {
   args: {
@@ -78,4 +78,4 @@ export const DefaultOpen: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};

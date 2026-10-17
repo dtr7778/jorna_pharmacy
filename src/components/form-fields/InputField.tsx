@@ -1,6 +1,6 @@
-import { useCallback, useId, useMemo } from "react"
+import { useCallback, useId, useMemo } from "react";
 
-import { Asterisk, Info } from "lucide-react"
+import { Asterisk, Info } from "lucide-react";
 import {
   type Control,
   Controller,
@@ -8,22 +8,22 @@ import {
   type ControllerRenderProps,
   type FieldValues,
   type Path,
-} from "react-hook-form"
+} from "react-hook-form";
 
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field"
-import { Input } from "../ui/input"
+import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
+import { Input } from "../ui/input";
 
 interface InputFieldProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"input"> {
-  name: Path<TFieldValues>
-  control: Control<TFieldValues>
-  onValueChange?: (value: string) => void
-  valueModifier?: (value: string) => string
-  label?: string
-  description?: string
-  isDescriptionInfoIconShow?: boolean
-  requiredField?: boolean
+  name: Path<TFieldValues>;
+  control: Control<TFieldValues>;
+  onValueChange?: (value: string) => void;
+  valueModifier?: (value: string) => string;
+  label?: string;
+  description?: string;
+  isDescriptionInfoIconShow?: boolean;
+  requiredField?: boolean;
 }
 
 function InputField<TFieldValues extends FieldValues>({
@@ -38,7 +38,7 @@ function InputField<TFieldValues extends FieldValues>({
   disabled = false,
   ...props
 }: InputFieldProps<TFieldValues>) {
-  const fieldId = useId()
+  const fieldId = useId();
   return (
     <Controller
       name={name}
@@ -75,17 +75,17 @@ function InputField<TFieldValues extends FieldValues>({
         </Field>
       )}
     />
-  )
+  );
 }
 
 interface InputFieldRenderProps<
   TFieldValues extends FieldValues,
 > extends React.ComponentProps<"input"> {
-  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>
-  fieldState: ControllerFieldState
-  id: string
-  onValueChange?: (value: string) => void
-  valueModifier?: (value: string) => string
+  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>;
+  fieldState: ControllerFieldState;
+  id: string;
+  onValueChange?: (value: string) => void;
+  valueModifier?: (value: string) => string;
 }
 
 function InputFieldRender<TFieldValues extends FieldValues>({
@@ -100,20 +100,20 @@ function InputFieldRender<TFieldValues extends FieldValues>({
   const filedValue = useMemo(
     () => (valueModifier ? valueModifier(field.value) : field.value),
     [field, valueModifier]
-  )
+  );
 
   const handleOnChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-      event.preventDefault()
-      event.stopPropagation()
+      event.preventDefault();
+      event.stopPropagation();
 
-      const value = event.target.value
+      const value = event.target.value;
 
-      field.onChange(value)
-      onValueChange?.(value)
+      field.onChange(value);
+      onValueChange?.(value);
     },
     [field, onValueChange]
-  )
+  );
 
   return (
     <Input
@@ -125,7 +125,7 @@ function InputFieldRender<TFieldValues extends FieldValues>({
       aria-invalid={fieldState.invalid}
       disabled={disabled}
     />
-  )
+  );
 }
 
-export { InputField }
+export { InputField };

@@ -1,37 +1,40 @@
+import { Link } from "@tanstack/react-router";
+import { ChevronRight } from "lucide-react";
+
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
 import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
-import type { SidebarMenuLinkType } from "@/types"
-import { Link } from "@tanstack/react-router"
-import { ChevronRight } from "lucide-react"
+} from "@/components/ui/sidebar";
+import type { SidebarMenuLinkType } from "@/types";
 
 export function NestedMenuItem({
   menuLink,
   pathname,
   isSubMenu = false,
 }: {
-  menuLink: SidebarMenuLinkType
-  pathname: string
-  isSubMenu?: boolean
+  menuLink: SidebarMenuLinkType;
+  pathname: string;
+  isSubMenu?: boolean;
 }) {
-  const hasChildren = menuLink.items && menuLink.items.length > 0
+  const hasChildren = menuLink.items && menuLink.items.length > 0;
 
-  const isActive = menuLink.pathRegex.test(pathname)
+  const isActive = menuLink.pathRegex.test(pathname);
 
   if (!hasChildren) {
-    const MainSidebarMenuItem = isSubMenu ? SidebarMenuSubItem : SidebarMenuItem
+    const MainSidebarMenuItem = isSubMenu
+      ? SidebarMenuSubItem
+      : SidebarMenuItem;
     const MainSidebarMenuButton = isSubMenu
       ? SidebarMenuSubButton
-      : SidebarMenuButton
+      : SidebarMenuButton;
 
     return (
       <MainSidebarMenuItem>
@@ -46,7 +49,7 @@ export function NestedMenuItem({
           }
         />
       </MainSidebarMenuItem>
-    )
+    );
   }
 
   return (
@@ -79,5 +82,5 @@ export function NestedMenuItem({
         </CollapsibleContent>
       </Collapsible>
     </SidebarMenuItem>
-  )
+  );
 }

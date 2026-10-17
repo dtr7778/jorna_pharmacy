@@ -1,11 +1,15 @@
-import { useCallback, useMemo } from "react"
+import { useCallback, useMemo } from "react";
 
-import { CalendarIcon } from "lucide-react"
-import type { DateRange } from "react-day-picker"
-import { Button, type ButtonProps } from "./button"
-import { Calendar, type CalendarProps } from "./calendar"
-import { formatDateWithTimezone } from "@/utils/formatDate"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "cn";
+import { CalendarIcon } from "lucide-react";
+import type { DateRange } from "react-day-picker";
+
+import { useControllableState } from "@/hooks/use-controllable-state";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { formatDateWithTimezone } from "@/utils/formatDate";
+
+import { Button, type ButtonProps } from "./button";
+import { Calendar, type CalendarProps } from "./calendar";
 import {
   Drawer,
   DrawerContent,
@@ -13,11 +17,9 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./drawer"
-import { Popover, PopoverContent, PopoverTrigger } from "./popover"
-import { Separator } from "./separator"
-import { cn } from "cn"
-import { useControllableState } from "@/hooks/use-controllable-state"
+} from "./drawer";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Separator } from "./separator";
 
 function isDateRange(value: unknown): value is DateRange {
   return (
@@ -26,32 +28,32 @@ function isDateRange(value: unknown): value is DateRange {
     !Array.isArray(value) &&
     "from" in value &&
     "to" in value
-  )
+  );
 }
 
-const DEFAULT_TIMEZONE = "America/New_York"
+const DEFAULT_TIMEZONE = "America/New_York";
 
 function safeFormat(
   date: Date | undefined,
   timezone?: string | null | undefined
 ): string {
-  return date ? formatDateWithTimezone(date, "MMM dd, yy", timezone) : ""
+  return date ? formatDateWithTimezone(date, "MMM dd, yy", timezone) : "";
 }
 
 export interface DateFilterProps {
-  value?: Date | DateRange | undefined
-  onValueChange?: (value: Date | DateRange | undefined) => void
-  onCancel?: () => void
-  onApply?: (value: Date | DateRange | undefined) => void
-  placeholder?: string
-  isInRange?: boolean
-  variant?: ButtonProps["variant"]
-  size?: ButtonProps["size"]
-  className?: string
-  timezone?: string | null | undefined
-  calendarProps?: Omit<CalendarProps, "selected" | "onSelect" | "mode">
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
+  value?: Date | DateRange | undefined;
+  onValueChange?: (value: Date | DateRange | undefined) => void;
+  onCancel?: () => void;
+  onApply?: (value: Date | DateRange | undefined) => void;
+  placeholder?: string;
+  isInRange?: boolean;
+  variant?: ButtonProps["variant"];
+  size?: ButtonProps["size"];
+  className?: string;
+  timezone?: string | null | undefined;
+  calendarProps?: Omit<CalendarProps, "selected" | "onSelect" | "mode">;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function DateFilter({
@@ -69,35 +71,35 @@ export function DateFilter({
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
 }: DateFilterProps) {
-  "use no memo"
+  "use no memo";
   const [open, setOpen] = useControllableState<boolean>({
     prop: controlledOpen,
     defaultProp: false,
     onChange: controlledOnOpenChange,
-  })
+  });
 
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
   const handleSelect = useCallback(
     (val: Date | DateRange | undefined) => {
-      onValueChange?.(val)
+      onValueChange?.(val);
       if (!isInRange && val instanceof Date) {
-        onApply?.(val)
-        setOpen(false)
+        onApply?.(val);
+        setOpen(false);
       }
     },
     [onValueChange, isInRange, onApply]
-  )
+  );
 
   const handleApply = useCallback(() => {
-    onApply?.(value)
-    setOpen(false)
-  }, [onApply, value])
+    onApply?.(value);
+    setOpen(false);
+  }, [onApply, value]);
 
   const handleCancel = useCallback(() => {
-    onCancel?.()
-    setOpen(false)
-  }, [onCancel])
+    onCancel?.();
+    setOpen(false);
+  }, [onCancel]);
 
   const trigger = (
     <DateFilterTrigger
@@ -109,7 +111,7 @@ export function DateFilter({
       timezone={timezone}
       className={className}
     />
-  )
+  );
 
   const content = (
     <DateFilterContent
@@ -123,7 +125,7 @@ export function DateFilter({
         timeZone: timezone || DEFAULT_TIMEZONE,
       }}
     />
-  )
+  );
 
   if (isMobile) {
     return (
@@ -137,7 +139,7 @@ export function DateFilter({
           <div className="flex flex-col gap-2 border-t">{content}</div>
         </DrawerContent>
       </Drawer>
-    )
+    );
   }
 
   return (
@@ -147,14 +149,14 @@ export function DateFilter({
         {content}
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
 interface DateFilterTriggerProps extends Omit<ButtonProps, "value"> {
-  isInRange?: boolean
-  value: Date | DateRange | undefined
-  timezone?: string | null | undefined
-  placeholder?: string
+  isInRange?: boolean;
+  value: Date | DateRange | undefined;
+  timezone?: string | null | undefined;
+  placeholder?: string;
 }
 
 function DateFilterTrigger({
@@ -169,12 +171,12 @@ function DateFilterTrigger({
 }: DateFilterTriggerProps) {
   const label = useMemo(() => {
     if (isInRange && isDateRange(value)) {
-      const has = value.from || value.to
+      const has = value.from || value.to;
       const text = has
         ? value.from && value.to
           ? `${safeFormat(value.from, timezone)} - ${safeFormat(value.to, timezone)}`
           : safeFormat(value.from ?? value.to, timezone)
-        : null
+        : null;
 
       return (
         <>
@@ -182,7 +184,7 @@ function DateFilterTrigger({
           {text && <Separator orientation="vertical" className="mx-2" />}
           {text && <span>{text}</span>}
         </>
-      )
+      );
     }
 
     if (!isInRange && value instanceof Date) {
@@ -192,11 +194,11 @@ function DateFilterTrigger({
           <Separator orientation="vertical" className="mx-2" />
           <span>{safeFormat(value, timezone)}</span>
         </>
-      )
+      );
     }
 
-    return <span>{placeholder}</span>
-  }, [isInRange, placeholder, value, timezone])
+    return <span>{placeholder}</span>;
+  }, [isInRange, placeholder, value, timezone]);
 
   return (
     <Button
@@ -208,16 +210,16 @@ function DateFilterTrigger({
       <CalendarIcon className="size-4" />
       {label}
     </Button>
-  )
+  );
 }
 
 interface DateFilterContentProps {
-  isInRange?: boolean
-  value: Date | DateRange | undefined
-  calendarProps?: Omit<CalendarProps, "selected" | "onSelect" | "mode">
-  onSelect: (value: Date | DateRange | undefined) => void
-  onCancel: () => void
-  onApply: () => void
+  isInRange?: boolean;
+  value: Date | DateRange | undefined;
+  calendarProps?: Omit<CalendarProps, "selected" | "onSelect" | "mode">;
+  onSelect: (value: Date | DateRange | undefined) => void;
+  onCancel: () => void;
+  onApply: () => void;
 }
 
 function DateFilterContent({
@@ -259,5 +261,5 @@ function DateFilterContent({
         />
       )}
     </div>
-  )
+  );
 }

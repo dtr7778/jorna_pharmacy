@@ -1,4 +1,5 @@
-import type { Column } from "@tanstack/react-table"
+import type { Column } from "@tanstack/react-table";
+import { cn } from "cn";
 import {
   ArrowDown01,
   ArrowDownAZ,
@@ -7,9 +8,9 @@ import {
   ArrowUpDown,
   EyeOff,
   X,
-} from "lucide-react"
+} from "lucide-react";
 
-import { Button } from "../ui/button"
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -17,15 +18,14 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
-import { cn } from "cn"
+} from "../ui/dropdown-menu";
 
 interface DataTableColumnHeaderProps<
   TData,
   TValue,
 > extends React.ComponentProps<"div"> {
-  column: Column<TData, TValue>
-  label: string
+  column: Column<TData, TValue>;
+  label: string;
 }
 
 export function DataTableColumnHeader<TData, TValue>({
@@ -34,12 +34,12 @@ export function DataTableColumnHeader<TData, TValue>({
   className,
   ...props
 }: DataTableColumnHeaderProps<TData, TValue>) {
-  "use no memo"
-  const columnMeta = column.columnDef.meta
+  "use no memo";
+  const columnMeta = column.columnDef.meta;
 
-  const isSorted = column.getIsSorted()
-  const canSort = column.getCanSort()
-  const canHide = column.getCanHide()
+  const isSorted = column.getIsSorted();
+  const canSort = column.getCanSort();
+  const canHide = column.getCanHide();
 
   if (!canSort && !canHide) {
     return (
@@ -49,7 +49,7 @@ export function DataTableColumnHeader<TData, TValue>({
       >
         <span>{label}</span>
       </div>
-    )
+    );
   }
 
   return (
@@ -162,5 +162,5 @@ export function DataTableColumnHeader<TData, TValue>({
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  )
+  );
 }

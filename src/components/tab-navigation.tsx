@@ -1,23 +1,24 @@
-import type { ComponentProps } from "react"
+import type { ComponentProps } from "react";
 
-import type { RegisteredRouter, RouteIds } from "@tanstack/react-router"
-import { getRouteApi } from "@tanstack/react-router"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
-import { cn } from "cn"
+import type { RegisteredRouter, RouteIds } from "@tanstack/react-router";
+import { getRouteApi } from "@tanstack/react-router";
+import { cn } from "cn";
 
-type RouteTree = RegisteredRouter["routeTree"]
-type RouteId = Exclude<RouteIds<RouteTree>, "__root__">
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+
+type RouteTree = RegisteredRouter["routeTree"];
+type RouteId = Exclude<RouteIds<RouteTree>, "__root__">;
 
 type SearchNavigate = (options: {
-  search: (prev: Record<string, unknown>) => Record<string, unknown>
-  resetScroll?: boolean
-}) => Promise<void>
+  search: (prev: Record<string, unknown>) => Record<string, unknown>;
+  resetScroll?: boolean;
+}) => Promise<void>;
 
 interface TabNavigationProps<TId extends RouteId> {
-  paramName?: string
-  routeId: TId
-  defaultTab: string
-  children: React.ReactNode
+  paramName?: string;
+  routeId: TId;
+  defaultTab: string;
+  children: React.ReactNode;
 }
 
 /**
@@ -46,28 +47,28 @@ export function TabNavigation<const TId extends RouteId>({
   children,
   routeId,
 }: TabNavigationProps<TId>) {
-  const route = getRouteApi(routeId)
-  const search = route.useSearch() as unknown as Record<string, string>
-  const navigate = route.useNavigate() as unknown as SearchNavigate
+  const route = getRouteApi(routeId);
+  const search = route.useSearch() as unknown as Record<string, string>;
+  const navigate = route.useNavigate() as unknown as SearchNavigate;
 
-  const value = String(search[paramName] ?? defaultTab)
+  const value = String(search[paramName] ?? defaultTab);
 
   const handleTabChange = (next: string) => {
     navigate({
       search: (prev) => {
-        const prevSearch = prev
+        const prevSearch = prev;
 
-        return { ...prevSearch, [paramName]: next }
+        return { ...prevSearch, [paramName]: next };
       },
       resetScroll: true,
-    })
-  }
+    });
+  };
 
   return (
     <Tabs value={value} onValueChange={handleTabChange}>
       {children}
     </Tabs>
-  )
+  );
 }
 
 export function TabNavigationList({
@@ -86,7 +87,7 @@ export function TabNavigationList({
         {...props}
       />
     </div>
-  )
+  );
 }
 
 export function TabNavigationTrigger({
@@ -101,11 +102,11 @@ export function TabNavigationTrigger({
       )}
       {...props}
     />
-  )
+  );
 }
 
 export function TabNavigationContent(
   props: ComponentProps<typeof TabsContent>
 ) {
-  return <TabsContent {...props} />
+  return <TabsContent {...props} />;
 }

@@ -1,17 +1,17 @@
-import type { BreadcrumbRouteType } from "@/types"
+import type { BreadcrumbRouteType } from "@/types";
 
-export const THEME_COLOR = "#006045"
-export const BACKGROUND_COLOR = "#ffffff"
+export const THEME_COLOR = "#006045";
+export const BACKGROUND_COLOR = "#ffffff";
 
 export const SITE_DESCRIPTION =
-  "Jorna Pharmacy's data management system for tracking sales, expenses, inventory, and reports — all in one secure web app."
+  "Jorna Pharmacy's data management system for tracking sales, expenses, inventory, and reports — all in one secure web app.";
 
-export const DEFAULT_UNAUTH_PATH = "/sign-in"
-export const DEFAULT_AUTH_PATH = "/dashboard"
-export const RESET_PASSWORD_PATH = "/reset-password"
-export const AUTH_ERROR_PAGE = "/auth-error"
+export const DEFAULT_UNAUTH_PATH = "/sign-in";
+export const DEFAULT_AUTH_PATH = "/dashboard";
+export const RESET_PASSWORD_PATH = "/reset-password";
+export const AUTH_ERROR_PAGE = "/auth-error";
 
-export const SUPPORTED_OAUTH_PROVIDERS = ["google"] as const
+export const SUPPORTED_OAUTH_PROVIDERS = ["google"] as const;
 
 export const breadcrumbRoutes: Array<BreadcrumbRouteType> = [
   {
@@ -54,7 +54,7 @@ export const breadcrumbRoutes: Array<BreadcrumbRouteType> = [
       },
     ],
   },
-]
+];
 
-export const DEFAULT_PAGE_INDEX = 1
-export const DEFAULT_PAGE_SIZE = 20
+export const DEFAULT_PAGE_INDEX = 1;
+export const DEFAULT_PAGE_SIZE = 20;

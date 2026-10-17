@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react";
 
-import { PlusCircle, X } from "lucide-react"
-import { Button, type ButtonProps } from "./button"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { useControllableState } from "@/hooks/use-controllable-state"
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback"
-import { Field, FieldLabel } from "./field"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "./input-group"
-import { Slider } from "./slider"
+import { cn } from "cn";
+import { PlusCircle, X } from "lucide-react";
+
+import { useControllableState } from "@/hooks/use-controllable-state";
+import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+import { Button, type ButtonProps } from "./button";
 import {
   Drawer,
   DrawerContent,
@@ -15,27 +15,29 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./drawer"
-import { Popover, PopoverContent, PopoverTrigger } from "./popover"
-import { cn } from "cn"
-import { Separator } from "./separator"
+} from "./drawer";
+import { Field, FieldLabel } from "./field";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "./input-group";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Separator } from "./separator";
+import { Slider } from "./slider";
 
-type RangeValue = [number, number]
+type RangeValue = [number, number];
 
 export interface SliderFilterProps {
-  value?: RangeValue
-  onValueChange?: (value: RangeValue | undefined) => void
-  min: number
-  max: number
-  step?: number
-  unit?: string
-  placeholder?: string
-  variant?: ButtonProps["variant"]
-  size?: ButtonProps["size"]
-  className?: string
-  debounceMs?: number
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
+  value?: RangeValue;
+  onValueChange?: (value: RangeValue | undefined) => void;
+  min: number;
+  max: number;
+  step?: number;
+  unit?: string;
+  placeholder?: string;
+  variant?: ButtonProps["variant"];
+  size?: ButtonProps["size"];
+  className?: string;
+  debounceMs?: number;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function SliderFilter({
@@ -53,78 +55,78 @@ export function SliderFilter({
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
 }: SliderFilterProps) {
-  "use no memo"
-  const isMobile = useIsMobile()
+  "use no memo";
+  const isMobile = useIsMobile();
   const [open, setOpen] = useControllableState<boolean>({
     prop: controlledOpen,
     defaultProp: false,
     onChange: controlledOnOpenChange,
-  })
+  });
 
   const [displayRange, setDisplayRange] = useState<RangeValue>(
     value ?? [min, max]
-  )
+  );
 
   useEffect(() => {
     queueMicrotask(() => {
-      setDisplayRange(value ?? [min, max])
-    })
-  }, [value, min, max])
+      setDisplayRange(value ?? [min, max]);
+    });
+  }, [value, min, max]);
 
   const commitFilter = useDebouncedCallback(
     (next: RangeValue | undefined) => onValueChange?.(next),
     debounceMs
-  )
+  );
 
   const update = useCallback(
     (next: RangeValue) => {
-      setDisplayRange(next)
-      commitFilter(next)
+      setDisplayRange(next);
+      commitFilter(next);
     },
     [commitFilter]
-  )
+  );
 
   const handleReset = useCallback(
     (e: React.MouseEvent) => {
-      e.stopPropagation()
-      setDisplayRange([min, max])
-      onValueChange?.(undefined)
+      e.stopPropagation();
+      setDisplayRange([min, max]);
+      onValueChange?.(undefined);
     },
     [min, max, onValueChange]
-  )
+  );
 
   const createInputHandler = useCallback(
     (index: 0 | 1) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const val = Number(e.target.value)
-      if (Number.isNaN(val)) return
+      const val = Number(e.target.value);
+      if (Number.isNaN(val)) return;
 
       const next: RangeValue =
         index === 0
           ? [Math.max(min, Math.min(val, displayRange[1])), displayRange[1]]
-          : [displayRange[0], Math.min(max, Math.max(val, displayRange[0]))]
+          : [displayRange[0], Math.min(max, Math.max(val, displayRange[0]))];
 
-      update(next)
+      update(next);
     },
     [min, max, displayRange, update]
-  )
+  );
 
   const handleSlider = useCallback(
     (val: number | readonly number[]) => {
       if (Array.isArray(val) && val.length === 2) {
-        update([val[0], val[1]])
+        update([val[0], val[1]]);
       }
     },
     [update]
-  )
+  );
 
   const handleBlur = useCallback(
     (index: 0 | 1) => () => {
-      const val = displayRange[index]
-      if (index === 0 && val < min) update([min, displayRange[1]])
-      else if (index === 1 && val > max) update([displayRange[0], max])
+      const val = displayRange[index];
+      if (index === 0 && val < min) update([min, displayRange[1]]);
+      else if (index === 1 && val > max) update([displayRange[0], max]);
     },
     [displayRange, min, max, update]
-  )
+  );
 
   const trigger = (
     <SliderFilterTrigger
@@ -135,16 +137,16 @@ export function SliderFilter({
       size={size}
       className={className}
     />
-  )
+  );
 
   const content = (
     <div className="flex flex-col gap-4 p-4">
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-4">
           {(["from", "to"] as const).map((type, index) => {
-            const i = index as 0 | 1
-            const inputMin = i === 0 ? min : displayRange[0]
-            const inputMax = i === 1 ? max : displayRange[1]
+            const i = index as 0 | 1;
+            const inputMin = i === 0 ? min : displayRange[0];
+            const inputMax = i === 1 ? max : displayRange[1];
 
             return (
               <Field key={type}>
@@ -167,7 +169,7 @@ export function SliderFilter({
                   )}
                 </InputGroup>
               </Field>
-            )
+            );
           })}
         </div>
         <Field>
@@ -186,7 +188,7 @@ export function SliderFilter({
         <span>Clear filter</span>
       </Button>
     </div>
-  )
+  );
 
   if (isMobile) {
     return (
@@ -200,7 +202,7 @@ export function SliderFilter({
           <div className="border-t">{content}</div>
         </DrawerContent>
       </Drawer>
-    )
+    );
   }
 
   return (
@@ -210,13 +212,13 @@ export function SliderFilter({
         {content}
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
 interface SliderFilterTriggerProps extends Omit<ButtonProps, "value"> {
-  placeholder?: string
-  value: RangeValue | undefined
-  unit?: string
+  placeholder?: string;
+  value: RangeValue | undefined;
+  unit?: string;
 }
 
 function SliderFilterTrigger({
@@ -246,5 +248,5 @@ function SliderFilterTrigger({
         </>
       )}
     </Button>
-  )
+  );
 }
