@@ -391,7 +391,7 @@ function createAuth(db: DatabaseType, mail: IMailService) {
         bannedUserMessage: "Your account is currently banned",
       }),
       ...defaultPlugins,
-      oneTap(),
+      oneTap({ clientId: env.VITE_GOOGLE_CLIENT_ID }),
       tanstackStartCookies(),
     ],
   })
