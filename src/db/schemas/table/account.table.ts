@@ -79,3 +79,4 @@ export const updateAccountSchema = createUpdateSchema(AccountTable, {
 export type AccountDataModel = typeof AccountTable.$inferSelect
 export type InsertAccount = z.infer<typeof insertAccountSchema>
 export type SelectAccount = z.infer<typeof selectAccountSchema>
+export type UpdateAccount = z.infer<typeof updateAccountSchema>
