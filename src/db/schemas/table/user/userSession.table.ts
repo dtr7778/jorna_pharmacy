@@ -1,23 +1,22 @@
-import { relations, sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm"
 import {
   foreignKey,
   index,
-  integer,
   sqliteTable,
   text,
   uniqueIndex,
-} from "drizzle-orm/sqlite-core";
+} from "drizzle-orm/sqlite-core"
 import {
   createInsertSchema,
   createSelectSchema,
   createUpdateSchema,
-} from "drizzle-zod";
-import z from "zod";
+} from "drizzle-zod"
+import z from "zod"
 
-import { db_created_at, db_id, db_updated_at } from "../../db-utils";
-import { SessionTable } from "../session.table";
-import { UserTable } from "./user.table";
-import { UserDeviceTable } from "./userDevice.table";
+import { db_created_at, db_date, db_id, db_updated_at } from "../../db-utils"
+import { SessionTable } from "../session.table"
+import { UserTable } from "./user.table"
+import { UserDeviceTable } from "./userDevice.table"
 
 export const UserSessionTable = sqliteTable(
   "user_sessions",
@@ -26,14 +25,14 @@ export const UserSessionTable = sqliteTable(
     userId: text("user_id").notNull(),
     deviceId: text("device_id"),
     sessionId: text("session_id").notNull(),
-    loginAt: integer("login_at", { mode: "timestamp_ms" })
+    loginAt: db_date("login_at")
       .notNull()
       .default(sql`(unixepoch() * 1000)`),
-    lastSeenAt: integer("last_seen_at", { mode: "timestamp_ms" })
+    lastSeenAt: db_date("last_seen_at")
       .notNull()
       .default(sql`(unixepoch() * 1000)`),
-    logoutAt: integer("logout_at", { mode: "timestamp_ms" }),
-    expiresAt: integer("expires_at", { mode: "timestamp_ms" }),
+    logoutAt: db_date("logout_at"),
+    expiresAt: db_date("expires_at"),
     createdAt: db_created_at,
     updatedAt: db_updated_at,
   },
@@ -58,7 +57,7 @@ export const UserSessionTable = sqliteTable(
     index("user_session_login_at_idx").on(table.loginAt),
     index("user_session_last_seen_at_idx").on(table.lastSeenAt),
   ]
-);
+)
 
 export const UserSessionRelations = relations(UserSessionTable, ({ one }) => ({
   user: one(UserTable, {
@@ -76,7 +75,7 @@ export const UserSessionRelations = relations(UserSessionTable, ({ one }) => ({
     references: [UserDeviceTable.id],
     relationName: "UserSessionToUserDevice",
   }),
-}));
+}))
 
 export const insertUserSessionSchema = createInsertSchema(UserSessionTable, {
   userId: z.uuid(),
@@ -86,13 +85,13 @@ export const insertUserSessionSchema = createInsertSchema(UserSessionTable, {
   id: true,
   createdAt: true,
   updatedAt: true,
-});
+})
 export const selectUserSessionSchema = createSelectSchema(UserSessionTable, {
   id: z.uuid(),
   userId: z.uuid(),
   deviceId: z.uuid().nullish(),
   sessionId: z.uuid(),
-});
+})
 export const updateUserSessionSchema = createUpdateSchema(UserSessionTable, {
   userId: z.uuid().optional(),
   deviceId: z.uuid().nullish(),
@@ -101,9 +100,9 @@ export const updateUserSessionSchema = createUpdateSchema(UserSessionTable, {
   id: true,
   createdAt: true,
   updatedAt: true,
-});
+})
 
-export type UserSessionDataModel = typeof UserSessionTable.$inferSelect;
-export type InsertUserSession = z.infer<typeof insertUserSessionSchema>;
-export type SelectUserSession = z.infer<typeof selectUserSessionSchema>;
-export type UpdateUserSession = z.infer<typeof updateUserSessionSchema>;
+export type UserSessionDataModel = typeof UserSessionTable.$inferSelect
+export type InsertUserSession = z.infer<typeof insertUserSessionSchema>
+export type SelectUserSession = z.infer<typeof selectUserSessionSchema>
+export type UpdateUserSession = z.infer<typeof updateUserSessionSchema>

@@ -1,22 +1,24 @@
 import { sql } from "drizzle-orm"
 import { integer, text } from "drizzle-orm/sqlite-core"
 
+export const db_date = (name: string) => integer(name, { mode: "timestamp_ms" })
+
 export const db_id = text("id")
   .primaryKey()
   .$defaultFn(() => crypto.randomUUID())
   .notNull()
 
-export const db_created_at = integer("created_at", { mode: "timestamp_ms" })
+export const db_created_at = db_date("created_at")
   .notNull()
   .default(sql`(unixepoch() * 1000)`)
 
-export const db_updated_at = integer("updated_at", { mode: "timestamp_ms" })
+export const db_updated_at = db_date("updated_at")
   .notNull()
   .default(sql`(unixepoch() * 1000)`)
   .$onUpdate(() => new Date())
 
 export const db_soft_delete = {
-  deletedAt: integer("deleted_at", { mode: "timestamp_ms" }),
+  deletedAt: db_date("deleted_at"),
   deletedBy: text("deleted_by"),
 }
 

@@ -2,7 +2,6 @@ import { relations } from "drizzle-orm/relations"
 import {
   foreignKey,
   index,
-  integer,
   sqliteTable,
   text,
   uniqueIndex,
@@ -14,7 +13,7 @@ import {
 } from "drizzle-zod"
 import z from "zod"
 
-import { db_created_at, db_id, db_updated_at } from "../db-utils"
+import { db_created_at, db_date, db_id, db_updated_at } from "../db-utils"
 import { UserSessionTable } from "./user"
 import { UserTable } from "./user/user.table"
 
@@ -27,7 +26,7 @@ export const SessionTable = sqliteTable(
     userAgent: text("user_agent"),
     impersonatedBy: text("impersonated_by"),
     userId: text("user_id").notNull(),
-    expiresAt: integer("expires_at", { mode: "timestamp_ms" }).notNull(),
+    expiresAt: db_date("expires_at").notNull(),
     createdAt: db_created_at,
     updatedAt: db_updated_at,
   },

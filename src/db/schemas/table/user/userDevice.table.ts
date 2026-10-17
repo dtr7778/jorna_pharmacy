@@ -1,23 +1,22 @@
-import { relations, sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm"
 import {
   foreignKey,
   index,
-  integer,
   sqliteTable,
   text,
   uniqueIndex,
-} from "drizzle-orm/sqlite-core";
+} from "drizzle-orm/sqlite-core"
 import {
   createInsertSchema,
   createSelectSchema,
   createUpdateSchema,
-} from "drizzle-zod";
-import z from "zod";
+} from "drizzle-zod"
+import z from "zod"
 
-import { db_created_at, db_id, db_updated_at } from "../../db-utils";
-import { UserTable } from "./user.table";
-import { UserEventTable } from "./userEvent.table";
-import { UserSessionTable } from "./userSession.table";
+import { db_created_at, db_date, db_id, db_updated_at } from "../../db-utils"
+import { UserTable } from "./user.table"
+import { UserEventTable } from "./userEvent.table"
+import { UserSessionTable } from "./userSession.table"
 
 export const UserDeviceTable = sqliteTable(
   "user_devices",
@@ -28,10 +27,10 @@ export const UserDeviceTable = sqliteTable(
     browser: text("browser"),
     os: text("os"),
     deviceType: text("device_type"),
-    firstSeenAt: integer("first_seen_at", { mode: "timestamp_ms" })
+    firstSeenAt: db_date("first_seen_at")
       .notNull()
       .default(sql`(unixepoch() * 1000)`),
-    lastSeenAt: integer("last_seen_at", { mode: "timestamp_ms" })
+    lastSeenAt: db_date("last_seen_at")
       .notNull()
       .default(sql`(unixepoch() * 1000)`),
     createdAt: db_created_at,
@@ -49,7 +48,7 @@ export const UserDeviceTable = sqliteTable(
     ),
     index("user_device_user_id_idx").on(table.userId),
   ]
-);
+)
 
 export const UserDeviceRelations = relations(
   UserDeviceTable,
@@ -66,7 +65,7 @@ export const UserDeviceRelations = relations(
       relationName: "UserEventToUserDevice",
     }),
   })
-);
+)
 
 export const insertUserDeviceSchema = createInsertSchema(UserDeviceTable, {
   userId: z.uuid(),
@@ -74,20 +73,20 @@ export const insertUserDeviceSchema = createInsertSchema(UserDeviceTable, {
   id: true,
   createdAt: true,
   updatedAt: true,
-});
+})
 export const selectUserDeviceSchema = createSelectSchema(UserDeviceTable, {
   id: z.uuid(),
   userId: z.uuid(),
-});
+})
 export const updateUserDeviceSchema = createUpdateSchema(UserDeviceTable, {
   userId: z.uuid().optional(),
 }).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
-});
+})
 
-export type UserDeviceDataModel = typeof UserDeviceTable.$inferSelect;
-export type InsertUserDevice = z.infer<typeof insertUserDeviceSchema>;
-export type SelectUserDevice = z.infer<typeof selectUserDeviceSchema>;
-export type UpdateUserDevice = z.infer<typeof updateUserDeviceSchema>;
+export type UserDeviceDataModel = typeof UserDeviceTable.$inferSelect
+export type InsertUserDevice = z.infer<typeof insertUserDeviceSchema>
+export type SelectUserDevice = z.infer<typeof selectUserDeviceSchema>
+export type UpdateUserDevice = z.infer<typeof updateUserDeviceSchema>

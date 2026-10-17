@@ -1,10 +1,5 @@
 import { relations } from "drizzle-orm"
-import {
-  integer,
-  sqliteTable,
-  text,
-  uniqueIndex,
-} from "drizzle-orm/sqlite-core"
+import { sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core"
 import {
   createInsertSchema,
   createSelectSchema,
@@ -12,7 +7,13 @@ import {
 } from "drizzle-zod"
 import z from "zod"
 
-import { db_bool, db_created_at, db_id, db_updated_at } from "../../db-utils"
+import {
+  db_bool,
+  db_created_at,
+  db_date,
+  db_id,
+  db_updated_at,
+} from "../../db-utils"
 import { RoleEnumSchema, type RoleEnumType } from "../../enums/zod-db-enums"
 import { AccountTable } from "../account.table"
 import { UserRoleTable } from "../role-permission"
@@ -32,7 +33,7 @@ export const UserTable = sqliteTable(
     role: text("role").$type<RoleEnumType>().notNull(),
     banned: db_bool("banned").default(false),
     banReason: text("ban_reason"),
-    banExpires: integer("ban_expires", { mode: "timestamp_ms" }),
+    banExpires: db_date("ban_expires"),
 
     // settings
     timezone: text("timezone").default("UTC").notNull(),

@@ -1,25 +1,29 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { describe, expect, test } from "vitest";
+import { sqliteTable, text } from "drizzle-orm/sqlite-core"
+import { describe, expect, test } from "vitest"
 
-import { db_created_at, db_id, db_updated_at } from "../schemas/db-utils";
-import { buildPaginateOptions } from "./buildPaginateOptions";
+import {
+  db_bool,
+  db_created_at,
+  db_date,
+  db_id,
+  db_updated_at,
+} from "../schemas/db-utils"
+import { buildPaginateOptions } from "./buildPaginateOptions"
 
 describe("buildPaginateOptions", () => {
   const UserTable = sqliteTable("users", {
     id: db_id,
     name: text("name", { length: 255 }).notNull(),
     email: text("email", { length: 255 }).notNull(),
-    emailVerified: integer("email_verified", { mode: "boolean" })
-      .notNull()
-      .default(false),
+    emailVerified: db_bool("email_verified").notNull().default(false),
     image: text("image", { length: 255 }),
     role: text("role", { length: 255 }),
-    banned: integer("banned", { mode: "boolean" }).default(false),
+    banned: db_bool("banned").default(false),
     banReason: text("ban_reason", { length: 255 }),
-    banExpires: integer("ban_expires", { mode: "timestamp_ms" }),
+    banExpires: db_date("ban_expires"),
     createdAt: db_created_at,
     updatedAt: db_updated_at,
-  });
+  })
 
   test("should build paginate options", () => {
     const paginateOptions = buildPaginateOptions(
@@ -45,12 +49,12 @@ describe("buildPaginateOptions", () => {
         page: 1,
         limit: 10,
       }
-    );
+    )
 
     expect(paginateOptions).include({
       limit: 10,
       offset: 0,
       page: 1,
-    });
-  });
-});
+    })
+  })
+})

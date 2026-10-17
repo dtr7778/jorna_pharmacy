@@ -48,7 +48,6 @@ class SliderUtils {
       const faceted = column.getFacetedMinMaxValues()
       if (
         Array.isArray(faceted) &&
-        faceted.length === 2 &&
         typeof faceted[0] === "number" &&
         typeof faceted[1] === "number"
       ) {
