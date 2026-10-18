@@ -91,7 +91,7 @@ export function AuthPanel() {
         onClick={() => handleLogin("support.agent@mail.com")}
         isLoading={isLoading}
       >
-        Support agent Login
+        Employee Login
       </ButtonSpinner>
       <ButtonSpinner
         onClick={() => handleLogin("user@mail.com")}

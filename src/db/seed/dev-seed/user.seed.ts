@@ -35,10 +35,10 @@ const DEFAULT_USERS: Array<{
     seed: "user",
   },
   {
-    name: "Support Agent",
-    email: "support.agent@mail.com",
+    name: "Employee",
+    email: "employee@mail.com",
     role: RoleEnumSchema.enum.EMPLOYEE,
-    seed: "superagent",
+    seed: "employee",
   },
   {
     name: "Admin Smith",
@@ -192,7 +192,7 @@ export async function seedUsers(
   const hashedPassword = await hashPassword(DEFAULT_PASSWORD);
 
   const accountsData: Array<InsertAccount> = users.map((u) => ({
-    accountId: faker.string.uuid(),
+    accountId: u.id,
     providerId: "credential",
     password: hashedPassword,
     userId: u.id,
