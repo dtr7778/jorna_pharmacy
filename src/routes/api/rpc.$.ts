@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getDB } from "@/lib/db";
+import { getDB } from "@/lib/db.server";
 import { rpcHandler } from "@/server/orpc.handler";
 
 export const Route = createFileRoute("/api/rpc/$")({

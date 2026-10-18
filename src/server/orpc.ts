@@ -7,7 +7,7 @@ import { createTanstackQueryUtils } from "@orpc/tanstack-query";
 import { createIsomorphicFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 
-import { getDB } from "@/lib/db";
+import { getDB } from "@/lib/db.server";
 
 import { router } from "./orpc.router";
 

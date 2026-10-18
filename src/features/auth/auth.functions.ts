@@ -4,7 +4,7 @@ import { getRequestHeaders } from "@tanstack/react-start/server";
 
 import { DEFAULT_AUTH_PATH } from "@/constants";
 import type { PermissionType } from "@/db/seed/permission.seed";
-import { getDB } from "@/lib/db";
+import { getDB } from "@/lib/db.server";
 
 import { auth } from "./auth.server";
 import { getUserRolesAndPermission } from "./getUserPermission";

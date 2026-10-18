@@ -24,9 +24,9 @@ import {
 import { RoleEnumSchema } from "@/db/schemas/enums/zod-db-enums";
 import type { IMailService } from "@/mail/Mail.service";
 
-import { getDB } from "../../lib/db";
+import { getDB } from "../../lib/db.server";
 import { env } from "../../lib/env";
-import { getMail } from "../../lib/mail";
+import { getMail } from "../../lib/mail.server";
 import { systemAc, systemRoles } from "./access-control";
 import { parseUserAgent } from "./device-fingerprint";
 
