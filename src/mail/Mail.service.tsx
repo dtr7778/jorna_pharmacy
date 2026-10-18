@@ -1,7 +1,7 @@
 /** @jsxRuntime automatic */
 import { render, toPlainText } from "react-email";
+import { WorkerMailer, type EmailOptions } from "worker-mailer";
 
-import type { MailTo, SendMailOption } from "./mail.types";
 import AccountLockedMail, {
   type AccountLockedMailProps,
 } from "./templates/auth/AccountLockedMail";
@@ -26,10 +26,8 @@ import SuspiciousLoginMail, {
 import WelcomeMail, {
   type WelcomeMailProps,
 } from "./templates/auth/WelcomeMail";
-import {
-  NodeMailerTransporter,
-  type NodeMailerTransporterConfig,
-} from "./transports/NodeMailer.transporter";
+
+type SendMailOption = Omit<EmailOptions, "from">;
 
 type WelcomeEmailOptions = Omit<SendMailOption, "subject" | "text" | "html"> &
   Omit<WelcomeMailProps, "appName" | "supportMail">;
@@ -104,21 +102,51 @@ export interface IMailService {
   sendAccountLockedMail: (options: AccountLockedMailOptions) => Promise<string>;
 }
 
-export interface MailConfig extends NodeMailerTransporterConfig {
+export interface MailConfig {
+  authUser: string;
+  authPass: string;
   appName: string;
   mailFrom: string;
 }
 
-export class MailService extends NodeMailerTransporter {
+export class MailService {
   public readonly mailConfig: MailConfig;
 
   constructor(config: MailConfig) {
-    super(config);
     this.mailConfig = config;
   }
 
+  private async sendMail(options: SendMailOption): Promise<string> {
+    const domain = this.mailConfig.mailFrom.split("@").pop();
+    const messageId = `<${crypto.randomUUID()}@${domain}>`;
+
+    await WorkerMailer.send(
+      {
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        startTls: true,
+        authType: ["plain", "login"],
+        credentials: {
+          username: this.mailConfig.authUser,
+          password: this.mailConfig.authPass,
+        },
+      },
+      {
+        ...options,
+        from: {
+          name: this.mailConfig.appName,
+          email: this.mailConfig.mailFrom,
+        },
+        headers: { "Message-ID": messageId },
+      }
+    );
+
+    return messageId;
+  }
+
   public async sendMailTemplate(
-    to: MailTo,
+    to: SendMailOption["to"],
     subject: string,
     component: React.ReactNode,
     options: Partial<SendMailOption> = {}
