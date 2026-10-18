@@ -36,6 +36,132 @@ table addresses {
   updated_at integer [not null, default: `(unixepoch() * 1000)`]
 }
 
+table customer_payments {
+  id text [pk, not null]
+  customer_id text [not null]
+  sale_id text
+  amount integer [not null]
+  note text
+  created_by text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    
+    customer_id [name: 'customerPayment_customerId_idx']
+    sale_id [name: 'customerPayment_saleId_idx']
+    created_at [name: 'customerPayment_createdAt_idx']
+  }
+}
+
+table customers {
+  id text [pk, not null]
+  name text [not null]
+  phone text
+  address text
+  note text
+  is_active integer [not null, default: 1]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    phone [name: 'customer_phone_idx']
+    name [name: 'customer_name_idx']
+  }
+}
+
+table daily_closings {
+  id text [pk, not null]
+  opening_cash integer [default: 0]
+  total_sales integer [not null]
+  total_returns integer [not null, default: 0]
+  cash_received integer [not null]
+  vendor_paid integer [default: 0]
+  total_expenses integer [not null, default: 0]
+  total_salary integer [not null]
+  expected_cash integer
+  counted_cash integer
+  difference integer
+  closed_by text
+  note text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    closed_by [name: 'dailyClosing_closedBy_idx']
+  }
+}
+
+table expense_categories {
+  id text [pk, not null]
+  name text [not null]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    name [name: 'expenseCategory_name_idx', unique]
+  }
+}
+
+table expenses {
+  id text [pk, not null]
+  category_id text [not null]
+  amount integer [not null]
+  note text
+  created_by text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    category_id [name: 'expense_categoryId_idx']
+    created_by [name: 'expense_createdBy_idx']
+    created_at [name: 'expense_createdAt_idx']
+  }
+}
+
+table medicine_categories {
+  id text [pk, not null]
+  name text [not null]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    name [name: 'medicineCategory_name_idx', unique]
+  }
+}
+
+table medicines {
+  id text [pk, not null]
+  name text [not null]
+  generic_name text
+  strength text
+  category_id text
+  vendor_id text
+  type text [not null]
+  base_unit text [not null]
+  barcode text
+  rack_location text
+  is_active integer [not null, default: 1]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    barcode [name: 'medicine_barcode_idx']
+    name [name: 'medicine_name_idx']
+    category_id [name: 'medicine_categoryId_idx']
+    vendor_id [name: 'medicine_vendorId_idx']
+  }
+}
+
 table permissions {
   id text [pk, not null]
   level text [not null]
@@ -50,6 +176,88 @@ table permissions {
     level [name: 'permission_level_idx']
     resource [name: 'permission_resource_idx']
     action [name: 'permission_action_idx']
+  }
+}
+
+table purchase_items {
+  id text [pk, not null]
+  purchase_id text [not null]
+  medicine_id text [not null]
+  batch_no text
+  tablets_per_strip integer
+  strips_per_box integer
+  qty_purchased integer [not null]
+  qty_remaining integer [not null]
+  cost_per_unit integer [not null]
+  sell_price_per_unit integer [not null]
+  expiry_date integer
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    
+    purchase_id [name: 'purchaseItem_purchaseId_idx']
+    (medicine_id, expiry_date) [name: 'purchaseItem_medicineExpiry_idx']
+  }
+}
+
+table purchase_return_items {
+  id text [pk, not null]
+  purchase_return_id text [not null]
+  purchase_item_id text [not null]
+  qty integer [not null]
+  unit_cost integer [not null]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    purchase_return_id [name: 'purchaseReturnItem_returnId_idx']
+  }
+}
+
+table purchase_returns {
+  id text [pk, not null]
+  vendor_id text [not null]
+  purchase_id text [not null]
+  total_amount integer [not null]
+  reason text
+  created_by text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    vendor_id [name: 'purchaseReturn_vendorId_idx']
+    created_by [name: 'purchaseReturn_createdBy_idx']
+  }
+}
+
+table purchases {
+  id text [pk, not null]
+  vendor_id text [not null]
+  invoice_no text
+  subtotal integer [not null]
+  discount integer [not null, default: 1]
+  total_amount integer [not null]
+  paid_amount integer [not null, default: 0]
+  note text
+  created_by text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    (vendor_id, invoice_no) [name: 'purchase_vendorInvoice_idx', unique]
+    vendor_id [name: 'purchase_vendorId_idx']
+    created_at [name: 'purchase_createdAt_idx']
   }
 }
 
@@ -78,6 +286,70 @@ table roles {
   }
 }
 
+table salary_payments {
+  id text [pk, not null]
+  user_id text [not null]
+  amount integer [not null]
+  note text
+  created_by text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    user_id [name: 'salaryPayment_userId_idx']
+    created_by [name: 'salaryPayment_createdBy_idx']
+    created_at [name: 'salaryPayment_createdAt_idx']
+  }
+}
+
+table sale_items {
+  id text [pk, not null]
+  sale_id text [not null]
+  medicine_id text [not null]
+  purchase_item_id text [not null]
+  qty integer [not null]
+  unit_price integer [not null]
+  unit_cost integer [not null]
+  line_total integer [not null]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    
+    sale_id [name: 'saleItem_saleId_idx']
+    medicine_id [name: 'saleItem_medicineId_idx']
+    purchase_item_id [name: 'saleItem_purchaseItemId_idx']
+  }
+}
+
+table sales {
+  id text [pk, not null]
+  invoice_no text [not null]
+  customer_id text
+  subtotal integer [not null]
+  discount integer [not null, default: 0]
+  total_amount integer [not null]
+  paid_amount integer [not null, default: 0]
+  created_by text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    invoice_no [name: 'sale_invoiceNo_idx', unique]
+    customer_id [name: 'sale_customerId_idx']
+    created_at [name: 'sale_createdAt_idx']
+    created_by [name: 'sale_createdBy_idx']
+  }
+}
+
 table sessions {
   id text [pk, not null]
   token text [not null]
@@ -94,6 +366,26 @@ table sessions {
     token [name: 'session_token_idx', unique]
     user_id [name: 'session_userId_idx']
     expires_at [name: 'session_expiresAt_idx']
+  }
+}
+
+table stock_movements {
+  id text [pk, not null]
+  purchase_item_id text [not null]
+  movement_type text [not null]
+  qty_change integer [not null]
+  ref_table text
+  ref_id text
+  reason text
+  created_by text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    purchase_item_id [name: 'stockMovement_purchaseItemId_idx']
+    (ref_table, ref_id) [name: 'stockMovement_ref_idx']
+    created_at [name: 'stockMovement_createdAt_idx']
   }
 }
 
@@ -196,6 +488,42 @@ table users {
   }
 }
 
+table vendor_payments {
+  id text [pk, not null]
+  vendor_id text [not null]
+  purchase_id text
+  amount integer [not null]
+  note text
+  created_by text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    
+    
+    vendor_id [name: 'vendorPayment_vendorId_idx']
+    created_at [name: 'vendorPayment_createdAt_idx']
+    created_by [name: 'vendorPayment_createdBy_idx']
+  }
+}
+
+table vendors {
+  id text [pk, not null]
+  name text [not null]
+  phone text
+  address text
+  note text
+  is_active integer [not null, default: 1]
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    name [name: 'vendor_name_idx']
+  }
+}
+
 table verifications {
   id text [pk, not null]
   identifier text [not null]
@@ -207,13 +535,63 @@ table verifications {
 
 ref: accounts.user_id > users.id
 
+ref: customer_payments.customer_id > customers.id
+
+ref: customer_payments.sale_id > sales.id
+
+ref: customer_payments.created_by > users.id
+
+ref: daily_closings.closed_by > users.id
+
+ref: expenses.category_id > expense_categories.id
+
+ref: expenses.created_by > users.id
+
+ref: medicines.category_id > medicine_categories.id
+
+ref: medicines.vendor_id > vendors.id
+
+ref: purchase_items.purchase_id > purchases.id
+
+ref: purchase_items.medicine_id > medicines.id
+
+ref: purchases.vendor_id > vendors.id
+
+ref: purchases.created_by > users.id
+
+ref: purchase_return_items.purchase_return_id > purchase_returns.id
+
+ref: purchase_return_items.purchase_item_id - purchase_items.id
+
+ref: purchase_returns.vendor_id > vendors.id
+
+ref: purchase_returns.purchase_id > purchases.id
+
+ref: purchase_returns.created_by > users.id
+
 ref: role_permissions.role_id > roles.id
 
 ref: role_permissions.permission_id > permissions.id
 
+ref: salary_payments.user_id - users.id
+
+ref: salary_payments.created_by > users.id
+
+ref: sale_items.sale_id > sales.id
+
+ref: sale_items.medicine_id - medicines.id
+
+ref: sale_items.purchase_item_id - purchase_items.id
+
+ref: sales.customer_id > customers.id
+
+ref: sales.created_by > users.id
+
 ref: sessions.user_id > users.id
 
 ref: user_sessions.session_id - sessions.id
+
+ref: stock_movements.purchase_item_id - purchase_items.id
 
 ref: user_devices.user_id > users.id
 
@@ -228,3 +606,9 @@ ref: user_roles.user_id > users.id
 ref: user_sessions.user_id > users.id
 
 ref: user_sessions.device_id > user_devices.id
+
+ref: vendor_payments.vendor_id > vendors.id
+
+ref: vendor_payments.created_by > users.id
+
+ref: vendor_payments.purchase_id > purchases.id

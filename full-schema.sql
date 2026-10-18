@@ -1,3 +1,194 @@
+CREATE TABLE `customers` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`phone` text,
+	`address` text,
+	`note` text,
+	`is_active` integer DEFAULT true NOT NULL,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL
+);
+
+CREATE INDEX `customer_phone_idx` ON `customers` (`phone`);
+CREATE INDEX `customer_name_idx` ON `customers` (`name`);
+CREATE TABLE `customer_payments` (
+	`id` text PRIMARY KEY NOT NULL,
+	`customer_id` text NOT NULL,
+	`sale_id` text,
+	`amount` integer NOT NULL,
+	`note` text,
+	`created_by` text,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`) ON UPDATE no action ON DELETE restrict,
+	FOREIGN KEY (`sale_id`) REFERENCES `sales`(`id`) ON UPDATE no action ON DELETE set null,
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null,
+	CONSTRAINT "customerPayment_amount_chk" CHECK("customer_payments"."amount" > 0)
+);
+
+CREATE INDEX `customerPayment_customerId_idx` ON `customer_payments` (`customer_id`);
+CREATE INDEX `customerPayment_saleId_idx` ON `customer_payments` (`sale_id`);
+CREATE INDEX `customerPayment_createdAt_idx` ON `customer_payments` (`created_at`);
+CREATE TABLE `daily_closings` (
+	`id` text PRIMARY KEY NOT NULL,
+	`opening_cash` integer DEFAULT 0,
+	`total_sales` integer NOT NULL,
+	`total_returns` integer DEFAULT 0 NOT NULL,
+	`cash_received` integer NOT NULL,
+	`vendor_paid` integer DEFAULT 0,
+	`total_expenses` integer DEFAULT 0 NOT NULL,
+	`total_salary` integer NOT NULL,
+	`expected_cash` integer,
+	`counted_cash` integer,
+	`difference` integer,
+	`closed_by` text,
+	`note` text,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`closed_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
+);
+
+CREATE INDEX `dailyClosing_closedBy_idx` ON `daily_closings` (`closed_by`);
+CREATE TABLE `expenses` (
+	`id` text PRIMARY KEY NOT NULL,
+	`category_id` text NOT NULL,
+	`amount` integer NOT NULL,
+	`note` text,
+	`created_by` text,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`category_id`) REFERENCES `expense_categories`(`id`) ON UPDATE no action ON DELETE restrict,
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null,
+	CONSTRAINT "expense_amount_chk" CHECK("expenses"."amount" > 0)
+);
+
+CREATE INDEX `expense_categoryId_idx` ON `expenses` (`category_id`);
+CREATE INDEX `expense_createdBy_idx` ON `expenses` (`created_by`);
+CREATE INDEX `expense_createdAt_idx` ON `expenses` (`created_at`);
+CREATE TABLE `expense_categories` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL
+);
+
+CREATE UNIQUE INDEX `expenseCategory_name_idx` ON `expense_categories` (`name`);
+CREATE TABLE `salary_payments` (
+	`id` text PRIMARY KEY NOT NULL,
+	`user_id` text NOT NULL,
+	`amount` integer NOT NULL,
+	`note` text,
+	`created_by` text,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE restrict,
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null,
+	CONSTRAINT "salaryPayment_amount_chk" CHECK("salary_payments"."amount" > 0)
+);
+
+CREATE INDEX `salaryPayment_userId_idx` ON `salary_payments` (`user_id`);
+CREATE INDEX `salaryPayment_createdBy_idx` ON `salary_payments` (`created_by`);
+CREATE INDEX `salaryPayment_createdAt_idx` ON `salary_payments` (`created_at`);
+CREATE TABLE `medicines` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`generic_name` text,
+	`strength` text,
+	`category_id` text,
+	`vendor_id` text,
+	`type` text NOT NULL,
+	`base_unit` text NOT NULL,
+	`barcode` text,
+	`rack_location` text,
+	`is_active` integer DEFAULT true NOT NULL,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`category_id`) REFERENCES `medicine_categories`(`id`) ON UPDATE no action ON DELETE set null,
+	FOREIGN KEY (`vendor_id`) REFERENCES `vendors`(`id`) ON UPDATE no action ON DELETE set null
+);
+
+CREATE INDEX `medicine_barcode_idx` ON `medicines` (`barcode`);
+CREATE INDEX `medicine_name_idx` ON `medicines` (`name`);
+CREATE INDEX `medicine_categoryId_idx` ON `medicines` (`category_id`);
+CREATE INDEX `medicine_vendorId_idx` ON `medicines` (`vendor_id`);
+CREATE TABLE `medicine_categories` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL
+);
+
+CREATE UNIQUE INDEX `medicineCategory_name_idx` ON `medicine_categories` (`name`);
+CREATE TABLE `purchases` (
+	`id` text PRIMARY KEY NOT NULL,
+	`vendor_id` text NOT NULL,
+	`invoice_no` text,
+	`subtotal` integer NOT NULL,
+	`discount` integer DEFAULT 1 NOT NULL,
+	`total_amount` integer NOT NULL,
+	`paid_amount` integer DEFAULT 0 NOT NULL,
+	`note` text,
+	`created_by` text,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`vendor_id`) REFERENCES `vendors`(`id`) ON UPDATE no action ON DELETE restrict,
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
+);
+
+CREATE UNIQUE INDEX `purchase_vendorInvoice_idx` ON `purchases` (`vendor_id`,`invoice_no`);
+CREATE INDEX `purchase_vendorId_idx` ON `purchases` (`vendor_id`);
+CREATE INDEX `purchase_createdAt_idx` ON `purchases` (`created_at`);
+CREATE TABLE `purchase_items` (
+	`id` text PRIMARY KEY NOT NULL,
+	`purchase_id` text NOT NULL,
+	`medicine_id` text NOT NULL,
+	`batch_no` text,
+	`tablets_per_strip` integer,
+	`strips_per_box` integer,
+	`qty_purchased` integer NOT NULL,
+	`qty_remaining` integer NOT NULL,
+	`cost_per_unit` integer NOT NULL,
+	`sell_price_per_unit` integer NOT NULL,
+	`expiry_date` integer,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`purchase_id`) REFERENCES `purchases`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`medicine_id`) REFERENCES `medicines`(`id`) ON UPDATE no action ON DELETE restrict,
+	CONSTRAINT "purchaseItem_qty_chk" CHECK("purchase_items"."qty_purchased" > 0 AND "purchase_items"."qty_remaining" >= 0 AND "purchase_items"."qty_remaining" <= "purchase_items"."qty_purchased"),
+	CONSTRAINT "purchaseItem_packaging_chk" CHECK(("purchase_items"."tablets_per_strip" IS NULL OR "purchase_items"."tablets_per_strip" > 0) AND ("purchase_items"."strips_per_box" IS NULL OR "purchase_items"."strips_per_box" > 0))
+);
+
+CREATE INDEX `purchaseItem_purchaseId_idx` ON `purchase_items` (`purchase_id`);
+CREATE INDEX `purchaseItem_medicineExpiry_idx` ON `purchase_items` (`medicine_id`,`expiry_date`);
+CREATE TABLE `purchase_returns` (
+	`id` text PRIMARY KEY NOT NULL,
+	`vendor_id` text NOT NULL,
+	`purchase_id` text NOT NULL,
+	`total_amount` integer NOT NULL,
+	`reason` text,
+	`created_by` text,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`vendor_id`) REFERENCES `vendors`(`id`) ON UPDATE no action ON DELETE restrict,
+	FOREIGN KEY (`purchase_id`) REFERENCES `purchases`(`id`) ON UPDATE no action ON DELETE set null,
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
+);
+
+CREATE INDEX `purchaseReturn_vendorId_idx` ON `purchase_returns` (`vendor_id`);
+CREATE INDEX `purchaseReturn_createdBy_idx` ON `purchase_returns` (`created_by`);
+CREATE TABLE `purchase_return_items` (
+	`id` text PRIMARY KEY NOT NULL,
+	`purchase_return_id` text NOT NULL,
+	`purchase_item_id` text NOT NULL,
+	`qty` integer NOT NULL,
+	`unit_cost` integer NOT NULL,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`purchase_return_id`) REFERENCES `purchase_returns`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`purchase_item_id`) REFERENCES `purchase_items`(`id`) ON UPDATE no action ON DELETE restrict,
+	CONSTRAINT "purchaseReturnItem_qty_chk" CHECK("purchase_return_items"."qty" > 0)
+);
+
+CREATE INDEX `purchaseReturnItem_returnId_idx` ON `purchase_return_items` (`purchase_return_id`);
 CREATE TABLE `permissions` (
 	`id` text PRIMARY KEY NOT NULL,
 	`level` text NOT NULL,
@@ -43,6 +234,45 @@ CREATE TABLE `user_roles` (
 CREATE UNIQUE INDEX `user_role_unique` ON `user_roles` (`user_id`,`role_id`);
 CREATE INDEX `user_role_role_id_idx` ON `user_roles` (`role_id`);
 CREATE INDEX `user_role_user_id_idx` ON `user_roles` (`user_id`);
+CREATE TABLE `sales` (
+	`id` text PRIMARY KEY NOT NULL,
+	`invoice_no` text NOT NULL,
+	`customer_id` text,
+	`subtotal` integer NOT NULL,
+	`discount` integer DEFAULT 0 NOT NULL,
+	`total_amount` integer NOT NULL,
+	`paid_amount` integer DEFAULT 0 NOT NULL,
+	`created_by` text,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`) ON UPDATE no action ON DELETE restrict,
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null,
+	CONSTRAINT "sale_walkInPaid_chk" CHECK("sales"."customer_id" IS NOT NULL OR "sales"."paid_amount" = "sales"."total_amount")
+);
+
+CREATE UNIQUE INDEX `sale_invoiceNo_idx` ON `sales` (`invoice_no`);
+CREATE INDEX `sale_customerId_idx` ON `sales` (`customer_id`);
+CREATE INDEX `sale_createdAt_idx` ON `sales` (`created_at`);
+CREATE INDEX `sale_createdBy_idx` ON `sales` (`created_by`);
+CREATE TABLE `sale_items` (
+	`id` text PRIMARY KEY NOT NULL,
+	`sale_id` text NOT NULL,
+	`medicine_id` text NOT NULL,
+	`purchase_item_id` text NOT NULL,
+	`qty` integer NOT NULL,
+	`unit_price` integer NOT NULL,
+	`unit_cost` integer NOT NULL,
+	`line_total` integer NOT NULL,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`sale_id`) REFERENCES `sales`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`medicine_id`) REFERENCES `medicines`(`id`) ON UPDATE no action ON DELETE restrict,
+	FOREIGN KEY (`purchase_item_id`) REFERENCES `purchase_items`(`id`) ON UPDATE no action ON DELETE restrict,
+	CONSTRAINT "saleItem_qty_chk" CHECK("sale_items"."qty" > 0)
+);
+
+CREATE INDEX `saleItem_saleId_idx` ON `sale_items` (`sale_id`);
+CREATE INDEX `saleItem_medicineId_idx` ON `sale_items` (`medicine_id`);
+CREATE INDEX `saleItem_purchaseItemId_idx` ON `sale_items` (`purchase_item_id`);
 CREATE TABLE `users` (
 	`id` text PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
@@ -115,6 +345,36 @@ CREATE INDEX `user_event_user_id_idx` ON `user_events` (`user_id`);
 CREATE INDEX `user_event_event_idx` ON `user_events` (`event`);
 CREATE INDEX `user_event_created_at_idx` ON `user_events` (`created_at`);
 CREATE INDEX `user_event_session_id_idx` ON `user_events` (`session_id`);
+CREATE TABLE `vendors` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`phone` text,
+	`address` text,
+	`note` text,
+	`is_active` integer DEFAULT true NOT NULL,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL
+);
+
+CREATE INDEX `vendor_name_idx` ON `vendors` (`name`);
+CREATE TABLE `vendor_payments` (
+	`id` text PRIMARY KEY NOT NULL,
+	`vendor_id` text NOT NULL,
+	`purchase_id` text,
+	`amount` integer NOT NULL,
+	`note` text,
+	`created_by` text,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`vendor_id`) REFERENCES `vendors`(`id`) ON UPDATE no action ON DELETE restrict,
+	FOREIGN KEY (`purchase_id`) REFERENCES `purchases`(`id`) ON UPDATE no action ON DELETE set null,
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null,
+	CONSTRAINT "vendorPayment_amount_chk" CHECK("vendor_payments"."amount" > 0)
+);
+
+CREATE INDEX `vendorPayment_vendorId_idx` ON `vendor_payments` (`vendor_id`);
+CREATE INDEX `vendorPayment_createdAt_idx` ON `vendor_payments` (`created_at`);
+CREATE INDEX `vendorPayment_createdBy_idx` ON `vendor_payments` (`created_by`);
 CREATE TABLE `accounts` (
 	`id` text PRIMARY KEY NOT NULL,
 	`account_id` text NOT NULL,
@@ -166,6 +426,23 @@ CREATE TABLE `sessions` (
 CREATE UNIQUE INDEX `session_token_idx` ON `sessions` (`token`);
 CREATE INDEX `session_userId_idx` ON `sessions` (`user_id`);
 CREATE INDEX `session_expiresAt_idx` ON `sessions` (`expires_at`);
+CREATE TABLE `stock_movements` (
+	`id` text PRIMARY KEY NOT NULL,
+	`purchase_item_id` text NOT NULL,
+	`movement_type` text NOT NULL,
+	`qty_change` integer NOT NULL,
+	`ref_table` text,
+	`ref_id` text,
+	`reason` text,
+	`created_by` text,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`purchase_item_id`) REFERENCES `purchase_items`(`id`) ON UPDATE no action ON DELETE restrict,
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
+);
+
+CREATE INDEX `stockMovement_purchaseItemId_idx` ON `stock_movements` (`purchase_item_id`);
+CREATE INDEX `stockMovement_ref_idx` ON `stock_movements` (`ref_table`,`ref_id`);
+CREATE INDEX `stockMovement_createdAt_idx` ON `stock_movements` (`created_at`);
 CREATE TABLE `verifications` (
 	`id` text PRIMARY KEY NOT NULL,
 	`identifier` text NOT NULL,
