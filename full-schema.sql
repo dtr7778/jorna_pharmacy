@@ -122,7 +122,8 @@ CREATE UNIQUE INDEX `medicineCategory_name_idx` ON `medicine_categories` (`name`
 CREATE TABLE `purchases` (
 	`id` text PRIMARY KEY NOT NULL,
 	`vendor_id` text NOT NULL,
-	`invoice_no` text,
+	`vendor_invoice_no` text,
+	`invoice_no` text NOT NULL,
 	`subtotal` integer NOT NULL,
 	`discount` integer DEFAULT 1 NOT NULL,
 	`total_amount` integer NOT NULL,
@@ -135,8 +136,9 @@ CREATE TABLE `purchases` (
 	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
 );
 
-CREATE UNIQUE INDEX `purchase_vendorInvoice_idx` ON `purchases` (`vendor_id`,`invoice_no`);
+CREATE UNIQUE INDEX `purchase_vendorInvoice_idx` ON `purchases` (`vendor_id`,`vendor_invoice_no`);
 CREATE INDEX `purchase_vendorId_idx` ON `purchases` (`vendor_id`);
+CREATE INDEX `purchase_invoice_idx` ON `purchases` (`invoice_no`);
 CREATE INDEX `purchase_createdAt_idx` ON `purchases` (`created_at`);
 CREATE TABLE `purchase_items` (
 	`id` text PRIMARY KEY NOT NULL,

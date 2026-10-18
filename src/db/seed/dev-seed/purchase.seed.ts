@@ -51,6 +51,7 @@ export async function seedPurchases(
 
   const purchasesData: Array<PurchaseInsert> = [];
   const purchaseItemsData: Array<PurchaseItemInsert> = [];
+  const vendorInvoiceCounters = new Map<string, number>();
 
   for (let i = 1; i <= seedConfigs.targets.purchases; i++) {
     const purchaseId = crypto.randomUUID();
@@ -58,6 +59,13 @@ export async function seedPurchases(
       from: daysAgo(180),
       to: daysAgo(90),
     });
+    const vendor = faker.helpers.arrayElement(vendors);
+    const vendorInvoiceCounter =
+      (vendorInvoiceCounters.get(vendor.id) ?? 0) + 1;
+    vendorInvoiceCounters.set(vendor.id, vendorInvoiceCounter);
+    const vendorInvoiceNo = faker.datatype.boolean(0.85)
+      ? `VINV-${createdAt.getFullYear()}-${String(vendorInvoiceCounter).padStart(4, "0")}`
+      : null;
 
     const items = faker.helpers
       .arrayElements(medicines, { min: 2, max: 6 })
@@ -100,8 +108,9 @@ export async function seedPurchases(
 
     purchasesData.push({
       id: purchaseId,
-      vendorId: faker.helpers.arrayElement(vendors).id,
+      vendorId: vendor.id,
       invoiceNo: `PI-${String(i).padStart(5, "0")}`,
+      vendorInvoiceNo,
       subtotal,
       discount,
       totalAmount,

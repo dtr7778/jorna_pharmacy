@@ -242,7 +242,8 @@ table purchase_returns {
 table purchases {
   id text [pk, not null]
   vendor_id text [not null]
-  invoice_no text
+  vendor_invoice_no text
+  invoice_no text [not null]
   subtotal integer [not null]
   discount integer [not null, default: 1]
   total_amount integer [not null]
@@ -255,8 +256,9 @@ table purchases {
   indexes {
     
     
-    (vendor_id, invoice_no) [name: 'purchase_vendorInvoice_idx', unique]
+    (vendor_id, vendor_invoice_no) [name: 'purchase_vendorInvoice_idx', unique]
     vendor_id [name: 'purchase_vendorId_idx']
+    invoice_no [name: 'purchase_invoice_idx']
     created_at [name: 'purchase_createdAt_idx']
   }
 }

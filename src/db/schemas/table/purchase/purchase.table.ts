@@ -24,7 +24,8 @@ export const PurchaseTable = sqliteTable(
   {
     id: db_id,
     vendorId: text("vendor_id").notNull(),
-    invoiceNo: text("invoice_no"),
+    vendorInvoiceNo: text("vendor_invoice_no"),
+    invoiceNo: text("invoice_no").notNull(),
     subtotal: db_money("subtotal").notNull(),
     discount: db_money("discount").notNull().default(1),
     totalAmount: db_money("total_amount").notNull(),
@@ -47,9 +48,10 @@ export const PurchaseTable = sqliteTable(
     }).onDelete("set null"),
     uniqueIndex("purchase_vendorInvoice_idx").on(
       table.vendorId,
-      table.invoiceNo
+      table.vendorInvoiceNo
     ),
     index("purchase_vendorId_idx").on(table.vendorId),
+    index("purchase_invoice_idx").on(table.invoiceNo),
     index("purchase_createdAt_idx").on(table.createdAt),
   ]
 );
