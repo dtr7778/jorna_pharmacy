@@ -16,8 +16,17 @@ import {
 } from "../../db-utils";
 import { RoleEnumSchema, type RoleEnumType } from "../../enums/zod-db-enums";
 import { AccountTable } from "../account.table";
+import { CustomerPaymentTable } from "../customer";
+import {
+  DailyClosingTable,
+  ExpenseTable,
+  SalaryPaymentTable,
+} from "../finance";
+import { PurchaseReturnTable, PurchaseTable } from "../purchase";
 import { UserRoleTable } from "../role-permission";
+import { SaleTable } from "../sale";
 import { SessionTable } from "../session.table";
+import { VendorPaymentTable } from "../vendor";
 import { UserDeviceTable } from "./userDevice.table";
 import { UserEventTable } from "./userEvent.table";
 import { UserSessionTable } from "./userSession.table";
@@ -62,6 +71,31 @@ export const UserRelations = relations(UserTable, ({ many }) => ({
   }),
   devices: many(UserDeviceTable, { relationName: "UserDeviceToUser" }),
   events: many(UserEventTable, { relationName: "UserEventToUser" }),
+  // customer
+  customerPayments: many(CustomerPaymentTable, {
+    relationName: "CustomerPaymentToCreatedBy",
+  }),
+  // finace
+  dailyClosings: many(DailyClosingTable, {
+    relationName: "DailyClosingToClosedBy",
+  }),
+  expenses: many(ExpenseTable, {
+    relationName: "ExpenseToCreatedBy",
+  }),
+  salaryPayments: many(SalaryPaymentTable, {
+    relationName: "SalaryPaymentToCreatedBy",
+  }),
+
+  purchases: many(PurchaseTable, { relationName: "PurchaseToCreatedBy" }),
+  purchaseReturns: many(PurchaseReturnTable, {
+    relationName: "PurchaseReturnToCreatedBy",
+  }),
+
+  sales: many(SaleTable, { relationName: "SaleToCreatedBy" }),
+
+  vendorPayments: many(VendorPaymentTable, {
+    relationName: "VendorPaymentToCreatedBy",
+  }),
 }));
 
 export const insertUserSchema = createInsertSchema(UserTable, {
