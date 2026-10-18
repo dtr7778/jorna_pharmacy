@@ -15,6 +15,25 @@ export async function clearAll(db: DatabaseType) {
   await db.delete(schema.SessionTable);
   await db.delete(schema.VerificationTable);
 
+  // Business data: children before parents, users last
+  await db.delete(schema.StockMovementTable);
+  await db.delete(schema.CustomerPaymentTable);
+  await db.delete(schema.VendorPaymentTable);
+  await db.delete(schema.SalaryPaymentTable);
+  await db.delete(schema.ExpenseTable);
+  await db.delete(schema.DailyClosingTable);
+  await db.delete(schema.SaleItemTable);
+  await db.delete(schema.SaleTable);
+  await db.delete(schema.PurchaseReturnItemTable);
+  await db.delete(schema.PurchaseReturnTable);
+  await db.delete(schema.PurchaseItemTable);
+  await db.delete(schema.PurchaseTable);
+  await db.delete(schema.MedicineTable);
+  await db.delete(schema.MedicineCategoryTable);
+  await db.delete(schema.ExpenseCategoryTable);
+  await db.delete(schema.CustomerTable);
+  await db.delete(schema.VendorTable);
+
   await db.delete(schema.AddressTable);
   await db.delete(schema.UserTable);
 
