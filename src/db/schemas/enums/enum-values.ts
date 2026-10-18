@@ -43,3 +43,22 @@ export const USER_EVENT_TYPE = [
   "device.new_detected",
   "admin.impersonation",
 ] as const;
+
+export const MEDICINE_TYPE = [
+  "tablet",
+  "capsule",
+  "liquid_bottle",
+  "liquid_drop",
+  "injection",
+  "cream",
+  "other",
+] as const;
+
+export const STOCK_MOVEMENT_TYPE = [
+  "purchase",
+  "sale",
+  "purchase_return",
+  "adjustment",
+  "expired",
+  "damaged",
+] as const;

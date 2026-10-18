@@ -3,9 +3,11 @@ import z from "zod";
 import {
   ACTION_TYPE,
   ADDRESS_TYPE,
+  MEDICINE_TYPE,
   PERMISSION_LEVEL,
   RESOURCE_TYPE,
   ROLES,
+  STOCK_MOVEMENT_TYPE,
   USER_EVENT_TYPE,
 } from "./enum-values";
 
@@ -26,3 +28,11 @@ export type AddressTypeEnumType = z.infer<typeof AddressTypeEnumSchema>;
 
 export const UserEventTypeEnumSchema = z.enum(USER_EVENT_TYPE);
 export type UserEventTypeEnumType = z.infer<typeof UserEventTypeEnumSchema>;
+
+export const MedicineTypeEnumSchema = z.enum(MEDICINE_TYPE);
+export type MedicineTypeEnumType = z.infer<typeof MedicineTypeEnumSchema>;
+
+export const StockMovementTypeEnumSchema = z.enum(STOCK_MOVEMENT_TYPE);
+export type StockMovementTypeEnumType = z.infer<
+  typeof StockMovementTypeEnumSchema
+>;

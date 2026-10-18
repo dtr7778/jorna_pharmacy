@@ -24,3 +24,5 @@ export const db_soft_delete = {
 };
 
 export const db_bool = (name: string) => integer(name, { mode: "boolean" });
+
+export const db_money = (name: string) => integer(name);
