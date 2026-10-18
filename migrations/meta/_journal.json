@@ -8,6 +8,48 @@
       "when": 1792169280811,
       "tag": "0000_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1792304014395,
+      "tag": "0001_add_customer",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1792304039065,
+      "tag": "0002_add_medicine",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1792304059018,
+      "tag": "0003_add_vendor",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1792304090614,
+      "tag": "0004_add_purchase",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1792304104168,
+      "tag": "0005_add_sale",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1792304271359,
+      "tag": "0006_add_finance",
+      "breakpoints": true
     }
   ]
 }
