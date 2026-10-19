@@ -139,6 +139,6 @@
     @apply rounded-lg! border bg-popover! text-popover-foreground! shadow-md;
   }
   .link {
-    @apply hover:underline;
+    @apply text-foreground underline-offset-2 hover:underline focus-visible:underline focus-visible:outline-none;
   }
 }
