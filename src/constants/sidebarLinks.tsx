@@ -1,10 +1,32 @@
-import { House, Settings, ShieldUser, User, UsersRound } from "lucide-react";
+import {
+  Banknote,
+  BuildingComplex,
+  Contact,
+  House,
+  Pill,
+  ReceiptText,
+  Settings,
+  ShieldUser,
+  ShoppingCart,
+  User,
+  UsersRound,
+} from "lucide-react";
 
 import type {
+  PermissionType,
   RoutePathType,
   SidebarGroupMenuLinkType,
   SidebarMenuLinkType,
 } from "@/types";
+
+function manageOrList(
+  resource: PermissionType["resource"]
+): Array<PermissionType> {
+  return [
+    { level: "system", resource, action: "manage" },
+    { level: "system", resource, action: "list" },
+  ];
+}
 
 export const sidebarMenuLinks: Array<SidebarGroupMenuLinkType> = [
   {
@@ -12,9 +34,66 @@ export const sidebarMenuLinks: Array<SidebarGroupMenuLinkType> = [
     items: [
       {
         title: "Dashboard",
-        icon: <House />,
         path: "/dashboard",
-        pathRegex: /\/dashboard/,
+        pathRegex: /^\/dashboard\/?$/,
+        icon: <House />,
+      },
+    ],
+  },
+  {
+    groupName: "Sales",
+    items: [
+      {
+        title: "Sales",
+        path: "/dashboard/sales",
+        pathRegex: /^\/dashboard\/sales\/?$/,
+        permissions: manageOrList("sale"),
+        icon: <ReceiptText />,
+      },
+      {
+        title: "Customers",
+        path: "/dashboard/customers",
+        pathRegex: /^\/dashboard\/customers(?:\/.*)?$/,
+        permissions: manageOrList("customer"),
+        icon: <Contact />,
+      },
+    ],
+  },
+  {
+    groupName: "Inventory",
+    items: [
+      {
+        title: "Medicines",
+        path: "/dashboard/medicines",
+        pathRegex: /^\/dashboard\/medicines\/?$/,
+        permissions: manageOrList("medicine"),
+        icon: <Pill />,
+      },
+      {
+        title: "Purchases",
+        path: "/dashboard/purchases",
+        pathRegex: /^\/dashboard\/purchases(?:\/.*)?$/,
+        permissions: manageOrList("purchase"),
+        icon: <ShoppingCart />,
+      },
+    ],
+  },
+  {
+    groupName: "Suppliers",
+    items: [
+      {
+        title: "Vendors",
+        path: "/dashboard/vendors",
+        pathRegex: /^\/dashboard\/vendors(?:\/.*)?$/,
+        permissions: manageOrList("vendor"),
+        icon: <BuildingComplex />,
+      },
+      {
+        title: "Payments",
+        path: "/dashboard/payments",
+        pathRegex: /^\/dashboard\/payments\/?$/,
+        permissions: manageOrList("vendor_payment"),
+        icon: <Banknote />,
       },
     ],
   },
@@ -23,23 +102,17 @@ export const sidebarMenuLinks: Array<SidebarGroupMenuLinkType> = [
     items: [
       {
         title: "All Users",
-        icon: <UsersRound />,
-        permissions: [
-          { level: "system", resource: "user", action: "manage" },
-          { level: "system", resource: "user", action: "list" },
-        ],
         path: "/dashboard/users",
-        pathRegex: /^\/dashboard\/users(\/.*)?$/,
+        pathRegex: /^\/dashboard\/users(?:\/.*)?$/,
+        permissions: manageOrList("user"),
+        icon: <UsersRound />,
       },
       {
         title: "Roles & Permissions",
-        icon: <ShieldUser />,
-        permissions: [
-          { level: "system", resource: "role_permission", action: "manage" },
-          { level: "system", resource: "role_permission", action: "list" },
-        ],
         path: "/dashboard/roles",
-        pathRegex: /^\/dashboard\/roles$/,
+        pathRegex: /^\/dashboard\/roles\/?$/,
+        permissions: manageOrList("role_permission"),
+        icon: <ShieldUser />,
       },
     ],
   },

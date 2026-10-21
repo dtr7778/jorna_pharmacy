@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import { DevPanel } from "@/components/dev-panel";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TanstackQueryProvider } from "@/components/tanstack-query/tanstack-query-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { requireSessions } from "@/features/auth/auth.functions";
 import { env } from "@/lib/env";
 import { globalHead } from "@/lib/head";
@@ -52,7 +53,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <TanstackQueryProvider queryClient={context.queryClient}>
           <ThemeProvider defaultTheme="system" storageKey="theme">
-            {children}
+            <TooltipProvider>{children}</TooltipProvider>
             <DevPanel
               currentEnv={env.VITE_ENVIRONMENT}
               envVars={Object.entries(import.meta.env)

@@ -30,4 +30,73 @@ export const API_MESSAGES = {
       NOT_FOUND: "Role not found.",
     },
   },
+  MEDICINE: {
+    GET_ALL: "Medicines loaded successfully.",
+    GET_FOR_SEARCH: "Medicines loaded successfully.",
+    CREATE: "Medicine created successfully.",
+    UPDATE: "Medicine updated successfully.",
+    NOT_FOUND: "Medicine not found.",
+    NOT_CREATE: "Failed to create medicine. Please try again.",
+    NOT_UPDATE: "Failed to update medicine. Please try again.",
+  },
+  CUSTOMER: {
+    GET_ALL: "Customers loaded successfully.",
+    GET_ALL_FOR_SEARCH: "Customers loaded successfully.",
+    GET_DETAILS: "Customer details loaded successfully.",
+    CREATE: "Customer created successfully.",
+    UPDATE: "Customer updated successfully.",
+    NOT_FOUND: "Customer not found.",
+    NOT_CREATE: "Failed to create customer. Please try again.",
+    NOT_UPDATE: "Failed to update customer. Please try again.",
+    PAYMENT: {
+      GET_ALL: "Customer payments loaded successfully.",
+      CREATE: "Customer payment recorded successfully.",
+      NOT_CREATE: "Failed to record customer payment. Please try again.",
+      EXCEEDS_BALANCE: "Payment amount exceeds the remaining sale balance.",
+    },
+  },
+  SALE: {
+    GET_ALL: "Sales loaded successfully.",
+    NOT_FOUND: "Sale not found.",
+  },
+  CASH_CLOSING: {
+    GET_ALL: "Cash closings loaded successfully.",
+  },
+  VENDOR: {
+    GET_ALL: "Vendors loaded successfully.",
+    GET_ALL_FOR_SEARCH: "Vendors loaded successfully.",
+    GET_DETAILS: "Vendor details loaded successfully.",
+    CREATE: "Vendor created successfully.",
+    UPDATE: "Vendor updated successfully.",
+    REMOVE: "Vendor removed successfully.",
+    NOT_FOUND: "Vendor not found.",
+    NOT_CREATE: "Failed to create vendor",
+    NOT_UPDATE: "Failed to update vendor",
+    PURCHASE: {
+      GET_ALL: "Purchases loaded successfully.",
+      GET_DETAILS: "Purchase details loaded successfully.",
+      GET_FOR_SEARCH: "Purchases loaded successfully.",
+      GET_STATS: "Purchase stats loaded successfully.",
+      GET_NEXT_INVOICE_NO: "Next purchase invoice number loaded successfully.",
+      CREATE: "Purchase created successfully.",
+      NOT_CREATE: "Failed to create purchase. Please try again.",
+      NOT_FOUND: "Purchase not found.",
+      MEDICINE_NOT_FOUND: "One or more selected medicines could not be found.",
+      MEDICINE_DETAILS_REQUIRED:
+        "Choose a type and base unit for each new medicine.",
+      DUPLICATE_VENDOR_INVOICE:
+        "A purchase with this vendor invoice number already exists.",
+      INVOICE_NOT_AVAILABLE:
+        "This invoice number is no longer reserved for you. Refresh the page and try again.",
+      INVALID_AMOUNT:
+        "The discount or paid amount is greater than the purchase total.",
+    },
+    PAYMENT: {
+      GET_ALL: "Payments loaded successfully.",
+      GET_STATS: "Payment stats loaded successfully.",
+      CREATE: "Payment recorded successfully.",
+      NOT_CREATE: "Failed to record payment. Please try again.",
+      EXCEEDS_BALANCE: "Payment amount exceeds the remaining balance.",
+    },
+  },
 };
