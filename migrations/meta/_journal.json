@@ -57,6 +57,34 @@
       "when": 1792367752888,
       "tag": "0007_add_invoiceNo",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1792420985248,
+      "tag": "0008_purchase_invoices",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1792424085158,
+      "tag": "0009_add_miniStock",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1792480814956,
+      "tag": "0010_money_as_real",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1792498637859,
+      "tag": "0011_cash_closings_period_range",
+      "breakpoints": true
     }
   ]
 }

@@ -70,16 +70,12 @@
       "indexes": {
         "customer_phone_idx": {
           "name": "customer_phone_idx",
-          "columns": [
-            "phone"
-          ],
+          "columns": ["phone"],
           "isUnique": false
         },
         "customer_name_idx": {
           "name": "customer_name_idx",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": false
         }
       },
@@ -153,23 +149,17 @@
       "indexes": {
         "customerPayment_customerId_idx": {
           "name": "customerPayment_customerId_idx",
-          "columns": [
-            "customer_id"
-          ],
+          "columns": ["customer_id"],
           "isUnique": false
         },
         "customerPayment_saleId_idx": {
           "name": "customerPayment_saleId_idx",
-          "columns": [
-            "sale_id"
-          ],
+          "columns": ["sale_id"],
           "isUnique": false
         },
         "customerPayment_createdAt_idx": {
           "name": "customerPayment_createdAt_idx",
-          "columns": [
-            "created_at"
-          ],
+          "columns": ["created_at"],
           "isUnique": false
         }
       },
@@ -178,12 +168,8 @@
           "name": "customerPayment_customer_fkey",
           "tableFrom": "customer_payments",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -191,12 +177,8 @@
           "name": "customerPayment_sale_fkey",
           "tableFrom": "customer_payments",
           "tableTo": "sales",
-          "columnsFrom": [
-            "sale_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["sale_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -204,12 +186,8 @@
           "name": "customerPayment_createdBy_fkey",
           "tableFrom": "customer_payments",
           "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -324,30 +302,22 @@
       "indexes": {
         "medicine_barcode_idx": {
           "name": "medicine_barcode_idx",
-          "columns": [
-            "barcode"
-          ],
+          "columns": ["barcode"],
           "isUnique": false
         },
         "medicine_name_idx": {
           "name": "medicine_name_idx",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": false
         },
         "medicine_categoryId_idx": {
           "name": "medicine_categoryId_idx",
-          "columns": [
-            "category_id"
-          ],
+          "columns": ["category_id"],
           "isUnique": false
         },
         "medicine_vendorId_idx": {
           "name": "medicine_vendorId_idx",
-          "columns": [
-            "vendor_id"
-          ],
+          "columns": ["vendor_id"],
           "isUnique": false
         }
       },
@@ -356,12 +326,8 @@
           "name": "medicine_category_fkey",
           "tableFrom": "medicines",
           "tableTo": "medicine_categories",
-          "columnsFrom": [
-            "category_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["category_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -369,12 +335,8 @@
           "name": "medicine_vendor_fkey",
           "tableFrom": "medicines",
           "tableTo": "vendors",
-          "columnsFrom": [
-            "vendor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["vendor_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -420,9 +382,7 @@
       "indexes": {
         "medicineCategory_name_idx": {
           "name": "medicineCategory_name_idx",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -519,24 +479,17 @@
       "indexes": {
         "purchase_vendorInvoice_idx": {
           "name": "purchase_vendorInvoice_idx",
-          "columns": [
-            "vendor_id",
-            "invoice_no"
-          ],
+          "columns": ["vendor_id", "invoice_no"],
           "isUnique": true
         },
         "purchase_vendorId_idx": {
           "name": "purchase_vendorId_idx",
-          "columns": [
-            "vendor_id"
-          ],
+          "columns": ["vendor_id"],
           "isUnique": false
         },
         "purchase_createdAt_idx": {
           "name": "purchase_createdAt_idx",
-          "columns": [
-            "created_at"
-          ],
+          "columns": ["created_at"],
           "isUnique": false
         }
       },
@@ -545,12 +498,8 @@
           "name": "purchase_vendor_fkey",
           "tableFrom": "purchases",
           "tableTo": "vendors",
-          "columnsFrom": [
-            "vendor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["vendor_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -558,12 +507,8 @@
           "name": "purchase_createdBy_fkey",
           "tableFrom": "purchases",
           "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -638,8 +583,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "sell_price_per_unit": {
-          "name": "sell_price_per_unit",
+        "sell_per_unit": {
+          "name": "sell_per_unit",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -672,17 +617,12 @@
       "indexes": {
         "purchaseItem_purchaseId_idx": {
           "name": "purchaseItem_purchaseId_idx",
-          "columns": [
-            "purchase_id"
-          ],
+          "columns": ["purchase_id"],
           "isUnique": false
         },
         "purchaseItem_medicineExpiry_idx": {
           "name": "purchaseItem_medicineExpiry_idx",
-          "columns": [
-            "medicine_id",
-            "expiry_date"
-          ],
+          "columns": ["medicine_id", "expiry_date"],
           "isUnique": false
         }
       },
@@ -691,12 +631,8 @@
           "name": "purchaseItem_purchase_fkey",
           "tableFrom": "purchase_items",
           "tableTo": "purchases",
-          "columnsFrom": [
-            "purchase_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["purchase_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -704,12 +640,8 @@
           "name": "purchaseItem_medicine_fkey",
           "tableFrom": "purchase_items",
           "tableTo": "medicines",
-          "columnsFrom": [
-            "medicine_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["medicine_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         }
@@ -792,16 +724,12 @@
       "indexes": {
         "purchaseReturn_vendorId_idx": {
           "name": "purchaseReturn_vendorId_idx",
-          "columns": [
-            "vendor_id"
-          ],
+          "columns": ["vendor_id"],
           "isUnique": false
         },
         "purchaseReturn_createdBy_idx": {
           "name": "purchaseReturn_createdBy_idx",
-          "columns": [
-            "created_by"
-          ],
+          "columns": ["created_by"],
           "isUnique": false
         }
       },
@@ -810,12 +738,8 @@
           "name": "purchaseReturn_vendor_fkey",
           "tableFrom": "purchase_returns",
           "tableTo": "vendors",
-          "columnsFrom": [
-            "vendor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["vendor_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -823,12 +747,8 @@
           "name": "purchaseReturn_purchase_fkey",
           "tableFrom": "purchase_returns",
           "tableTo": "purchases",
-          "columnsFrom": [
-            "purchase_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["purchase_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -836,12 +756,8 @@
           "name": "purchaseReturn_createdBy_fkey",
           "tableFrom": "purchase_returns",
           "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -900,9 +816,7 @@
       "indexes": {
         "purchaseReturnItem_returnId_idx": {
           "name": "purchaseReturnItem_returnId_idx",
-          "columns": [
-            "purchase_return_id"
-          ],
+          "columns": ["purchase_return_id"],
           "isUnique": false
         }
       },
@@ -911,12 +825,8 @@
           "name": "purchaseReturnItem_return_fkey",
           "tableFrom": "purchase_return_items",
           "tableTo": "purchase_returns",
-          "columnsFrom": [
-            "purchase_return_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["purchase_return_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -924,12 +834,8 @@
           "name": "purchaseReturnItem_purchaseItem_fkey",
           "tableFrom": "purchase_return_items",
           "tableTo": "purchase_items",
-          "columnsFrom": [
-            "purchase_item_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["purchase_item_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         }
@@ -1001,32 +907,22 @@
       "indexes": {
         "permission_level_resource_action_key": {
           "name": "permission_level_resource_action_key",
-          "columns": [
-            "level",
-            "resource",
-            "action"
-          ],
+          "columns": ["level", "resource", "action"],
           "isUnique": true
         },
         "permission_level_idx": {
           "name": "permission_level_idx",
-          "columns": [
-            "level"
-          ],
+          "columns": ["level"],
           "isUnique": false
         },
         "permission_resource_idx": {
           "name": "permission_resource_idx",
-          "columns": [
-            "resource"
-          ],
+          "columns": ["resource"],
           "isUnique": false
         },
         "permission_action_idx": {
           "name": "permission_action_idx",
-          "columns": [
-            "action"
-          ],
+          "columns": ["action"],
           "isUnique": false
         }
       },
@@ -1064,9 +960,7 @@
       "indexes": {
         "role_name_unique": {
           "name": "role_name_unique",
-          "columns": [
-            "role_name"
-          ],
+          "columns": ["role_name"],
           "isUnique": true
         }
       },
@@ -1111,24 +1005,17 @@
       "indexes": {
         "role_permission_unique": {
           "name": "role_permission_unique",
-          "columns": [
-            "role_id",
-            "permission_id"
-          ],
+          "columns": ["role_id", "permission_id"],
           "isUnique": true
         },
         "role_permission_role_idx": {
           "name": "role_permission_role_idx",
-          "columns": [
-            "role_id"
-          ],
+          "columns": ["role_id"],
           "isUnique": false
         },
         "role_permission_permission_idx": {
           "name": "role_permission_permission_idx",
-          "columns": [
-            "permission_id"
-          ],
+          "columns": ["permission_id"],
           "isUnique": false
         }
       },
@@ -1137,12 +1024,8 @@
           "name": "role_permission_role_fkey",
           "tableFrom": "role_permissions",
           "tableTo": "roles",
-          "columnsFrom": [
-            "role_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["role_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1150,12 +1033,8 @@
           "name": "role_permission_permission_fkey",
           "tableFrom": "role_permissions",
           "tableTo": "permissions",
-          "columnsFrom": [
-            "permission_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["permission_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1200,24 +1079,17 @@
       "indexes": {
         "user_role_unique": {
           "name": "user_role_unique",
-          "columns": [
-            "user_id",
-            "role_id"
-          ],
+          "columns": ["user_id", "role_id"],
           "isUnique": true
         },
         "user_role_role_id_idx": {
           "name": "user_role_role_id_idx",
-          "columns": [
-            "role_id"
-          ],
+          "columns": ["role_id"],
           "isUnique": false
         },
         "user_role_user_id_idx": {
           "name": "user_role_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         }
       },
@@ -1226,12 +1098,8 @@
           "name": "fk_user_roles_role_id",
           "tableFrom": "user_roles",
           "tableTo": "roles",
-          "columnsFrom": [
-            "role_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["role_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1239,12 +1107,8 @@
           "name": "fk_user_roles_user_id",
           "tableFrom": "user_roles",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1334,30 +1198,22 @@
       "indexes": {
         "sale_invoiceNo_idx": {
           "name": "sale_invoiceNo_idx",
-          "columns": [
-            "invoice_no"
-          ],
+          "columns": ["invoice_no"],
           "isUnique": true
         },
         "sale_customerId_idx": {
           "name": "sale_customerId_idx",
-          "columns": [
-            "customer_id"
-          ],
+          "columns": ["customer_id"],
           "isUnique": false
         },
         "sale_createdAt_idx": {
           "name": "sale_createdAt_idx",
-          "columns": [
-            "created_at"
-          ],
+          "columns": ["created_at"],
           "isUnique": false
         },
         "sale_createdBy_idx": {
           "name": "sale_createdBy_idx",
-          "columns": [
-            "created_by"
-          ],
+          "columns": ["created_by"],
           "isUnique": false
         }
       },
@@ -1366,12 +1222,8 @@
           "name": "sale_customer_fkey",
           "tableFrom": "sales",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -1379,12 +1231,8 @@
           "name": "sale_createdBy_fkey",
           "tableFrom": "sales",
           "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -1469,23 +1317,17 @@
       "indexes": {
         "saleItem_saleId_idx": {
           "name": "saleItem_saleId_idx",
-          "columns": [
-            "sale_id"
-          ],
+          "columns": ["sale_id"],
           "isUnique": false
         },
         "saleItem_medicineId_idx": {
           "name": "saleItem_medicineId_idx",
-          "columns": [
-            "medicine_id"
-          ],
+          "columns": ["medicine_id"],
           "isUnique": false
         },
         "saleItem_purchaseItemId_idx": {
           "name": "saleItem_purchaseItemId_idx",
-          "columns": [
-            "purchase_item_id"
-          ],
+          "columns": ["purchase_item_id"],
           "isUnique": false
         }
       },
@@ -1494,12 +1336,8 @@
           "name": "saleItem_sale_fkey",
           "tableFrom": "sale_items",
           "tableTo": "sales",
-          "columnsFrom": [
-            "sale_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["sale_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1507,12 +1345,8 @@
           "name": "saleItem_medicine_fkey",
           "tableFrom": "sale_items",
           "tableTo": "medicines",
-          "columnsFrom": [
-            "medicine_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["medicine_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -1520,12 +1354,8 @@
           "name": "saleItem_purchaseItem_fkey",
           "tableFrom": "sale_items",
           "tableTo": "purchase_items",
-          "columnsFrom": [
-            "purchase_item_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["purchase_item_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         }
@@ -1651,9 +1481,7 @@
       "indexes": {
         "user_email_key": {
           "name": "user_email_key",
-          "columns": [
-            "email"
-          ],
+          "columns": ["email"],
           "isUnique": true
         }
       },
@@ -1743,17 +1571,12 @@
       "indexes": {
         "user_device_user_fingerprint_idx": {
           "name": "user_device_user_fingerprint_idx",
-          "columns": [
-            "user_id",
-            "fingerprint"
-          ],
+          "columns": ["user_id", "fingerprint"],
           "isUnique": true
         },
         "user_device_user_id_idx": {
           "name": "user_device_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         }
       },
@@ -1762,12 +1585,8 @@
           "name": "user_device_user_fkey",
           "tableFrom": "user_devices",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1857,30 +1676,22 @@
       "indexes": {
         "user_session_user_id_idx": {
           "name": "user_session_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         },
         "user_session_session_id_idx": {
           "name": "user_session_session_id_idx",
-          "columns": [
-            "session_id"
-          ],
+          "columns": ["session_id"],
           "isUnique": true
         },
         "user_session_login_at_idx": {
           "name": "user_session_login_at_idx",
-          "columns": [
-            "login_at"
-          ],
+          "columns": ["login_at"],
           "isUnique": false
         },
         "user_session_last_seen_at_idx": {
           "name": "user_session_last_seen_at_idx",
-          "columns": [
-            "last_seen_at"
-          ],
+          "columns": ["last_seen_at"],
           "isUnique": false
         }
       },
@@ -1889,12 +1700,8 @@
           "name": "user_session_user_fkey",
           "tableFrom": "user_sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1902,12 +1709,8 @@
           "name": "user_session_session_fkey",
           "tableFrom": "user_sessions",
           "tableTo": "sessions",
-          "columnsFrom": [
-            "session_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["session_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1915,12 +1718,8 @@
           "name": "user_session_device_fkey",
           "tableFrom": "user_sessions",
           "tableTo": "user_devices",
-          "columnsFrom": [
-            "device_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["device_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2000,30 +1799,22 @@
       "indexes": {
         "user_event_user_id_idx": {
           "name": "user_event_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         },
         "user_event_event_idx": {
           "name": "user_event_event_idx",
-          "columns": [
-            "event"
-          ],
+          "columns": ["event"],
           "isUnique": false
         },
         "user_event_created_at_idx": {
           "name": "user_event_created_at_idx",
-          "columns": [
-            "created_at"
-          ],
+          "columns": ["created_at"],
           "isUnique": false
         },
         "user_event_session_id_idx": {
           "name": "user_event_session_id_idx",
-          "columns": [
-            "session_id"
-          ],
+          "columns": ["session_id"],
           "isUnique": false
         }
       },
@@ -2032,12 +1823,8 @@
           "name": "user_event_user_fkey",
           "tableFrom": "user_events",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2045,12 +1832,8 @@
           "name": "user_event_device_fkey",
           "tableFrom": "user_events",
           "tableTo": "user_devices",
-          "columnsFrom": [
-            "device_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["device_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2125,9 +1908,7 @@
       "indexes": {
         "vendor_name_idx": {
           "name": "vendor_name_idx",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": false
         }
       },
@@ -2201,23 +1982,17 @@
       "indexes": {
         "vendorPayment_vendorId_idx": {
           "name": "vendorPayment_vendorId_idx",
-          "columns": [
-            "vendor_id"
-          ],
+          "columns": ["vendor_id"],
           "isUnique": false
         },
         "vendorPayment_createdAt_idx": {
           "name": "vendorPayment_createdAt_idx",
-          "columns": [
-            "created_at"
-          ],
+          "columns": ["created_at"],
           "isUnique": false
         },
         "vendorPayment_createdBy_idx": {
           "name": "vendorPayment_createdBy_idx",
-          "columns": [
-            "created_by"
-          ],
+          "columns": ["created_by"],
           "isUnique": false
         }
       },
@@ -2226,12 +2001,8 @@
           "name": "vendorPayment_vendor_fkey",
           "tableFrom": "vendor_payments",
           "tableTo": "vendors",
-          "columnsFrom": [
-            "vendor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["vendor_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -2239,12 +2010,8 @@
           "name": "vendorPayment_purchase_fkey",
           "tableFrom": "vendor_payments",
           "tableTo": "purchases",
-          "columnsFrom": [
-            "purchase_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["purchase_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2252,12 +2019,8 @@
           "name": "vendorPayment_createdBy_fkey",
           "tableFrom": "vendor_payments",
           "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2371,17 +2134,12 @@
       "indexes": {
         "account_accountProvider_accountId_idx": {
           "name": "account_accountProvider_accountId_idx",
-          "columns": [
-            "provider_id",
-            "account_id"
-          ],
+          "columns": ["provider_id", "account_id"],
           "isUnique": true
         },
         "account_userId_idx": {
           "name": "account_userId_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         }
       },
@@ -2390,12 +2148,8 @@
           "name": "account_user_fkey",
           "tableFrom": "accounts",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2580,23 +2334,17 @@
       "indexes": {
         "session_token_idx": {
           "name": "session_token_idx",
-          "columns": [
-            "token"
-          ],
+          "columns": ["token"],
           "isUnique": true
         },
         "session_userId_idx": {
           "name": "session_userId_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         },
         "session_expiresAt_idx": {
           "name": "session_expiresAt_idx",
-          "columns": [
-            "expires_at"
-          ],
+          "columns": ["expires_at"],
           "isUnique": false
         }
       },
@@ -2605,12 +2353,8 @@
           "name": "session_user_fkey",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2690,24 +2434,17 @@
       "indexes": {
         "stockMovement_purchaseItemId_idx": {
           "name": "stockMovement_purchaseItemId_idx",
-          "columns": [
-            "purchase_item_id"
-          ],
+          "columns": ["purchase_item_id"],
           "isUnique": false
         },
         "stockMovement_ref_idx": {
           "name": "stockMovement_ref_idx",
-          "columns": [
-            "ref_table",
-            "ref_id"
-          ],
+          "columns": ["ref_table", "ref_id"],
           "isUnique": false
         },
         "stockMovement_createdAt_idx": {
           "name": "stockMovement_createdAt_idx",
-          "columns": [
-            "created_at"
-          ],
+          "columns": ["created_at"],
           "isUnique": false
         }
       },
@@ -2716,12 +2453,8 @@
           "name": "stockMovement_purchaseItem_fkey",
           "tableFrom": "stock_movements",
           "tableTo": "purchase_items",
-          "columnsFrom": [
-            "purchase_item_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["purchase_item_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -2729,12 +2462,8 @@
           "name": "stockMovement_createdBy_fkey",
           "tableFrom": "stock_movements",
           "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2915,9 +2644,7 @@
       "indexes": {
         "dailyClosing_closedBy_idx": {
           "name": "dailyClosing_closedBy_idx",
-          "columns": [
-            "closed_by"
-          ],
+          "columns": ["closed_by"],
           "isUnique": false
         }
       },
@@ -2926,12 +2653,8 @@
           "name": "dailyClosing_closedBy_fkey",
           "tableFrom": "daily_closings",
           "tableTo": "users",
-          "columnsFrom": [
-            "closed_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["closed_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2998,23 +2721,17 @@
       "indexes": {
         "expense_categoryId_idx": {
           "name": "expense_categoryId_idx",
-          "columns": [
-            "category_id"
-          ],
+          "columns": ["category_id"],
           "isUnique": false
         },
         "expense_createdBy_idx": {
           "name": "expense_createdBy_idx",
-          "columns": [
-            "created_by"
-          ],
+          "columns": ["created_by"],
           "isUnique": false
         },
         "expense_createdAt_idx": {
           "name": "expense_createdAt_idx",
-          "columns": [
-            "created_at"
-          ],
+          "columns": ["created_at"],
           "isUnique": false
         }
       },
@@ -3023,12 +2740,8 @@
           "name": "expense_category_fkey",
           "tableFrom": "expenses",
           "tableTo": "expense_categories",
-          "columnsFrom": [
-            "category_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["category_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -3036,12 +2749,8 @@
           "name": "expense_createdBy_fkey",
           "tableFrom": "expenses",
           "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -3092,9 +2801,7 @@
       "indexes": {
         "expenseCategory_name_idx": {
           "name": "expenseCategory_name_idx",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -3161,23 +2868,17 @@
       "indexes": {
         "salaryPayment_userId_idx": {
           "name": "salaryPayment_userId_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         },
         "salaryPayment_createdBy_idx": {
           "name": "salaryPayment_createdBy_idx",
-          "columns": [
-            "created_by"
-          ],
+          "columns": ["created_by"],
           "isUnique": false
         },
         "salaryPayment_createdAt_idx": {
           "name": "salaryPayment_createdAt_idx",
-          "columns": [
-            "created_at"
-          ],
+          "columns": ["created_at"],
           "isUnique": false
         }
       },
@@ -3186,12 +2887,8 @@
           "name": "salaryPayment_user_fkey",
           "tableFrom": "salary_payments",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
@@ -3199,12 +2896,8 @@
           "name": "salaryPayment_createdBy_fkey",
           "tableFrom": "salary_payments",
           "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }

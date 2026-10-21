@@ -17,11 +17,7 @@ import {
 import { RoleEnumSchema, type RoleEnumType } from "../../enums/zod-db-enums";
 import { AccountTable } from "../account.table";
 import { CustomerPaymentTable } from "../customer";
-import {
-  DailyClosingTable,
-  ExpenseTable,
-  SalaryPaymentTable,
-} from "../finance";
+import { CashClosingTable, ExpenseTable, SalaryPaymentTable } from "../finance";
 import { PurchaseReturnTable, PurchaseTable } from "../purchase";
 import { UserRoleTable } from "../role-permission";
 import { SaleTable } from "../sale";
@@ -76,8 +72,8 @@ export const UserRelations = relations(UserTable, ({ many }) => ({
     relationName: "CustomerPaymentToCreatedBy",
   }),
   // finace
-  dailyClosings: many(DailyClosingTable, {
-    relationName: "DailyClosingToClosedBy",
+  cashClosings: many(CashClosingTable, {
+    relationName: "CashClosingToClosedBy",
   }),
   expenses: many(ExpenseTable, {
     relationName: "ExpenseToCreatedBy",

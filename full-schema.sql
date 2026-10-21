@@ -15,7 +15,7 @@ CREATE TABLE `customer_payments` (
 	`id` text PRIMARY KEY NOT NULL,
 	`customer_id` text NOT NULL,
 	`sale_id` text,
-	`amount` integer NOT NULL,
+	`amount` real NOT NULL,
 	`note` text,
 	`created_by` text,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
@@ -29,30 +29,34 @@ CREATE TABLE `customer_payments` (
 CREATE INDEX `customerPayment_customerId_idx` ON `customer_payments` (`customer_id`);
 CREATE INDEX `customerPayment_saleId_idx` ON `customer_payments` (`sale_id`);
 CREATE INDEX `customerPayment_createdAt_idx` ON `customer_payments` (`created_at`);
-CREATE TABLE `daily_closings` (
+CREATE TABLE `cash_closings` (
 	`id` text PRIMARY KEY NOT NULL,
-	`opening_cash` integer DEFAULT 0,
-	`total_sales` integer NOT NULL,
-	`total_returns` integer DEFAULT 0 NOT NULL,
-	`cash_received` integer NOT NULL,
-	`vendor_paid` integer DEFAULT 0,
-	`total_expenses` integer DEFAULT 0 NOT NULL,
-	`total_salary` integer NOT NULL,
-	`expected_cash` integer,
-	`counted_cash` integer,
-	`difference` integer,
+	`period_start` integer NOT NULL,
+	`period_end` integer NOT NULL,
+	`opening_cash` real DEFAULT 0,
+	`total_sales` real NOT NULL,
+	`total_returns` real DEFAULT 0 NOT NULL,
+	`cash_received` real NOT NULL,
+	`vendor_paid` real DEFAULT 0,
+	`total_expenses` real DEFAULT 0 NOT NULL,
+	`total_salary` real NOT NULL,
+	`expected_cash` real,
+	`counted_cash` real,
+	`difference` real,
 	`closed_by` text,
 	`note` text,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
-	FOREIGN KEY (`closed_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
+	FOREIGN KEY (`closed_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null,
+	CONSTRAINT "cashClosing_period_chk" CHECK("cash_closings"."period_end" > "cash_closings"."period_start")
 );
 
-CREATE INDEX `dailyClosing_closedBy_idx` ON `daily_closings` (`closed_by`);
+CREATE INDEX `cashClosing_closedBy_idx` ON `cash_closings` (`closed_by`);
+CREATE INDEX `cashClosing_periodStart_idx` ON `cash_closings` (`period_start`);
 CREATE TABLE `expenses` (
 	`id` text PRIMARY KEY NOT NULL,
 	`category_id` text NOT NULL,
-	`amount` integer NOT NULL,
+	`amount` real NOT NULL,
 	`note` text,
 	`created_by` text,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
@@ -76,7 +80,7 @@ CREATE UNIQUE INDEX `expenseCategory_name_idx` ON `expense_categories` (`name`);
 CREATE TABLE `salary_payments` (
 	`id` text PRIMARY KEY NOT NULL,
 	`user_id` text NOT NULL,
-	`amount` integer NOT NULL,
+	`amount` real NOT NULL,
 	`note` text,
 	`created_by` text,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
@@ -100,6 +104,7 @@ CREATE TABLE `medicines` (
 	`base_unit` text NOT NULL,
 	`barcode` text,
 	`rack_location` text,
+	`minimum_stock` integer DEFAULT 0 NOT NULL,
 	`is_active` integer DEFAULT true NOT NULL,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
@@ -123,23 +128,37 @@ CREATE TABLE `purchases` (
 	`id` text PRIMARY KEY NOT NULL,
 	`vendor_id` text NOT NULL,
 	`vendor_invoice_no` text,
-	`invoice_no` text NOT NULL,
-	`subtotal` integer NOT NULL,
-	`discount` integer DEFAULT 1 NOT NULL,
-	`total_amount` integer NOT NULL,
-	`paid_amount` integer DEFAULT 0 NOT NULL,
+	`invoice_id` text,
+	`subtotal` real NOT NULL,
+	`discount` real DEFAULT 1 NOT NULL,
+	`total_amount` real NOT NULL,
+	`paid_amount` real DEFAULT 0 NOT NULL,
 	`note` text,
 	`created_by` text,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	FOREIGN KEY (`vendor_id`) REFERENCES `vendors`(`id`) ON UPDATE no action ON DELETE restrict,
-	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null,
+	FOREIGN KEY (`invoice_id`) REFERENCES `purchase_invoices`(`id`) ON UPDATE no action ON DELETE restrict
 );
 
 CREATE UNIQUE INDEX `purchase_vendorInvoice_idx` ON `purchases` (`vendor_id`,`vendor_invoice_no`);
 CREATE INDEX `purchase_vendorId_idx` ON `purchases` (`vendor_id`);
-CREATE INDEX `purchase_invoice_idx` ON `purchases` (`invoice_no`);
+CREATE UNIQUE INDEX `purchase_invoiceId_idx` ON `purchases` (`invoice_id`);
 CREATE INDEX `purchase_createdAt_idx` ON `purchases` (`created_at`);
+CREATE TABLE `purchase_invoices` (
+	`id` text PRIMARY KEY NOT NULL,
+	`number` text NOT NULL,
+	`is_linked` integer DEFAULT false NOT NULL,
+	`reserved_by` text,
+	`reserved_until` integer,
+	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
+	FOREIGN KEY (`reserved_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
+);
+
+CREATE UNIQUE INDEX `purchase_invoice_number_idx` ON `purchase_invoices` (`number`);
+CREATE INDEX `purchase_invoice_reservation_idx` ON `purchase_invoices` (`is_linked`,`reserved_until`);
 CREATE TABLE `purchase_items` (
 	`id` text PRIMARY KEY NOT NULL,
 	`purchase_id` text NOT NULL,
@@ -149,8 +168,8 @@ CREATE TABLE `purchase_items` (
 	`strips_per_box` integer,
 	`qty_purchased` integer NOT NULL,
 	`qty_remaining` integer NOT NULL,
-	`cost_per_unit` integer NOT NULL,
-	`sell_price_per_unit` integer NOT NULL,
+	`cost_per_unit` real NOT NULL,
+	`sell_per_unit` real NOT NULL,
 	`expiry_date` integer,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
@@ -166,7 +185,7 @@ CREATE TABLE `purchase_returns` (
 	`id` text PRIMARY KEY NOT NULL,
 	`vendor_id` text NOT NULL,
 	`purchase_id` text NOT NULL,
-	`total_amount` integer NOT NULL,
+	`total_amount` real NOT NULL,
 	`reason` text,
 	`created_by` text,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
@@ -183,7 +202,7 @@ CREATE TABLE `purchase_return_items` (
 	`purchase_return_id` text NOT NULL,
 	`purchase_item_id` text NOT NULL,
 	`qty` integer NOT NULL,
-	`unit_cost` integer NOT NULL,
+	`unit_cost` real NOT NULL,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	FOREIGN KEY (`purchase_return_id`) REFERENCES `purchase_returns`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`purchase_item_id`) REFERENCES `purchase_items`(`id`) ON UPDATE no action ON DELETE restrict,
@@ -240,10 +259,10 @@ CREATE TABLE `sales` (
 	`id` text PRIMARY KEY NOT NULL,
 	`invoice_no` text NOT NULL,
 	`customer_id` text,
-	`subtotal` integer NOT NULL,
-	`discount` integer DEFAULT 0 NOT NULL,
-	`total_amount` integer NOT NULL,
-	`paid_amount` integer DEFAULT 0 NOT NULL,
+	`subtotal` real NOT NULL,
+	`discount` real DEFAULT 0 NOT NULL,
+	`total_amount` real NOT NULL,
+	`paid_amount` real DEFAULT 0 NOT NULL,
 	`created_by` text,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
@@ -262,9 +281,9 @@ CREATE TABLE `sale_items` (
 	`medicine_id` text NOT NULL,
 	`purchase_item_id` text NOT NULL,
 	`qty` integer NOT NULL,
-	`unit_price` integer NOT NULL,
-	`unit_cost` integer NOT NULL,
-	`line_total` integer NOT NULL,
+	`unit_price` real NOT NULL,
+	`unit_cost` real NOT NULL,
+	`line_total` real NOT NULL,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	FOREIGN KEY (`sale_id`) REFERENCES `sales`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`medicine_id`) REFERENCES `medicines`(`id`) ON UPDATE no action ON DELETE restrict,
@@ -363,7 +382,7 @@ CREATE TABLE `vendor_payments` (
 	`id` text PRIMARY KEY NOT NULL,
 	`vendor_id` text NOT NULL,
 	`purchase_id` text,
-	`amount` integer NOT NULL,
+	`amount` real NOT NULL,
 	`note` text,
 	`created_by` text,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,

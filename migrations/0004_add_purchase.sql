@@ -27,7 +27,7 @@ CREATE TABLE `purchase_items` (
 	`qty_purchased` integer NOT NULL,
 	`qty_remaining` integer NOT NULL,
 	`cost_per_unit` integer NOT NULL,
-	`sell_price_per_unit` integer NOT NULL,
+	`sell_per_unit` integer NOT NULL,
 	`expiry_date` integer,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,

@@ -1,0 +1,1 @@
+ALTER TABLE `medicines` ADD `minimum_stock` integer DEFAULT 0 NOT NULL;

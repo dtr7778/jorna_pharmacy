@@ -36,11 +36,38 @@ table addresses {
   updated_at integer [not null, default: `(unixepoch() * 1000)`]
 }
 
+table cash_closings {
+  id text [pk, not null]
+  period_start integer [not null]
+  period_end integer [not null]
+  opening_cash real [default: 0]
+  total_sales real [not null]
+  total_returns real [not null, default: 0]
+  cash_received real [not null]
+  vendor_paid real [default: 0]
+  total_expenses real [not null, default: 0]
+  total_salary real [not null]
+  expected_cash real
+  counted_cash real
+  difference real
+  closed_by text
+  note text
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    
+    closed_by [name: 'cashClosing_closedBy_idx']
+    period_start [name: 'cashClosing_periodStart_idx']
+  }
+}
+
 table customer_payments {
   id text [pk, not null]
   customer_id text [not null]
   sale_id text
-  amount integer [not null]
+  amount real [not null]
   note text
   created_by text
   created_at integer [not null, default: `(unixepoch() * 1000)`]
@@ -73,29 +100,6 @@ table customers {
   }
 }
 
-table daily_closings {
-  id text [pk, not null]
-  opening_cash integer [default: 0]
-  total_sales integer [not null]
-  total_returns integer [not null, default: 0]
-  cash_received integer [not null]
-  vendor_paid integer [default: 0]
-  total_expenses integer [not null, default: 0]
-  total_salary integer [not null]
-  expected_cash integer
-  counted_cash integer
-  difference integer
-  closed_by text
-  note text
-  created_at integer [not null, default: `(unixepoch() * 1000)`]
-  updated_at integer [not null, default: `(unixepoch() * 1000)`]
-
-  indexes {
-    
-    closed_by [name: 'dailyClosing_closedBy_idx']
-  }
-}
-
 table expense_categories {
   id text [pk, not null]
   name text [not null]
@@ -110,7 +114,7 @@ table expense_categories {
 table expenses {
   id text [pk, not null]
   category_id text [not null]
-  amount integer [not null]
+  amount real [not null]
   note text
   created_by text
   created_at integer [not null, default: `(unixepoch() * 1000)`]
@@ -148,6 +152,7 @@ table medicines {
   base_unit text [not null]
   barcode text
   rack_location text
+  minimum_stock integer [not null, default: 0]
   is_active integer [not null, default: 1]
   created_at integer [not null, default: `(unixepoch() * 1000)`]
   updated_at integer [not null, default: `(unixepoch() * 1000)`]
@@ -179,6 +184,22 @@ table permissions {
   }
 }
 
+table purchase_invoices {
+  id text [pk, not null]
+  number text [not null]
+  is_linked integer [not null, default: 0]
+  reserved_by text
+  reserved_until integer
+  created_at integer [not null, default: `(unixepoch() * 1000)`]
+  updated_at integer [not null, default: `(unixepoch() * 1000)`]
+
+  indexes {
+    
+    number [name: 'purchase_invoice_number_idx', unique]
+    (is_linked, reserved_until) [name: 'purchase_invoice_reservation_idx']
+  }
+}
+
 table purchase_items {
   id text [pk, not null]
   purchase_id text [not null]
@@ -188,8 +209,8 @@ table purchase_items {
   strips_per_box integer
   qty_purchased integer [not null]
   qty_remaining integer [not null]
-  cost_per_unit integer [not null]
-  sell_price_per_unit integer [not null]
+  cost_per_unit real [not null]
+  sell_per_unit real [not null]
   expiry_date integer
   created_at integer [not null, default: `(unixepoch() * 1000)`]
   updated_at integer [not null, default: `(unixepoch() * 1000)`]
@@ -209,7 +230,7 @@ table purchase_return_items {
   purchase_return_id text [not null]
   purchase_item_id text [not null]
   qty integer [not null]
-  unit_cost integer [not null]
+  unit_cost real [not null]
   created_at integer [not null, default: `(unixepoch() * 1000)`]
 
   indexes {
@@ -224,7 +245,7 @@ table purchase_returns {
   id text [pk, not null]
   vendor_id text [not null]
   purchase_id text [not null]
-  total_amount integer [not null]
+  total_amount real [not null]
   reason text
   created_by text
   created_at integer [not null, default: `(unixepoch() * 1000)`]
@@ -243,11 +264,11 @@ table purchases {
   id text [pk, not null]
   vendor_id text [not null]
   vendor_invoice_no text
-  invoice_no text [not null]
-  subtotal integer [not null]
-  discount integer [not null, default: 1]
-  total_amount integer [not null]
-  paid_amount integer [not null, default: 0]
+  invoice_id text
+  subtotal real [not null]
+  discount real [not null, default: 1]
+  total_amount real [not null]
+  paid_amount real [not null, default: 0]
   note text
   created_by text
   created_at integer [not null, default: `(unixepoch() * 1000)`]
@@ -256,9 +277,10 @@ table purchases {
   indexes {
     
     
+    
     (vendor_id, vendor_invoice_no) [name: 'purchase_vendorInvoice_idx', unique]
     vendor_id [name: 'purchase_vendorId_idx']
-    invoice_no [name: 'purchase_invoice_idx']
+    invoice_id [name: 'purchase_invoiceId_idx', unique]
     created_at [name: 'purchase_createdAt_idx']
   }
 }
@@ -291,7 +313,7 @@ table roles {
 table salary_payments {
   id text [pk, not null]
   user_id text [not null]
-  amount integer [not null]
+  amount real [not null]
   note text
   created_by text
   created_at integer [not null, default: `(unixepoch() * 1000)`]
@@ -313,9 +335,9 @@ table sale_items {
   medicine_id text [not null]
   purchase_item_id text [not null]
   qty integer [not null]
-  unit_price integer [not null]
-  unit_cost integer [not null]
-  line_total integer [not null]
+  unit_price real [not null]
+  unit_cost real [not null]
+  line_total real [not null]
   created_at integer [not null, default: `(unixepoch() * 1000)`]
 
   indexes {
@@ -333,10 +355,10 @@ table sales {
   id text [pk, not null]
   invoice_no text [not null]
   customer_id text
-  subtotal integer [not null]
-  discount integer [not null, default: 0]
-  total_amount integer [not null]
-  paid_amount integer [not null, default: 0]
+  subtotal real [not null]
+  discount real [not null, default: 0]
+  total_amount real [not null]
+  paid_amount real [not null, default: 0]
   created_by text
   created_at integer [not null, default: `(unixepoch() * 1000)`]
   updated_at integer [not null, default: `(unixepoch() * 1000)`]
@@ -494,7 +516,7 @@ table vendor_payments {
   id text [pk, not null]
   vendor_id text [not null]
   purchase_id text
-  amount integer [not null]
+  amount real [not null]
   note text
   created_by text
   created_at integer [not null, default: `(unixepoch() * 1000)`]
@@ -537,13 +559,13 @@ table verifications {
 
 ref: accounts.user_id > users.id
 
+ref: cash_closings.closed_by > users.id
+
 ref: customer_payments.customer_id > customers.id
 
 ref: customer_payments.sale_id > sales.id
 
 ref: customer_payments.created_by > users.id
-
-ref: daily_closings.closed_by > users.id
 
 ref: expenses.category_id > expense_categories.id
 
@@ -552,6 +574,10 @@ ref: expenses.created_by > users.id
 ref: medicines.category_id > medicine_categories.id
 
 ref: medicines.vendor_id > vendors.id
+
+ref: purchases.invoice_id - purchase_invoices.id
+
+ref: purchase_invoices.reserved_by - users.id
 
 ref: purchase_items.purchase_id > purchases.id
 

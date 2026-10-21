@@ -36,7 +36,7 @@ export const PurchaseItemTable = sqliteTable(
     qtyPurchased: integer("qty_purchased").notNull(),
     qtyRemaining: integer("qty_remaining").notNull(),
     costPerUnit: db_money("cost_per_unit").notNull(),
-    sellPricePerUnit: db_money("sell_price_per_unit").notNull(),
+    sellPerUnit: db_money("sell_per_unit").notNull(),
     expiryDate: db_date("expiry_date"),
     createdAt: db_created_at,
     updatedAt: db_updated_at,

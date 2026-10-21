@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { integer, text } from "drizzle-orm/sqlite-core";
+import { integer, real, text } from "drizzle-orm/sqlite-core";
 
 export const db_date = (name: string) =>
   integer(name, { mode: "timestamp_ms" });
@@ -25,4 +25,4 @@ export const db_soft_delete = {
 
 export const db_bool = (name: string) => integer(name, { mode: "boolean" });
 
-export const db_money = (name: string) => integer(name);
+export const db_money = (name: string) => real(name);

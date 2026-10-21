@@ -9,6 +9,7 @@ export const RESOURCE_TYPE = [
   "purchase_return",
   "vendor",
   "vendor_payment",
+  "medicine",
   "customer",
   "customer_payment",
   "sale",

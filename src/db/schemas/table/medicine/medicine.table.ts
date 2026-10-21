@@ -1,5 +1,11 @@
 import { relations } from "drizzle-orm";
-import { foreignKey, index, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  foreignKey,
+  index,
+  integer,
+  sqliteTable,
+  text,
+} from "drizzle-orm/sqlite-core";
 import {
   createInsertSchema,
   createSelectSchema,
@@ -26,6 +32,7 @@ export const MedicineTable = sqliteTable(
     baseUnit: text("base_unit").notNull(),
     barcode: text("barcode"),
     rackLocation: text("rack_location"),
+    minimumStock: integer("minimum_stock").notNull().default(0),
     isActive: db_bool("is_active").notNull().default(true),
     createdAt: db_created_at,
     updatedAt: db_updated_at,

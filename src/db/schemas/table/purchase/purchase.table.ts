@@ -16,6 +16,7 @@ import z from "zod";
 import { db_created_at, db_id, db_money, db_updated_at } from "../../db-utils";
 import { UserTable } from "../user";
 import { VendorTable, VendorPaymentTable } from "../vendor";
+import { PurchaseInvoiceTable } from "./purchaseInvoice.table";
 import { PurchaseItemTable } from "./purchaseItem.table";
 import { PurchaseReturnTable } from "./purchaseReturn.table";
 
@@ -25,7 +26,7 @@ export const PurchaseTable = sqliteTable(
     id: db_id,
     vendorId: text("vendor_id").notNull(),
     vendorInvoiceNo: text("vendor_invoice_no"),
-    invoiceNo: text("invoice_no").notNull(),
+    invoiceId: text("invoice_id"),
     subtotal: db_money("subtotal").notNull(),
     discount: db_money("discount").notNull().default(1),
     totalAmount: db_money("total_amount").notNull(),
@@ -46,17 +47,27 @@ export const PurchaseTable = sqliteTable(
       columns: [table.createdBy],
       foreignColumns: [UserTable.id],
     }).onDelete("set null"),
+    foreignKey({
+      name: "purchase_invoice_fkey",
+      columns: [table.invoiceId],
+      foreignColumns: [PurchaseInvoiceTable.id],
+    }).onDelete("restrict"),
     uniqueIndex("purchase_vendorInvoice_idx").on(
       table.vendorId,
       table.vendorInvoiceNo
     ),
     index("purchase_vendorId_idx").on(table.vendorId),
-    index("purchase_invoice_idx").on(table.invoiceNo),
+    uniqueIndex("purchase_invoiceId_idx").on(table.invoiceId),
     index("purchase_createdAt_idx").on(table.createdAt),
   ]
 );
 
 export const PurchaseRelations = relations(PurchaseTable, ({ one, many }) => ({
+  invoice: one(PurchaseInvoiceTable, {
+    fields: [PurchaseTable.invoiceId],
+    references: [PurchaseInvoiceTable.id],
+    relationName: "PurchaseToInvoice",
+  }),
   vendor: one(VendorTable, {
     fields: [PurchaseTable.vendorId],
     references: [VendorTable.id],
