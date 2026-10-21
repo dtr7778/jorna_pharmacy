@@ -17,9 +17,19 @@ import { Route as rootRouteImport } from "./routes/__root";
 import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth.$";
 import { Route as ApiRpcSplatRouteImport } from "./routes/api/rpc.$";
 import { Route as DashboardDashboardLayoutRouteImport } from "./routes/dashboard/_dashboardLayout";
+import { Route as DashboardDashboardLayoutCashClosingCashClosingIdRouteImport } from "./routes/dashboard/_dashboardLayout/cash-closing/$cashClosingId";
+import { Route as DashboardDashboardLayoutCashClosingIndexRouteImport } from "./routes/dashboard/_dashboardLayout/cash-closing/index";
+import { Route as DashboardDashboardLayoutCustomersCustomerIdRouteImport } from "./routes/dashboard/_dashboardLayout/customers/$customerId";
+import { Route as DashboardDashboardLayoutCustomersIndexRouteImport } from "./routes/dashboard/_dashboardLayout/customers/index";
 import { Route as DashboardDashboardLayoutIndexRouteImport } from "./routes/dashboard/_dashboardLayout/index";
+import { Route as DashboardDashboardLayoutMedicinesRouteImport } from "./routes/dashboard/_dashboardLayout/medicines";
+import { Route as DashboardDashboardLayoutPaymentsRouteImport } from "./routes/dashboard/_dashboardLayout/payments";
 import { Route as DashboardDashboardLayoutProfileRouteImport } from "./routes/dashboard/_dashboardLayout/profile";
+import { Route as DashboardDashboardLayoutPurchasesPurchaseIdRouteImport } from "./routes/dashboard/_dashboardLayout/purchases/$purchaseId";
+import { Route as DashboardDashboardLayoutPurchasesIndexRouteImport } from "./routes/dashboard/_dashboardLayout/purchases/index";
+import { Route as DashboardDashboardLayoutPurchasesNewRouteImport } from "./routes/dashboard/_dashboardLayout/purchases/new";
 import { Route as DashboardDashboardLayoutRolesRouteImport } from "./routes/dashboard/_dashboardLayout/roles";
+import { Route as DashboardDashboardLayoutSalesRouteImport } from "./routes/dashboard/_dashboardLayout/sales";
 import { Route as DashboardDashboardLayoutSettingsSettingsLayoutRouteImport } from "./routes/dashboard/_dashboardLayout/settings/_settingsLayout";
 import { Route as DashboardDashboardLayoutSettingsSettingsLayoutConnectedAppsRouteImport } from "./routes/dashboard/_dashboardLayout/settings/_settingsLayout/connected-apps";
 import { Route as DashboardDashboardLayoutSettingsSettingsLayoutIndexRouteImport } from "./routes/dashboard/_dashboardLayout/settings/_settingsLayout/index";
@@ -28,6 +38,8 @@ import { Route as DashboardDashboardLayoutSettingsSettingsLayoutSessionsRouteImp
 import { Route as DashboardDashboardLayoutSettingsSettingsLayoutUpdatePasswordRouteImport } from "./routes/dashboard/_dashboardLayout/settings/_settingsLayout/update-password";
 import { Route as DashboardDashboardLayoutUsersUserIdRouteImport } from "./routes/dashboard/_dashboardLayout/users/$userId";
 import { Route as DashboardDashboardLayoutUsersIndexRouteImport } from "./routes/dashboard/_dashboardLayout/users/index";
+import { Route as DashboardDashboardLayoutVendorsVendorIdRouteImport } from "./routes/dashboard/_dashboardLayout/vendors/$vendorId";
+import { Route as DashboardDashboardLayoutVendorsIndexRouteImport } from "./routes/dashboard/_dashboardLayout/vendors/index";
 import { Route as IndexRouteImport } from "./routes/index";
 
 const IndexRoute = IndexRouteImport.update({
@@ -88,6 +100,18 @@ const DashboardDashboardLayoutIndexRoute =
     path: "/",
     getParentRoute: () => DashboardDashboardLayoutRoute,
   } as any);
+const DashboardDashboardLayoutMedicinesRoute =
+  DashboardDashboardLayoutMedicinesRouteImport.update({
+    id: "/medicines",
+    path: "/medicines",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutPaymentsRoute =
+  DashboardDashboardLayoutPaymentsRouteImport.update({
+    id: "/payments",
+    path: "/payments",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
 const DashboardDashboardLayoutProfileRoute =
   DashboardDashboardLayoutProfileRouteImport.update({
     id: "/profile",
@@ -98,6 +122,54 @@ const DashboardDashboardLayoutRolesRoute =
   DashboardDashboardLayoutRolesRouteImport.update({
     id: "/roles",
     path: "/roles",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutSalesRoute =
+  DashboardDashboardLayoutSalesRouteImport.update({
+    id: "/sales",
+    path: "/sales",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutCashClosingIndexRoute =
+  DashboardDashboardLayoutCashClosingIndexRouteImport.update({
+    id: "/cash-closing/",
+    path: "/cash-closing/",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutCashClosingCashClosingIdRoute =
+  DashboardDashboardLayoutCashClosingCashClosingIdRouteImport.update({
+    id: "/cash-closing/$cashClosingId",
+    path: "/cash-closing/$cashClosingId",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutCustomersIndexRoute =
+  DashboardDashboardLayoutCustomersIndexRouteImport.update({
+    id: "/customers/",
+    path: "/customers/",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutCustomersCustomerIdRoute =
+  DashboardDashboardLayoutCustomersCustomerIdRouteImport.update({
+    id: "/customers/$customerId",
+    path: "/customers/$customerId",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutPurchasesIndexRoute =
+  DashboardDashboardLayoutPurchasesIndexRouteImport.update({
+    id: "/purchases/",
+    path: "/purchases/",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutPurchasesPurchaseIdRoute =
+  DashboardDashboardLayoutPurchasesPurchaseIdRouteImport.update({
+    id: "/purchases/$purchaseId",
+    path: "/purchases/$purchaseId",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutPurchasesNewRoute =
+  DashboardDashboardLayoutPurchasesNewRouteImport.update({
+    id: "/purchases/new",
+    path: "/purchases/new",
     getParentRoute: () => DashboardDashboardLayoutRoute,
   } as any);
 const DashboardDashboardLayoutSettingsSettingsLayoutRoute =
@@ -116,6 +188,18 @@ const DashboardDashboardLayoutUsersUserIdRoute =
   DashboardDashboardLayoutUsersUserIdRouteImport.update({
     id: "/users/$userId",
     path: "/users/$userId",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutVendorsIndexRoute =
+  DashboardDashboardLayoutVendorsIndexRouteImport.update({
+    id: "/vendors/",
+    path: "/vendors/",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
+const DashboardDashboardLayoutVendorsVendorIdRoute =
+  DashboardDashboardLayoutVendorsVendorIdRouteImport.update({
+    id: "/vendors/$vendorId",
+    path: "/vendors/$vendorId",
     getParentRoute: () => DashboardDashboardLayoutRoute,
   } as any);
 const DashboardDashboardLayoutSettingsSettingsLayoutIndexRoute =
@@ -163,12 +247,24 @@ export interface FileRoutesByFullPath {
   "/sign-up": typeof authAuthLayoutSignUpRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/api/rpc/$": typeof ApiRpcSplatRoute;
+  "/dashboard/medicines": typeof DashboardDashboardLayoutMedicinesRoute;
+  "/dashboard/payments": typeof DashboardDashboardLayoutPaymentsRoute;
   "/dashboard/profile": typeof DashboardDashboardLayoutProfileRoute;
   "/dashboard/roles": typeof DashboardDashboardLayoutRolesRoute;
+  "/dashboard/sales": typeof DashboardDashboardLayoutSalesRoute;
   "/dashboard/": typeof DashboardDashboardLayoutIndexRoute;
+  "/dashboard/cash-closing/$cashClosingId": typeof DashboardDashboardLayoutCashClosingCashClosingIdRoute;
+  "/dashboard/customers/$customerId": typeof DashboardDashboardLayoutCustomersCustomerIdRoute;
+  "/dashboard/purchases/$purchaseId": typeof DashboardDashboardLayoutPurchasesPurchaseIdRoute;
+  "/dashboard/purchases/new": typeof DashboardDashboardLayoutPurchasesNewRoute;
   "/dashboard/settings": typeof DashboardDashboardLayoutSettingsSettingsLayoutRouteWithChildren;
   "/dashboard/users/$userId": typeof DashboardDashboardLayoutUsersUserIdRoute;
+  "/dashboard/vendors/$vendorId": typeof DashboardDashboardLayoutVendorsVendorIdRoute;
+  "/dashboard/cash-closing/": typeof DashboardDashboardLayoutCashClosingIndexRoute;
+  "/dashboard/customers/": typeof DashboardDashboardLayoutCustomersIndexRoute;
+  "/dashboard/purchases/": typeof DashboardDashboardLayoutPurchasesIndexRoute;
   "/dashboard/users/": typeof DashboardDashboardLayoutUsersIndexRoute;
+  "/dashboard/vendors/": typeof DashboardDashboardLayoutVendorsIndexRoute;
   "/dashboard/settings/connected-apps": typeof DashboardDashboardLayoutSettingsSettingsLayoutConnectedAppsRoute;
   "/dashboard/settings/profile": typeof DashboardDashboardLayoutSettingsSettingsLayoutProfileRoute;
   "/dashboard/settings/sessions": typeof DashboardDashboardLayoutSettingsSettingsLayoutSessionsRoute;
@@ -184,11 +280,23 @@ export interface FileRoutesByTo {
   "/sign-up": typeof authAuthLayoutSignUpRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/api/rpc/$": typeof ApiRpcSplatRoute;
+  "/dashboard/medicines": typeof DashboardDashboardLayoutMedicinesRoute;
+  "/dashboard/payments": typeof DashboardDashboardLayoutPaymentsRoute;
   "/dashboard/profile": typeof DashboardDashboardLayoutProfileRoute;
   "/dashboard/roles": typeof DashboardDashboardLayoutRolesRoute;
+  "/dashboard/sales": typeof DashboardDashboardLayoutSalesRoute;
   "/dashboard": typeof DashboardDashboardLayoutIndexRoute;
+  "/dashboard/cash-closing/$cashClosingId": typeof DashboardDashboardLayoutCashClosingCashClosingIdRoute;
+  "/dashboard/customers/$customerId": typeof DashboardDashboardLayoutCustomersCustomerIdRoute;
+  "/dashboard/purchases/$purchaseId": typeof DashboardDashboardLayoutPurchasesPurchaseIdRoute;
+  "/dashboard/purchases/new": typeof DashboardDashboardLayoutPurchasesNewRoute;
   "/dashboard/users/$userId": typeof DashboardDashboardLayoutUsersUserIdRoute;
+  "/dashboard/vendors/$vendorId": typeof DashboardDashboardLayoutVendorsVendorIdRoute;
+  "/dashboard/cash-closing": typeof DashboardDashboardLayoutCashClosingIndexRoute;
+  "/dashboard/customers": typeof DashboardDashboardLayoutCustomersIndexRoute;
+  "/dashboard/purchases": typeof DashboardDashboardLayoutPurchasesIndexRoute;
   "/dashboard/users": typeof DashboardDashboardLayoutUsersIndexRoute;
+  "/dashboard/vendors": typeof DashboardDashboardLayoutVendorsIndexRoute;
   "/dashboard/settings/connected-apps": typeof DashboardDashboardLayoutSettingsSettingsLayoutConnectedAppsRoute;
   "/dashboard/settings/profile": typeof DashboardDashboardLayoutSettingsSettingsLayoutProfileRoute;
   "/dashboard/settings/sessions": typeof DashboardDashboardLayoutSettingsSettingsLayoutSessionsRoute;
@@ -207,12 +315,24 @@ export interface FileRoutesById {
   "/(auth)/_authLayout/sign-up": typeof authAuthLayoutSignUpRoute;
   "/api/auth/$": typeof ApiAuthSplatRoute;
   "/api/rpc/$": typeof ApiRpcSplatRoute;
+  "/dashboard/_dashboardLayout/medicines": typeof DashboardDashboardLayoutMedicinesRoute;
+  "/dashboard/_dashboardLayout/payments": typeof DashboardDashboardLayoutPaymentsRoute;
   "/dashboard/_dashboardLayout/profile": typeof DashboardDashboardLayoutProfileRoute;
   "/dashboard/_dashboardLayout/roles": typeof DashboardDashboardLayoutRolesRoute;
+  "/dashboard/_dashboardLayout/sales": typeof DashboardDashboardLayoutSalesRoute;
   "/dashboard/_dashboardLayout/": typeof DashboardDashboardLayoutIndexRoute;
+  "/dashboard/_dashboardLayout/cash-closing/$cashClosingId": typeof DashboardDashboardLayoutCashClosingCashClosingIdRoute;
+  "/dashboard/_dashboardLayout/customers/$customerId": typeof DashboardDashboardLayoutCustomersCustomerIdRoute;
+  "/dashboard/_dashboardLayout/purchases/$purchaseId": typeof DashboardDashboardLayoutPurchasesPurchaseIdRoute;
+  "/dashboard/_dashboardLayout/purchases/new": typeof DashboardDashboardLayoutPurchasesNewRoute;
   "/dashboard/_dashboardLayout/settings/_settingsLayout": typeof DashboardDashboardLayoutSettingsSettingsLayoutRouteWithChildren;
   "/dashboard/_dashboardLayout/users/$userId": typeof DashboardDashboardLayoutUsersUserIdRoute;
+  "/dashboard/_dashboardLayout/vendors/$vendorId": typeof DashboardDashboardLayoutVendorsVendorIdRoute;
+  "/dashboard/_dashboardLayout/cash-closing/": typeof DashboardDashboardLayoutCashClosingIndexRoute;
+  "/dashboard/_dashboardLayout/customers/": typeof DashboardDashboardLayoutCustomersIndexRoute;
+  "/dashboard/_dashboardLayout/purchases/": typeof DashboardDashboardLayoutPurchasesIndexRoute;
   "/dashboard/_dashboardLayout/users/": typeof DashboardDashboardLayoutUsersIndexRoute;
+  "/dashboard/_dashboardLayout/vendors/": typeof DashboardDashboardLayoutVendorsIndexRoute;
   "/dashboard/_dashboardLayout/settings/_settingsLayout/connected-apps": typeof DashboardDashboardLayoutSettingsSettingsLayoutConnectedAppsRoute;
   "/dashboard/_dashboardLayout/settings/_settingsLayout/profile": typeof DashboardDashboardLayoutSettingsSettingsLayoutProfileRoute;
   "/dashboard/_dashboardLayout/settings/_settingsLayout/sessions": typeof DashboardDashboardLayoutSettingsSettingsLayoutSessionsRoute;
@@ -231,12 +351,24 @@ export interface FileRouteTypes {
     | "/sign-up"
     | "/api/auth/$"
     | "/api/rpc/$"
+    | "/dashboard/medicines"
+    | "/dashboard/payments"
     | "/dashboard/profile"
     | "/dashboard/roles"
+    | "/dashboard/sales"
     | "/dashboard/"
+    | "/dashboard/cash-closing/$cashClosingId"
+    | "/dashboard/customers/$customerId"
+    | "/dashboard/purchases/$purchaseId"
+    | "/dashboard/purchases/new"
     | "/dashboard/settings"
     | "/dashboard/users/$userId"
+    | "/dashboard/vendors/$vendorId"
+    | "/dashboard/cash-closing/"
+    | "/dashboard/customers/"
+    | "/dashboard/purchases/"
     | "/dashboard/users/"
+    | "/dashboard/vendors/"
     | "/dashboard/settings/connected-apps"
     | "/dashboard/settings/profile"
     | "/dashboard/settings/sessions"
@@ -252,11 +384,23 @@ export interface FileRouteTypes {
     | "/sign-up"
     | "/api/auth/$"
     | "/api/rpc/$"
+    | "/dashboard/medicines"
+    | "/dashboard/payments"
     | "/dashboard/profile"
     | "/dashboard/roles"
+    | "/dashboard/sales"
     | "/dashboard"
+    | "/dashboard/cash-closing/$cashClosingId"
+    | "/dashboard/customers/$customerId"
+    | "/dashboard/purchases/$purchaseId"
+    | "/dashboard/purchases/new"
     | "/dashboard/users/$userId"
+    | "/dashboard/vendors/$vendorId"
+    | "/dashboard/cash-closing"
+    | "/dashboard/customers"
+    | "/dashboard/purchases"
     | "/dashboard/users"
+    | "/dashboard/vendors"
     | "/dashboard/settings/connected-apps"
     | "/dashboard/settings/profile"
     | "/dashboard/settings/sessions"
@@ -274,12 +418,24 @@ export interface FileRouteTypes {
     | "/(auth)/_authLayout/sign-up"
     | "/api/auth/$"
     | "/api/rpc/$"
+    | "/dashboard/_dashboardLayout/medicines"
+    | "/dashboard/_dashboardLayout/payments"
     | "/dashboard/_dashboardLayout/profile"
     | "/dashboard/_dashboardLayout/roles"
+    | "/dashboard/_dashboardLayout/sales"
     | "/dashboard/_dashboardLayout/"
+    | "/dashboard/_dashboardLayout/cash-closing/$cashClosingId"
+    | "/dashboard/_dashboardLayout/customers/$customerId"
+    | "/dashboard/_dashboardLayout/purchases/$purchaseId"
+    | "/dashboard/_dashboardLayout/purchases/new"
     | "/dashboard/_dashboardLayout/settings/_settingsLayout"
     | "/dashboard/_dashboardLayout/users/$userId"
+    | "/dashboard/_dashboardLayout/vendors/$vendorId"
+    | "/dashboard/_dashboardLayout/cash-closing/"
+    | "/dashboard/_dashboardLayout/customers/"
+    | "/dashboard/_dashboardLayout/purchases/"
     | "/dashboard/_dashboardLayout/users/"
+    | "/dashboard/_dashboardLayout/vendors/"
     | "/dashboard/_dashboardLayout/settings/_settingsLayout/connected-apps"
     | "/dashboard/_dashboardLayout/settings/_settingsLayout/profile"
     | "/dashboard/_dashboardLayout/settings/_settingsLayout/sessions"
@@ -374,6 +530,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DashboardDashboardLayoutIndexRouteImport;
       parentRoute: typeof DashboardDashboardLayoutRoute;
     };
+    "/dashboard/_dashboardLayout/medicines": {
+      id: "/dashboard/_dashboardLayout/medicines";
+      path: "/medicines";
+      fullPath: "/dashboard/medicines";
+      preLoaderRoute: typeof DashboardDashboardLayoutMedicinesRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/payments": {
+      id: "/dashboard/_dashboardLayout/payments";
+      path: "/payments";
+      fullPath: "/dashboard/payments";
+      preLoaderRoute: typeof DashboardDashboardLayoutPaymentsRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
     "/dashboard/_dashboardLayout/profile": {
       id: "/dashboard/_dashboardLayout/profile";
       path: "/profile";
@@ -386,6 +556,62 @@ declare module "@tanstack/react-router" {
       path: "/roles";
       fullPath: "/dashboard/roles";
       preLoaderRoute: typeof DashboardDashboardLayoutRolesRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/sales": {
+      id: "/dashboard/_dashboardLayout/sales";
+      path: "/sales";
+      fullPath: "/dashboard/sales";
+      preLoaderRoute: typeof DashboardDashboardLayoutSalesRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/cash-closing/": {
+      id: "/dashboard/_dashboardLayout/cash-closing/";
+      path: "/cash-closing";
+      fullPath: "/dashboard/cash-closing/";
+      preLoaderRoute: typeof DashboardDashboardLayoutCashClosingIndexRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/cash-closing/$cashClosingId": {
+      id: "/dashboard/_dashboardLayout/cash-closing/$cashClosingId";
+      path: "/cash-closing/$cashClosingId";
+      fullPath: "/dashboard/cash-closing/$cashClosingId";
+      preLoaderRoute: typeof DashboardDashboardLayoutCashClosingCashClosingIdRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/customers/": {
+      id: "/dashboard/_dashboardLayout/customers/";
+      path: "/customers";
+      fullPath: "/dashboard/customers/";
+      preLoaderRoute: typeof DashboardDashboardLayoutCustomersIndexRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/customers/$customerId": {
+      id: "/dashboard/_dashboardLayout/customers/$customerId";
+      path: "/customers/$customerId";
+      fullPath: "/dashboard/customers/$customerId";
+      preLoaderRoute: typeof DashboardDashboardLayoutCustomersCustomerIdRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/purchases/": {
+      id: "/dashboard/_dashboardLayout/purchases/";
+      path: "/purchases";
+      fullPath: "/dashboard/purchases/";
+      preLoaderRoute: typeof DashboardDashboardLayoutPurchasesIndexRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/purchases/$purchaseId": {
+      id: "/dashboard/_dashboardLayout/purchases/$purchaseId";
+      path: "/purchases/$purchaseId";
+      fullPath: "/dashboard/purchases/$purchaseId";
+      preLoaderRoute: typeof DashboardDashboardLayoutPurchasesPurchaseIdRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/purchases/new": {
+      id: "/dashboard/_dashboardLayout/purchases/new";
+      path: "/purchases/new";
+      fullPath: "/dashboard/purchases/new";
+      preLoaderRoute: typeof DashboardDashboardLayoutPurchasesNewRouteImport;
       parentRoute: typeof DashboardDashboardLayoutRoute;
     };
     "/dashboard/_dashboardLayout/settings/_settingsLayout": {
@@ -407,6 +633,20 @@ declare module "@tanstack/react-router" {
       path: "/users/$userId";
       fullPath: "/dashboard/users/$userId";
       preLoaderRoute: typeof DashboardDashboardLayoutUsersUserIdRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/vendors/": {
+      id: "/dashboard/_dashboardLayout/vendors/";
+      path: "/vendors";
+      fullPath: "/dashboard/vendors/";
+      preLoaderRoute: typeof DashboardDashboardLayoutVendorsIndexRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
+    "/dashboard/_dashboardLayout/vendors/$vendorId": {
+      id: "/dashboard/_dashboardLayout/vendors/$vendorId";
+      path: "/vendors/$vendorId";
+      fullPath: "/dashboard/vendors/$vendorId";
+      preLoaderRoute: typeof DashboardDashboardLayoutVendorsVendorIdRouteImport;
       parentRoute: typeof DashboardDashboardLayoutRoute;
     };
     "/dashboard/_dashboardLayout/settings/_settingsLayout/": {
@@ -495,25 +735,60 @@ const DashboardDashboardLayoutSettingsSettingsLayoutRouteWithChildren =
   );
 
 interface DashboardDashboardLayoutRouteChildren {
+  DashboardDashboardLayoutMedicinesRoute: typeof DashboardDashboardLayoutMedicinesRoute;
+  DashboardDashboardLayoutPaymentsRoute: typeof DashboardDashboardLayoutPaymentsRoute;
   DashboardDashboardLayoutProfileRoute: typeof DashboardDashboardLayoutProfileRoute;
   DashboardDashboardLayoutRolesRoute: typeof DashboardDashboardLayoutRolesRoute;
+  DashboardDashboardLayoutSalesRoute: typeof DashboardDashboardLayoutSalesRoute;
   DashboardDashboardLayoutIndexRoute: typeof DashboardDashboardLayoutIndexRoute;
+  DashboardDashboardLayoutCashClosingCashClosingIdRoute: typeof DashboardDashboardLayoutCashClosingCashClosingIdRoute;
+  DashboardDashboardLayoutCustomersCustomerIdRoute: typeof DashboardDashboardLayoutCustomersCustomerIdRoute;
+  DashboardDashboardLayoutPurchasesPurchaseIdRoute: typeof DashboardDashboardLayoutPurchasesPurchaseIdRoute;
+  DashboardDashboardLayoutPurchasesNewRoute: typeof DashboardDashboardLayoutPurchasesNewRoute;
   DashboardDashboardLayoutSettingsSettingsLayoutRoute: typeof DashboardDashboardLayoutSettingsSettingsLayoutRouteWithChildren;
   DashboardDashboardLayoutUsersUserIdRoute: typeof DashboardDashboardLayoutUsersUserIdRoute;
+  DashboardDashboardLayoutVendorsVendorIdRoute: typeof DashboardDashboardLayoutVendorsVendorIdRoute;
+  DashboardDashboardLayoutCashClosingIndexRoute: typeof DashboardDashboardLayoutCashClosingIndexRoute;
+  DashboardDashboardLayoutCustomersIndexRoute: typeof DashboardDashboardLayoutCustomersIndexRoute;
+  DashboardDashboardLayoutPurchasesIndexRoute: typeof DashboardDashboardLayoutPurchasesIndexRoute;
   DashboardDashboardLayoutUsersIndexRoute: typeof DashboardDashboardLayoutUsersIndexRoute;
+  DashboardDashboardLayoutVendorsIndexRoute: typeof DashboardDashboardLayoutVendorsIndexRoute;
 }
 
 const DashboardDashboardLayoutRouteChildren: DashboardDashboardLayoutRouteChildren =
   {
+    DashboardDashboardLayoutMedicinesRoute:
+      DashboardDashboardLayoutMedicinesRoute,
+    DashboardDashboardLayoutPaymentsRoute:
+      DashboardDashboardLayoutPaymentsRoute,
     DashboardDashboardLayoutProfileRoute: DashboardDashboardLayoutProfileRoute,
     DashboardDashboardLayoutRolesRoute: DashboardDashboardLayoutRolesRoute,
+    DashboardDashboardLayoutSalesRoute: DashboardDashboardLayoutSalesRoute,
     DashboardDashboardLayoutIndexRoute: DashboardDashboardLayoutIndexRoute,
+    DashboardDashboardLayoutCashClosingCashClosingIdRoute:
+      DashboardDashboardLayoutCashClosingCashClosingIdRoute,
+    DashboardDashboardLayoutCustomersCustomerIdRoute:
+      DashboardDashboardLayoutCustomersCustomerIdRoute,
+    DashboardDashboardLayoutPurchasesPurchaseIdRoute:
+      DashboardDashboardLayoutPurchasesPurchaseIdRoute,
+    DashboardDashboardLayoutPurchasesNewRoute:
+      DashboardDashboardLayoutPurchasesNewRoute,
     DashboardDashboardLayoutSettingsSettingsLayoutRoute:
       DashboardDashboardLayoutSettingsSettingsLayoutRouteWithChildren,
     DashboardDashboardLayoutUsersUserIdRoute:
       DashboardDashboardLayoutUsersUserIdRoute,
+    DashboardDashboardLayoutVendorsVendorIdRoute:
+      DashboardDashboardLayoutVendorsVendorIdRoute,
+    DashboardDashboardLayoutCashClosingIndexRoute:
+      DashboardDashboardLayoutCashClosingIndexRoute,
+    DashboardDashboardLayoutCustomersIndexRoute:
+      DashboardDashboardLayoutCustomersIndexRoute,
+    DashboardDashboardLayoutPurchasesIndexRoute:
+      DashboardDashboardLayoutPurchasesIndexRoute,
     DashboardDashboardLayoutUsersIndexRoute:
       DashboardDashboardLayoutUsersIndexRoute,
+    DashboardDashboardLayoutVendorsIndexRoute:
+      DashboardDashboardLayoutVendorsIndexRoute,
   };
 
 const DashboardDashboardLayoutRouteWithChildren =
