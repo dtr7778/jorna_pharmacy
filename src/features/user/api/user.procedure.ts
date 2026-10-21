@@ -13,7 +13,6 @@ import {
 } from "drizzle-orm";
 
 import { API_MESSAGES } from "@/constants/apiMessage";
-import { buildPaginateOptions, buildPaginationMeta } from "@/db/paginate-query";
 import {
   RoleTable,
   UserDeviceTable,
@@ -22,6 +21,7 @@ import {
   UserSessionTable,
   UserTable,
 } from "@/db/schemas";
+import { buildPaginateOptions, buildPaginationMeta } from "@/db/utils";
 import { auth } from "@/features/auth/auth.server";
 import { apiResponse } from "@/lib/apiResponse";
 import {

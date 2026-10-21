@@ -7,7 +7,7 @@ import {
   db_date,
   db_id,
   db_updated_at,
-} from "../schemas/db-utils";
+} from "../../schemas/db-utils";
 import { buildPaginateOptions } from "./buildPaginateOptions";
 
 describe("buildPaginateOptions", () => {

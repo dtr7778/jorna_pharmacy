@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
-import type { PaginationMeta } from "@/db/paginate-query";
+import type { PaginationMeta } from "@/db/utils";
 
 import { Button } from "./ui/button";
 import {
