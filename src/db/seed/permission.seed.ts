@@ -249,6 +249,50 @@ const systemPermissions: CreatePermissionType[] = [
     description: "Export purchase return records",
   },
 
+  // Medicine
+  {
+    level: "system",
+    resource: "medicine",
+    action: "create",
+    description: "Add new medicines to the catalog",
+  },
+  {
+    level: "system",
+    resource: "medicine",
+    action: "read",
+    description: "View medicine details",
+  },
+  {
+    level: "system",
+    resource: "medicine",
+    action: "list",
+    description: "List medicines with filters and pagination",
+  },
+  {
+    level: "system",
+    resource: "medicine",
+    action: "update",
+    description: "Edit medicine details",
+  },
+  {
+    level: "system",
+    resource: "medicine",
+    action: "delete",
+    description: "Deactivate or remove medicines",
+  },
+  {
+    level: "system",
+    resource: "medicine",
+    action: "manage",
+    description: "Full access to medicine management",
+  },
+  {
+    level: "system",
+    resource: "medicine",
+    action: "export",
+    description: "Export medicine records",
+  },
+
   // Vendor
   {
     level: "system",

@@ -5,7 +5,7 @@ import { seedRoles } from "../roles.seed";
 import { seedDbClient } from "../seed-db.client";
 import { seedCustomerPayments, seedCustomers } from "./customer.seed";
 import {
-  seedDailyClosings,
+  seedCashClosings,
   seedExpenseCategories,
   seedExpenses,
   seedSalaryPayments,
@@ -65,7 +65,7 @@ async function main() {
     const expenseCategories = await seedExpenseCategories(db);
     await seedExpenses(db, { categories: expenseCategories, users });
     await seedSalaryPayments(db, users);
-    await seedDailyClosings(db, users);
+    await seedCashClosings(db, users);
 
     await seedStockMovements(db, {
       purchases,

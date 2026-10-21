@@ -75,9 +75,9 @@ export async function seedSales(
         medicineId: batch.medicineId,
         purchaseItemId: batch.id,
         qty,
-        unitPrice: batch.sellPricePerUnit,
+        unitPrice: batch.sellPerUnit,
         unitCost: batch.costPerUnit,
-        lineTotal: qty * batch.sellPricePerUnit,
+        lineTotal: qty * batch.sellPerUnit,
         createdAt,
       });
     }

@@ -305,6 +305,10 @@ export async function seedMedicines(
         ? faker.string.numeric({ length: 13 })
         : null,
       rackLocation: `R${faker.number.int({ min: 1, max: 12 })}-S${faker.number.int({ min: 1, max: 6 })}`,
+      minimumStock:
+        medicine.type === "tablet" || medicine.type === "capsule"
+          ? faker.number.int({ min: 50, max: 200 })
+          : faker.number.int({ min: 5, max: 25 }),
       isActive: true,
     })
   );

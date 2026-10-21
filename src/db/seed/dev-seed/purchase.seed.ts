@@ -12,6 +12,7 @@ import type {
   VendorDataModel,
 } from "../../schemas";
 import {
+  PurchaseInvoiceTable,
   PurchaseItemTable,
   PurchaseReturnItemTable,
   PurchaseReturnTable,
@@ -21,6 +22,7 @@ import { addDays, daysAgo, insertChunkedReturning } from "../seed-utils";
 import { seedConfigs } from "../seed.config";
 
 type PurchaseInsert = typeof PurchaseTable.$inferInsert;
+type PurchaseInvoiceInsert = typeof PurchaseInvoiceTable.$inferInsert;
 type PurchaseItemInsert = typeof PurchaseItemTable.$inferInsert;
 type PurchaseReturnInsert = typeof PurchaseReturnTable.$inferInsert;
 type PurchaseReturnItemInsert = typeof PurchaseReturnItemTable.$inferInsert;
@@ -51,10 +53,12 @@ export async function seedPurchases(
 
   const purchasesData: Array<PurchaseInsert> = [];
   const purchaseItemsData: Array<PurchaseItemInsert> = [];
+  const invoicesData: Array<PurchaseInvoiceInsert> = [];
   const vendorInvoiceCounters = new Map<string, number>();
 
   for (let i = 1; i <= seedConfigs.targets.purchases; i++) {
     const purchaseId = crypto.randomUUID();
+    const invoiceId = crypto.randomUUID();
     const createdAt = faker.date.between({
       from: daysAgo(180),
       to: daysAgo(90),
@@ -85,7 +89,7 @@ export async function seedPurchases(
           qtyPurchased,
           qtyRemaining: qtyPurchased,
           costPerUnit,
-          sellPricePerUnit: Math.ceil(
+          sellPerUnit: Math.ceil(
             costPerUnit * faker.number.float({ min: 1.1, max: 1.4 })
           ),
           expiryDate: addDays(
@@ -106,10 +110,16 @@ export async function seedPurchases(
     });
     const totalAmount = subtotal - discount;
 
+    invoicesData.push({
+      id: invoiceId,
+      number: String(i).padStart(4, "0"),
+      isLinked: true,
+      createdAt,
+    });
     purchasesData.push({
       id: purchaseId,
       vendorId: vendor.id,
-      invoiceNo: `PI-${String(i).padStart(5, "0")}`,
+      invoiceId,
       vendorInvoiceNo,
       subtotal,
       discount,
@@ -124,6 +134,9 @@ export async function seedPurchases(
     purchaseItemsData.push(...items);
   }
 
+  await insertChunkedReturning(invoicesData, (chunk) =>
+    db.insert(PurchaseInvoiceTable).values(chunk).returning()
+  );
   const purchases = await insertChunkedReturning(purchasesData, (chunk) =>
     db.insert(PurchaseTable).values(chunk).returning()
   );

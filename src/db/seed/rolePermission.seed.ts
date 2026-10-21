@@ -49,6 +49,10 @@ const employeePermissions: Array<PermissionType> = [
   { level: "system", resource: "customer_payment", action: "create" },
   { level: "system", resource: "customer_payment", action: "read" },
   { level: "system", resource: "customer_payment", action: "list" },
+
+  // Medicine catalog (view only)
+  { level: "system", resource: "medicine", action: "read" },
+  { level: "system", resource: "medicine", action: "list" },
 ];
 
 /**
@@ -74,6 +78,7 @@ const adminPermissions: Array<PermissionType> = [
   { level: "system", resource: "purchase_return", action: "manage" },
   { level: "system", resource: "vendor", action: "manage" },
   { level: "system", resource: "vendor_payment", action: "manage" },
+  { level: "system", resource: "medicine", action: "manage" },
   { level: "system", resource: "customer", action: "manage" },
   { level: "system", resource: "customer_payment", action: "manage" },
   { level: "system", resource: "sale", action: "manage" },
