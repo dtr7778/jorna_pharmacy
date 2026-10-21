@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { useSettingStore } from "./settingStore";
 
-const STORAGE_KEY = "dashboard-settings";
+const STORAGE_KEY = "settings";
 
 function resetStore() {
   useSettingStore.setState({
