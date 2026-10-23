@@ -2,7 +2,11 @@ import { implement } from "@orpc/server";
 import { desc, eq, sql } from "drizzle-orm";
 
 import { API_MESSAGES } from "@/constants/apiMessage";
-import { CashClosingTable, UserTable } from "@/db/schemas";
+import {
+  CashClosingTable,
+  UserTable,
+  type InsertCashClosing,
+} from "@/db/schemas";
 import { buildPaginateOptions, buildPaginationMeta } from "@/db/utils";
 import { apiResponse } from "@/lib/apiResponse";
 import {
@@ -22,29 +26,13 @@ export const cashClosingImpl = implement(cashClosingContract)
 export const listCashClosingProcedure = cashClosingImpl.list
   .use(
     userPermissionMiddleware([
-      { level: "system", resource: "report", action: "manage" },
-      { level: "system", resource: "report", action: "list" },
+      { level: "system", resource: "cash_closing", action: "manage" },
+      { level: "system", resource: "cash_closing", action: "list" },
     ])
   )
   .handler(async ({ context, input }) => {
     const { where, page, orderBy, offset, limit } = buildPaginateOptions(
-      {
-        periodStart: CashClosingTable.periodStart,
-        periodEnd: CashClosingTable.periodEnd,
-        openingCash: CashClosingTable.openingCash,
-        totalSales: CashClosingTable.totalSales,
-        totalReturns: CashClosingTable.totalReturns,
-        cashReceived: CashClosingTable.cashReceived,
-        vendorPaid: CashClosingTable.vendorPaid,
-        totalExpenses: CashClosingTable.totalExpenses,
-        totalSalary: CashClosingTable.totalSalary,
-        expectedCash: CashClosingTable.expectedCash,
-        countedCash: CashClosingTable.countedCash,
-        difference: CashClosingTable.difference,
-        closedByName: UserTable.name,
-        note: CashClosingTable.note,
-        createdAt: CashClosingTable.createdAt,
-      },
+      {},
       input
     );
 
@@ -92,4 +80,34 @@ export const listCashClosingProcedure = cashClosingImpl.list
       meta: buildPaginationMeta(totalCount, cashClosings.length, page, limit),
       data: cashClosings,
     });
+  });
+
+export const cashClosingCreateProcedure = cashClosingImpl.create
+  .use(
+    userPermissionMiddleware([
+      { level: "system", resource: "cash_closing", action: "manage" },
+      { level: "system", resource: "cash_closing", action: "list" },
+    ])
+  )
+  .handler(async ({ context, input }) => {
+    const now = new Date();
+
+    const startOfDay = new Date(now);
+    startOfDay.setUTCHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(now);
+    endOfDay.setUTCHours(23, 59, 59, 999);
+
+    const [cashClosing] = await context.db
+      .insert(CashClosingTable)
+      .values({
+        totalSalary: Number(input.totalSalary),
+        totalSales: Number(input.totalSales),
+        cashReceived: Number(input.totalSales),
+        periodStart: startOfDay,
+        periodEnd: endOfDay,
+      } satisfies InsertCashClosing)
+      .returning();
+
+    return apiResponse(API_MESSAGES.CASH_CLOSING.CREATE, cashClosing!);
   });
