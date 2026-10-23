@@ -13,8 +13,8 @@ export const RESOURCE_TYPE = [
   "customer",
   "customer_payment",
   "sale",
-  "sale_return",
   "salary",
+  "cash_closing",
 ] as const;
 export const ACTION_TYPE = [
   "create",

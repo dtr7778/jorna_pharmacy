@@ -16,8 +16,6 @@ import { insertChunkedReturning } from "./seed-utils";
 const userPermissions: Array<PermissionType> = [
   { level: "self", resource: "user", action: "read" },
   { level: "self", resource: "user", action: "update" },
-  { level: "self", resource: "customer", action: "read" },
-  { level: "self", resource: "customer", action: "update" },
 ];
 
 /**
@@ -37,9 +35,6 @@ const employeePermissions: Array<PermissionType> = [
   { level: "system", resource: "sale", action: "create" },
   { level: "system", resource: "sale", action: "read" },
   { level: "system", resource: "sale", action: "list" },
-  { level: "system", resource: "sale_return", action: "create" },
-  { level: "system", resource: "sale_return", action: "read" },
-  { level: "system", resource: "sale_return", action: "list" },
 
   // Customer management
   { level: "system", resource: "customer", action: "create" },
@@ -82,7 +77,7 @@ const adminPermissions: Array<PermissionType> = [
   { level: "system", resource: "customer", action: "manage" },
   { level: "system", resource: "customer_payment", action: "manage" },
   { level: "system", resource: "sale", action: "manage" },
-  { level: "system", resource: "sale_return", action: "manage" },
+  { level: "system", resource: "cash_closing", action: "manage" },
   { level: "system", resource: "salary", action: "manage" },
 ];
 

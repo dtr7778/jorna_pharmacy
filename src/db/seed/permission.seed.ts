@@ -516,45 +516,39 @@ const systemPermissions: CreatePermissionType[] = [
   // Sale Return
   {
     level: "system",
-    resource: "sale_return",
+    resource: "cash_closing",
     action: "create",
-    description: "Process customer sale returns and refunds",
+    description: "Process cash closing",
   },
   {
     level: "system",
-    resource: "sale_return",
+    resource: "cash_closing",
     action: "read",
-    description: "View sale return details",
+    description: "View cash closing details",
   },
   {
     level: "system",
-    resource: "sale_return",
+    resource: "cash_closing",
     action: "list",
-    description: "List sale returns with filters and pagination",
+    description: "List cash clsing with filters and pagination",
   },
   {
     level: "system",
-    resource: "sale_return",
+    resource: "cash_closing",
     action: "update",
-    description: "Edit pending sale returns",
+    description: "Edit cash closing",
   },
   {
     level: "system",
-    resource: "sale_return",
-    action: "delete",
-    description: "Delete sale returns",
-  },
-  {
-    level: "system",
-    resource: "sale_return",
+    resource: "cash_closing",
     action: "manage",
-    description: "Full access to sale return management",
+    description: "Full access to cash closing management",
   },
   {
     level: "system",
-    resource: "sale_return",
+    resource: "cash_closing",
     action: "export",
-    description: "Export sale return records",
+    description: "Export cash clsing records",
   },
 
   // Salary
