@@ -11,7 +11,7 @@ export function SidebarLogo() {
         size="lg"
         className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         render={
-          <Link to="/">
+          <Link to="/dashboard">
             <span className="flex aspect-square size-8 items-center justify-center">
               <img src="/sitelogo.png" alt={`${env.VITE_APP_NAME} logo`} />
             </span>
