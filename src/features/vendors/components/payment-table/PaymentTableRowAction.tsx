@@ -4,7 +4,7 @@ import { Eye } from "lucide-react";
 import DataTableRowMenu from "@/components/data-table/data-table-row-menu";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
-import type { ListVendorPaymentsContractType } from "../../api/vendorPyament.contract";
+import type { ListVendorPaymentsContractType } from "../../api/vendorPayment.contract";
 
 export function PaymentTableRowAction({
   paymentData,

@@ -3,7 +3,7 @@ import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { useDataTable } from "@/hooks/use-data-table";
 import type { FiltersType } from "@/types/data-table";
 
-import type { ListVendorPaymentsContractType } from "../../api/vendorPyament.contract";
+import type { ListVendorPaymentsContractType } from "../../api/vendorPayment.contract";
 import { paymentTableColumn } from "./paymentTableColumn";
 
 interface PaymentTableProps {

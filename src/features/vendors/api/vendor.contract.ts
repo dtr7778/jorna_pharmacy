@@ -9,7 +9,7 @@ import { baseContract } from "@/server/orpc.contract-base";
 import type { InferContractRouterType } from "@/types/orpc.types";
 
 import { vendorCreateSchema, vendorUpdateSchema } from "../vendor.schema";
-import { vendorPaymentContract } from "./vendorPyament.contract";
+import { vendorPaymentContract } from "./vendorPayment.contract";
 
 const vendorBaseContract = baseContract.errors({
   NOT_FOUND: {

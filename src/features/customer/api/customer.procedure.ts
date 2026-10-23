@@ -285,9 +285,11 @@ export const listCustomerPaymentsProcedure = customerImpl.payment.list
       paginateInput
     );
 
-    const whereSql: Array<SQL> = [
-      eq(CustomerPaymentTable.customerId, customerId),
-    ];
+    const whereSql: Array<SQL> = [];
+
+    if (customerId) {
+      whereSql.push(eq(CustomerPaymentTable.customerId, customerId));
+    }
 
     if (where) {
       whereSql.push(where);
@@ -388,4 +390,55 @@ export const createCustomerPaymentProcedure = customerImpl.payment.create
     }
 
     return apiResponse(API_MESSAGES.CUSTOMER.PAYMENT.CREATE, payment);
+  });
+
+export const customerPaymentStatsProcedure = customerImpl.payment.stats
+  .use(
+    userPermissionMiddleware([
+      { level: "system", resource: "customer_payment", action: "manage" },
+      { level: "system", resource: "customer_payment", action: "read" },
+    ])
+  )
+  .handler(async ({ context, input }) => {
+    const { where } = buildPaginateOptions(
+      {
+        createdAt: CustomerPaymentTable.createdAt,
+      },
+      input
+    );
+
+    const customerCondition =
+      input.customerId !== undefined
+        ? eq(CustomerPaymentTable.customerId, input.customerId)
+        : undefined;
+
+    // Same for the second query
+    const customerSaleCondition =
+      input.customerId !== undefined
+        ? eq(SaleTable.customerId, input.customerId)
+        : undefined;
+
+    const [paymentTotals, dueTotals] = await Promise.all([
+      context.db
+        .select({
+          total: sql<number>`COALESCE(SUM(${CustomerPaymentTable.amount}), 0)`,
+          count: sql<number>`COUNT(*)`,
+        })
+        .from(CustomerPaymentTable)
+        .where(and(customerCondition, where)),
+      context.db
+        .select({
+          total: sql<number>`COALESCE(SUM(${SaleTable.totalAmount}), 0)`,
+          count: sql<number>`COUNT(*)`,
+          lastPurchaseAt: sql<number | null>`MAX(${SaleTable.createdAt})`,
+        })
+        .from(SaleTable)
+        .where(customerSaleCondition),
+    ]);
+
+    return apiResponse(API_MESSAGES.CUSTOMER.PAYMENT.GET_STATS, {
+      totalPaid: Number(paymentTotals[0]?.total ?? 0),
+      dueAmount: Number(dueTotals[0]?.total ?? 0),
+      paymentCount: Number(paymentTotals[0]?.count ?? 0),
+    });
   });

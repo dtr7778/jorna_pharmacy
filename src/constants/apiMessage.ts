@@ -53,6 +53,7 @@ export const API_MESSAGES = {
       CREATE: "Customer payment recorded successfully.",
       NOT_CREATE: "Failed to record customer payment. Please try again.",
       EXCEEDS_BALANCE: "Payment amount exceeds the remaining sale balance.",
+      GET_STATS: "Payment stats loaded successfully.",
     },
   },
   SALE: {

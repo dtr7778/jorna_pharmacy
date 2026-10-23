@@ -30,6 +30,12 @@ export function useCreateCustomerPayment<TFieldNames>({
             exact: false,
           }),
           queryClient.invalidateQueries({
+            queryKey: orpcTQClient.customer.payment.stats.queryKey({
+              input: { customerId },
+            }),
+            exact: false,
+          }),
+          queryClient.invalidateQueries({
             queryKey: orpcTQClient.customer.details.queryKey({
               input: { customerId },
             }),

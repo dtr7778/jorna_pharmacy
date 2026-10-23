@@ -172,7 +172,7 @@ const listCustomerPaymentsContract = customerPaymentBaseContract
           })
           .optional(),
       }),
-    }).extend({ customerId: z.uuid() })
+    }).extend({ customerId: z.uuid().optional() })
   )
   .output(apiOutputSchema(paginateOutputSchema(customerPaymentListRowSchema)));
 export type ListCustomerPaymentsContractType = InferContractRouterType<
@@ -191,6 +191,45 @@ export type CreateCustomerPaymentContractType = InferContractRouterType<
   typeof createCustomerPaymentContract
 >;
 
+const customerPaymentStatsContract = customerPaymentBaseContract
+  .route({
+    method: "GET",
+    path: "/customers/payments/stats",
+    description: "Get customer payment stats",
+    tags,
+  })
+  .input(
+    z
+      .object({
+        filter: z
+          .object({
+            createdAt: z
+              .object({
+                from: z.coerce
+                  .date()
+                  .describe("Created at from date")
+                  .optional(),
+                to: z.coerce.date().describe("Created at to date").optional(),
+              })
+              .optional(),
+          })
+          .optional(),
+      })
+      .extend({ customerId: z.uuid().optional() })
+  )
+  .output(
+    apiOutputSchema(
+      z.object({
+        totalPaid: z.number(),
+        dueAmount: z.number(),
+        paymentCount: z.number(),
+      })
+    )
+  );
+export type CustomerPaymentStatsContractType = InferContractRouterType<
+  typeof customerPaymentStatsContract
+>;
+
 export const customerContract = {
   list: listCustomerContract,
   listForSearch: listCustomerForSearchContract,
@@ -200,5 +239,6 @@ export const customerContract = {
   payment: {
     list: listCustomerPaymentsContract,
     create: createCustomerPaymentContract,
+    stats: customerPaymentStatsContract,
   },
 };

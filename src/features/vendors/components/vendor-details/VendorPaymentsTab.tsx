@@ -30,7 +30,7 @@ import { usePermissionCheck } from "@/hooks/use-permission-check";
 import { orpcTQClient } from "@/server/orpc";
 import { formatCurrency } from "@/utils/formatCurrency";
 
-import type { ListVendorPaymentsContractType } from "../../api/vendorPyament.contract";
+import type { ListVendorPaymentsContractType } from "../../api/vendorPayment.contract";
 
 export function VendorPaymentsTab({ vendorId }: { vendorId: string }) {
   const [page, setPage] = useState(1);

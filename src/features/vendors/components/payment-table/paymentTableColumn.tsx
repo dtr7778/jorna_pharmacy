@@ -5,7 +5,7 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import type { ColumnType } from "@/types/data-table";
 import { formatCurrency } from "@/utils/formatCurrency";
 
-import type { ListVendorPaymentsContractType } from "../../api/vendorPyament.contract";
+import type { ListVendorPaymentsContractType } from "../../api/vendorPayment.contract";
 import { PaymentTableRowAction } from "./PaymentTableRowAction";
 
 type PaymentTableRowDataType =

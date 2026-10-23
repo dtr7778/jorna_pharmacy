@@ -3,6 +3,7 @@ import {
   createCustomerProcedure,
   customerDetailsProcedure,
   customerImpl,
+  customerPaymentStatsProcedure,
   listCustomerForSearchProcedure,
   listCustomerPaymentsProcedure,
   listCustomerProcedure,
@@ -18,5 +19,6 @@ export const customerRouter = customerImpl.router({
   payment: {
     list: listCustomerPaymentsProcedure,
     create: createCustomerPaymentProcedure,
+    stats: customerPaymentStatsProcedure,
   },
 });
