@@ -170,8 +170,19 @@ export const vendorPaymentStatsProcedure = vendorImpl.payment.stats
       {
         createdAt: VendorPaymentTable.createdAt,
       },
-      { filter: input.filter }
+      input
     );
+
+    const vendorCondition =
+      input.vendorId !== undefined
+        ? eq(VendorPaymentTable.vendorId, input.vendorId)
+        : undefined;
+
+    // Same for the second query
+    const purchaseVendorCondition =
+      input.vendorId !== undefined
+        ? eq(PurchaseTable.vendorId, input.vendorId)
+        : undefined;
 
     const [paymentTotals, dueTotals] = await Promise.all([
       context.db
@@ -180,12 +191,13 @@ export const vendorPaymentStatsProcedure = vendorImpl.payment.stats
           count: sql<number>`COUNT(*)`,
         })
         .from(VendorPaymentTable)
-        .where(where),
+        .where(and(vendorCondition, where)),
       context.db
         .select({
           total: sql<number>`COALESCE(SUM(${PurchaseTable.totalAmount} - ${PurchaseTable.paidAmount}), 0)`,
         })
-        .from(PurchaseTable),
+        .from(PurchaseTable)
+        .where(purchaseVendorCondition),
     ]);
 
     return apiResponse(API_MESSAGES.VENDOR.PAYMENT.GET_STATS, {

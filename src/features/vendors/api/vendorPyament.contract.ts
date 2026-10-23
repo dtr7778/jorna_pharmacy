@@ -95,18 +95,23 @@ const vendorPaymentStatsContract = vendorPaymentBaseContract
     tags,
   })
   .input(
-    z.object({
-      filter: z
-        .object({
-          createdAt: z
-            .object({
-              from: z.coerce.date().describe("Created at from date").optional(),
-              to: z.coerce.date().describe("Created at to date").optional(),
-            })
-            .optional(),
-        })
-        .optional(),
-    })
+    z
+      .object({
+        filter: z
+          .object({
+            createdAt: z
+              .object({
+                from: z.coerce
+                  .date()
+                  .describe("Created at from date")
+                  .optional(),
+                to: z.coerce.date().describe("Created at to date").optional(),
+              })
+              .optional(),
+          })
+          .optional(),
+      })
+      .extend({ vendorId: z.uuid().optional() })
   )
   .output(
     apiOutputSchema(

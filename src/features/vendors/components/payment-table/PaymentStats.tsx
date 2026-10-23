@@ -15,14 +15,20 @@ import { buildDateRangeFilter } from "@/utils/buildDateRangeFilter";
 import { formatCurrency } from "@/utils/formatCurrency";
 
 interface PaymentStatsProps {
+  vendorId?: string | undefined;
   startTime?: string | null;
   endTime?: string | null;
 }
 
-export function PaymentStats({ startTime, endTime }: PaymentStatsProps) {
+export function PaymentStats({
+  vendorId,
+  startTime,
+  endTime,
+}: PaymentStatsProps) {
   const { data, isLoading, isError, error } = useQuery(
     orpcTQClient.vendor.payment.stats.queryOptions({
       input: {
+        vendorId,
         filter: {
           createdAt: buildDateRangeFilter(startTime, endTime),
         },

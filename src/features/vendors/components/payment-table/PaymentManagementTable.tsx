@@ -27,6 +27,7 @@ export function PaymentManagementTable({
 }) {
   "use no memo";
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
+
   const { filters, setFilters, setSearchFilter } = useQuerySearch(
     "/dashboard/_dashboardLayout/payments"
   );
@@ -40,6 +41,7 @@ export function PaymentManagementTable({
         searchFields,
         order: filters.order,
         orderField: filters.orderField,
+        vendorId: filters.vendorId,
         filter: {
           createdAt: buildDateRangeFilter(filters.startTime, filters.endTime),
         },
@@ -74,7 +76,11 @@ export function PaymentManagementTable({
             })
           }
         />
-        <PaymentStats startTime={filters.startTime} endTime={filters.endTime} />
+        <PaymentStats
+          vendorId={filters.vendorId}
+          startTime={filters.startTime}
+          endTime={filters.endTime}
+        />
         <DataTableGlobalSearch
           searchValue={filters.search}
           setSearchValue={globalSearch}
@@ -125,6 +131,7 @@ export function PaymentManagementTable({
 
       {isAllowCreate && (
         <VendorPaymentCreateDialog
+          vendorId={filters.vendorId}
           open={openCreateDialog}
           setOpen={setOpenCreateDialog}
         />
