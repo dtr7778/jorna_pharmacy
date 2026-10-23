@@ -69,7 +69,7 @@ export function VendorDetailsTab({ vendorId }: { vendorId: string }) {
             <Card className="lg:col-span-2">
               <CardHeader>
                 <CardTitle>Contact & location</CardTitle>
-                <CardDescription>Vendor contact info</CardDescription>
+                <CardDescription>Company contact info</CardDescription>
                 <CardAction>
                   {isAllowUpdate && (
                     <Button

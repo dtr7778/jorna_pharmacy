@@ -2,12 +2,10 @@ import {
   Banknote,
   BuildingComplex,
   Contact,
+  CreditCard,
   House,
-  Pill,
-  ReceiptText,
   Settings,
   ShieldUser,
-  ShoppingCart,
   User,
   UsersRound,
 } from "lucide-react";
@@ -43,13 +41,13 @@ export const sidebarMenuLinks: Array<SidebarGroupMenuLinkType> = [
   {
     groupName: "Sales",
     items: [
-      {
-        title: "Sales",
-        path: "/dashboard/sales",
-        pathRegex: /^\/dashboard\/sales\/?$/,
-        permissions: manageOrList("sale"),
-        icon: <ReceiptText />,
-      },
+      // {
+      //   title: "Sales",
+      //   path: "/dashboard/sales",
+      //   pathRegex: /^\/dashboard\/sales\/?$/,
+      //   permissions: manageOrList("sale"),
+      //   icon: <ReceiptText />,
+      // },
       {
         title: "Customers",
         path: "/dashboard/customers",
@@ -57,41 +55,48 @@ export const sidebarMenuLinks: Array<SidebarGroupMenuLinkType> = [
         permissions: manageOrList("customer"),
         icon: <Contact />,
       },
-    ],
-  },
-  {
-    groupName: "Inventory",
-    items: [
       {
-        title: "Medicines",
-        path: "/dashboard/medicines",
-        pathRegex: /^\/dashboard\/medicines\/?$/,
-        permissions: manageOrList("medicine"),
-        icon: <Pill />,
-      },
-      {
-        title: "Purchases",
-        path: "/dashboard/purchases",
-        pathRegex: /^\/dashboard\/purchases(?:\/.*)?$/,
-        permissions: manageOrList("purchase"),
-        icon: <ShoppingCart />,
+        title: "Daily sales",
+        path: "/dashboard/cash-closing",
+        pathRegex: /^\/dashboard\/cash-closing(?:\/.*)?$/,
+        permissions: manageOrList("cash_closing"),
+        icon: <CreditCard />,
       },
     ],
   },
+  // {
+  //   groupName: "Inventory",
+  //   items: [
+  //     {
+  //       title: "Medicines",
+  //       path: "/dashboard/medicines",
+  //       pathRegex: /^\/dashboard\/medicines\/?$/,
+  //       permissions: manageOrList("medicine"),
+  //       icon: <Pill />,
+  //     },
+  //     {
+  //       title: "Purchases",
+  //       path: "/dashboard/purchases",
+  //       pathRegex: /^\/dashboard\/purchases(?:\/.*)?$/,
+  //       permissions: manageOrList("purchase"),
+  //       icon: <ShoppingCart />,
+  //     },
+  //   ],
+  // },
   {
     groupName: "Suppliers",
     items: [
       {
-        title: "Vendors",
+        title: "Company",
         path: "/dashboard/vendors",
-        pathRegex: /^\/dashboard\/vendors(?:\/.*)?$/,
+        pathRegex: /^\/dashboard\/vendors$/,
         permissions: manageOrList("vendor"),
         icon: <BuildingComplex />,
       },
       {
-        title: "Payments",
-        path: "/dashboard/payments",
-        pathRegex: /^\/dashboard\/payments\/?$/,
+        title: "Company Payments",
+        path: "/dashboard/vendors/payments",
+        pathRegex: /^\/dashboard\/vendors\/payments$/,
         permissions: manageOrList("vendor_payment"),
         icon: <Banknote />,
       },

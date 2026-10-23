@@ -61,6 +61,7 @@ export const API_MESSAGES = {
   },
   CASH_CLOSING: {
     GET_ALL: "Cash closings loaded successfully.",
+    CREATE: "Cash closings created successfully.",
   },
   VENDOR: {
     GET_ALL: "Vendors loaded successfully.",

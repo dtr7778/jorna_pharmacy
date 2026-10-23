@@ -41,7 +41,7 @@ export function VendorPurchasesTab({ vendorId }: { vendorId: string }) {
     <Card>
       <CardHeader>
         <CardTitle>Purchases</CardTitle>
-        <CardDescription>All purchases made from this vendor</CardDescription>
+        <CardDescription>All purchases made from this company</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <QueryStateBoundary

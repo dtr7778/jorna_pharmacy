@@ -40,7 +40,7 @@ export const paymentTableColumn: ColumnType<PaymentTableRowDataType> = [
     id: "vendorName",
     accessorKey: "vendorName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Vendor" />
+      <DataTableColumnHeader column={column} label="Company" />
     ),
     cell: ({ row, getValue }) => (
       <Link
@@ -52,7 +52,7 @@ export const paymentTableColumn: ColumnType<PaymentTableRowDataType> = [
         {getValue<PaymentTableRowDataType["vendorName"]>()}
       </Link>
     ),
-    meta: { label: "Vendor" },
+    meta: { label: "Company" },
     enableSorting: false,
     enableHiding: false,
   },

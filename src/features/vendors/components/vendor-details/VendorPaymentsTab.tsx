@@ -56,7 +56,7 @@ export function VendorPaymentsTab({ vendorId }: { vendorId: string }) {
       <Card>
         <CardHeader>
           <CardTitle>Payments</CardTitle>
-          <CardDescription>All payments made to this vendor</CardDescription>
+          <CardDescription>All payments made to this company</CardDescription>
           {isAllowCreatePayment && (
             <CardAction>
               <Button size="sm" onClick={() => setOpenCreateDialog(true)}>
