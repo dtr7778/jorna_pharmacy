@@ -25,10 +25,6 @@ export async function getUserRolesAndPermission(
     .innerJoin(UserRoleTable, eq(RoleTable.id, UserRoleTable.roleId))
     .where(eq(UserRoleTable.userId, userId));
 
-  if (systemRoles.length === 0) {
-    throw new Error("User has no system role");
-  }
-
   const systemRolePermissions = await database
     .select({
       level: PermissionTable.level,
