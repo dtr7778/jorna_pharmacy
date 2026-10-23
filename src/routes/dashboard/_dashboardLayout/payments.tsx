@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import z from "zod";
 
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton";
 import { DataTableToolbarSkeleton } from "@/components/data-table/data-table-toolbar-skeleton";
@@ -18,6 +19,7 @@ import { PaymentManagementTable } from "@/features/vendors/components/payment-ta
 import { head } from "@/lib/head";
 import { querySearchSchema, rangeFilterSchema } from "@/lib/querySearchSchema";
 import { orpcTQClient } from "@/server/orpc";
+import { buildDateRangeFilter } from "@/utils/buildDateRangeFilter";
 
 const searchFields = ["invoiceNo"];
 
@@ -32,7 +34,9 @@ export const Route = createFileRoute("/dashboard/_dashboardLayout/payments")({
       context.user.id
     );
   },
-  validateSearch: querySearchSchema.extend(rangeFilterSchema.shape),
+  validateSearch: querySearchSchema
+    .extend(rangeFilterSchema.shape)
+    .extend({ vendorId: z.uuid().optional() }),
   loaderDeps: ({ search }) => search,
   head: ({ match }) =>
     head({
@@ -50,6 +54,17 @@ export const Route = createFileRoute("/dashboard/_dashboardLayout/payments")({
           searchFields,
           order: deps.order,
           orderField: deps.orderField,
+          vendorId: deps.vendorId,
+        },
+      })
+    );
+    await queryClient.query(
+      orpcTQClient.vendor.payment.stats.queryOptions({
+        input: {
+          vendorId: deps.vendorId,
+          filter: {
+            createdAt: buildDateRangeFilter(deps.startTime, deps.endTime),
+          },
         },
       })
     );

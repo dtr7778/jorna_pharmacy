@@ -64,9 +64,9 @@ export function VendorCreateDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogResponsiveContent>
         <DialogStickyHeader>
-          <DialogTitle>Create vendor</DialogTitle>
+          <DialogTitle>Create company</DialogTitle>
           <DialogDescription>
-            Add a new vendor to your directory
+            Add a new company to your directory
           </DialogDescription>
         </DialogStickyHeader>
 
@@ -77,7 +77,7 @@ export function VendorCreateDialog({
                 control={form.control}
                 name="name"
                 label="Name"
-                placeholder="Vendor name"
+                placeholder="Company name"
                 disabled={isPending}
                 requiredField
               />
@@ -85,7 +85,7 @@ export function VendorCreateDialog({
                 control={form.control}
                 name="phone"
                 label="Number"
-                placeholder="Vendor phone number"
+                placeholder="Company phone number"
                 defaultCountry="BD"
                 disabled={isPending}
               />
@@ -93,7 +93,7 @@ export function VendorCreateDialog({
                 control={form.control}
                 name="address"
                 label="Address"
-                placeholder="Vendor address"
+                placeholder="Company address"
                 disabled={isPending}
               />
               <TextareaField

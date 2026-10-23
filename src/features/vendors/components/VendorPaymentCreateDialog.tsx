@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DollarSign } from "lucide-react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { InputAddonField } from "@/components/form-fields/InputAddonField";
 import { TextareaField } from "@/components/form-fields/TextareaField";
@@ -17,7 +17,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FieldGroup } from "@/components/ui/field";
-import { VendorPurchaseSelectorField } from "@/features/purchase/components/VendorPurchaseSelectorField";
 import { VendorSelectorField } from "@/features/vendors/components/VendorSelectorField";
 
 import { useCreateVendorPayment } from "../api/vendorPayment.api.hook";
@@ -38,18 +37,21 @@ export function VendorPaymentCreateDialog({
   setOpen: (value: boolean) => void;
 }) {
   "use no memo";
-
   const form = useForm<VendorPaymentCreateFormType>({
     resolver: zodResolver(vendorPaymentCreateFormSchema),
     defaultValues: {
-      vendorId: vendorId ?? undefined,
-      purchaseId: purchaseId ?? undefined,
+      vendorId,
+      purchaseId,
       amount: "",
       note: "",
     },
   });
 
-  const formVendorId = useWatch({ control: form.control, name: "vendorId" });
+  // const formVendorId = useWatch({
+  //   control: form.control,
+  //   name: "vendorId",
+  //   defaultValue: vendorId,
+  // });
 
   const { mutate, isPending } = useCreateVendorPayment<
     keyof VendorPaymentCreateFormType
@@ -70,6 +72,7 @@ export function VendorPaymentCreateDialog({
   const handleSubmit = form.handleSubmit(({ amount, ...rest }) => {
     mutate({
       ...rest,
+      ...(vendorId && { vendorId }),
       amount: Number(amount),
     });
   });
@@ -98,17 +101,17 @@ export function VendorPaymentCreateDialog({
                   disabled={isPending}
                 />
               )}
-              {!purchaseId && (
+              {/* {!purchaseId && (
                 <VendorPurchaseSelectorField
                   control={form.control}
                   name="purchaseId"
                   vendorId={formVendorId}
                   label="Purchase"
                   fetchApi={open}
-                  description="The vendor is taken from the selected purchase"
-                  disabled={!formVendorId || isPending}
+                  description="The company is taken from the selected purchase"
+                  disabled={isPending}
                 />
-              )}
+              )} */}
               <InputAddonField
                 control={form.control}
                 name="amount"

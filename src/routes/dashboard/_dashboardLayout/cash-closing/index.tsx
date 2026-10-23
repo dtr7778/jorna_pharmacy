@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { DataTableEmpty } from "@/components/data-table/data-table-empty";
-import { DataTableGlobalSearch } from "@/components/data-table/data-table-global-search";
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton";
 import { DataTableToolbarSkeleton } from "@/components/data-table/data-table-toolbar-skeleton";
 import { DashboardShell } from "@/components/shared/dashboard-shell";
@@ -19,9 +18,8 @@ import { DashboardShellSkeleton } from "@/components/shared/dashboard-shell/Dash
 import { QueryStateBoundary } from "@/components/tanstack-query/query-state-boundary";
 import { TimeRangeFilter } from "@/components/time-range-filter";
 import { requirePermissions } from "@/features/auth/auth.functions";
+import { CashClosingCreateDialog } from "@/features/cash-closing/components/CashClosingCreateDialog";
 import { CashClosingTable } from "@/features/cash-closing/components/cash-closing-table/CashClosingTable";
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
-import { useQuerySearch } from "@/hooks/use-query-search";
 import { head } from "@/lib/head";
 import { querySearchSchema, rangeFilterSchema } from "@/lib/querySearchSchema";
 import { orpcTQClient } from "@/server/orpc";
@@ -72,26 +70,20 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const { filters, setFilters, setSearchFilter } = useQuerySearch(
-    "/dashboard/_dashboardLayout/cash-closing/"
-  );
+  const navigate = Route.useNavigate();
+  const search = Route.useSearch();
 
-  const globalSearch = useDebouncedCallback(
-    (searchValue: string | undefined) => setSearchFilter(searchValue),
-    500
-  );
-
-  const { data, isLoading, isError, error, refetch } = useQuery(
+  const { data, isLoading, isError, error } = useQuery(
     orpcTQClient.cashClosing.list.queryOptions({
       input: {
-        page: filters.page,
-        limit: filters.limit,
-        search: filters.search,
+        page: search.page,
+        limit: search.limit,
+        search: search.search,
         searchFields,
-        order: filters.order,
-        orderField: filters.orderField,
+        order: search.order,
+        orderField: search.orderField,
         filter: {
-          periodStart: buildDateRangeFilter(filters.startTime, filters.endTime),
+          periodStart: buildDateRangeFilter(search.startTime, search.endTime),
         },
       },
       select: (result) => result.data,
@@ -110,22 +102,31 @@ function RouteComponent() {
       }
     >
       <div className="space-y-3">
-        <TimeRangeFilter
-          rangeSearch={filters}
-          setRangeSearch={({ range, startTime, endTime }) =>
-            setFilters({
-              range,
-              startTime,
-              endTime,
-              page: 1,
-            })
-          }
-        />
-        <DataTableGlobalSearch
-          searchValue={filters.search}
-          setSearchValue={globalSearch}
-          refresh={refetch}
-        />
+        <div className="flex items-center justify-between gap-2">
+          <TimeRangeFilter
+            rangeSearch={{
+              range: search.range,
+              startTime: search.startTime,
+              endTime: search.endTime,
+            }}
+            setRangeSearch={(updatedValue) =>
+              navigate({
+                search: {
+                  ...(updatedValue.range && {
+                    range: updatedValue.range,
+                  }),
+                  ...(updatedValue.startTime && {
+                    startTime: updatedValue.startTime,
+                  }),
+                  ...(updatedValue.endTime && {
+                    endTime: updatedValue.endTime,
+                  }),
+                },
+              })
+            }
+          />
+          <CashClosingCreateDialog />
+        </div>
         <QueryStateBoundary
           isLoading={isLoading}
           isError={isError}
@@ -143,18 +144,24 @@ function RouteComponent() {
             <CashClosingTable
               data={cashClosingsData}
               filters={{
-                page: filters.page,
-                limit: filters.limit,
-                search: filters.search,
-                order: filters.order,
-                orderField: filters.orderField,
+                page: search.page,
+                limit: search.limit,
+                search: search.search,
+                order: search.order,
+                orderField: search.orderField,
               }}
               setFilters={(updatedFilters) => {
-                setFilters({
-                  page: updatedFilters.page,
-                  limit: updatedFilters.limit,
-                  order: updatedFilters.order,
-                  orderField: updatedFilters.orderField,
+                navigate({
+                  search: {
+                    page: updatedFilters.page,
+                    limit: updatedFilters.limit,
+                    ...(updatedFilters.order && {
+                      order: updatedFilters.order,
+                    }),
+                    ...(updatedFilters.orderField && {
+                      orderField: updatedFilters.orderField,
+                    }),
+                  },
                 });
               }}
             />

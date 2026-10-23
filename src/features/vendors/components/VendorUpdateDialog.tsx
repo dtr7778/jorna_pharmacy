@@ -86,21 +86,21 @@ export function VendorUpdateDialog({
                 control={form.control}
                 name="name"
                 label="Name"
-                placeholder="Vendor name"
+                placeholder="Company name"
                 disabled={isPending}
                 requiredField
               />
               <CheckboxField
                 control={form.control}
                 name="isActive"
-                label="Is vendor active"
+                label="Is company active"
                 disabled={isPending}
               />
               <PhoneInputField
                 control={form.control}
                 name="phone"
                 label="Number"
-                placeholder="Vendor phone number"
+                placeholder="Company phone number"
                 defaultCountry="BD"
                 disabled={isPending}
               />
@@ -108,7 +108,7 @@ export function VendorUpdateDialog({
                 control={form.control}
                 name="address"
                 label="Address"
-                placeholder="Vendor address"
+                placeholder="Company address"
                 disabled={isPending}
               />
               <TextareaField

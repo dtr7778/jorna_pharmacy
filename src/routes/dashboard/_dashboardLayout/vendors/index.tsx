@@ -63,9 +63,9 @@ function RouteComponent() {
     <DashboardShell
       header={
         <DashboardShellHeader>
-          <DashboardShellTitle>Vendor Management</DashboardShellTitle>
+          <DashboardShellTitle>Company Management</DashboardShellTitle>
           <DashboardShellDescription>
-            Manage your vendors
+            Manage your companies
           </DashboardShellDescription>
         </DashboardShellHeader>
       }

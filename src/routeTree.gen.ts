@@ -40,6 +40,7 @@ import { Route as DashboardDashboardLayoutUsersUserIdRouteImport } from "./route
 import { Route as DashboardDashboardLayoutUsersIndexRouteImport } from "./routes/dashboard/_dashboardLayout/users/index";
 import { Route as DashboardDashboardLayoutVendorsVendorIdRouteImport } from "./routes/dashboard/_dashboardLayout/vendors/$vendorId";
 import { Route as DashboardDashboardLayoutVendorsIndexRouteImport } from "./routes/dashboard/_dashboardLayout/vendors/index";
+import { Route as DashboardDashboardLayoutVendorsPaymentsRouteImport } from "./routes/dashboard/_dashboardLayout/vendors/payments";
 import { Route as IndexRouteImport } from "./routes/index";
 
 const IndexRoute = IndexRouteImport.update({
@@ -202,6 +203,12 @@ const DashboardDashboardLayoutVendorsVendorIdRoute =
     path: "/vendors/$vendorId",
     getParentRoute: () => DashboardDashboardLayoutRoute,
   } as any);
+const DashboardDashboardLayoutVendorsPaymentsRoute =
+  DashboardDashboardLayoutVendorsPaymentsRouteImport.update({
+    id: "/vendors/payments",
+    path: "/vendors/payments",
+    getParentRoute: () => DashboardDashboardLayoutRoute,
+  } as any);
 const DashboardDashboardLayoutSettingsSettingsLayoutIndexRoute =
   DashboardDashboardLayoutSettingsSettingsLayoutIndexRouteImport.update({
     id: "/",
@@ -260,6 +267,7 @@ export interface FileRoutesByFullPath {
   "/dashboard/settings": typeof DashboardDashboardLayoutSettingsSettingsLayoutRouteWithChildren;
   "/dashboard/users/$userId": typeof DashboardDashboardLayoutUsersUserIdRoute;
   "/dashboard/vendors/$vendorId": typeof DashboardDashboardLayoutVendorsVendorIdRoute;
+  "/dashboard/vendors/payments": typeof DashboardDashboardLayoutVendorsPaymentsRoute;
   "/dashboard/cash-closing/": typeof DashboardDashboardLayoutCashClosingIndexRoute;
   "/dashboard/customers/": typeof DashboardDashboardLayoutCustomersIndexRoute;
   "/dashboard/purchases/": typeof DashboardDashboardLayoutPurchasesIndexRoute;
@@ -292,6 +300,7 @@ export interface FileRoutesByTo {
   "/dashboard/purchases/new": typeof DashboardDashboardLayoutPurchasesNewRoute;
   "/dashboard/users/$userId": typeof DashboardDashboardLayoutUsersUserIdRoute;
   "/dashboard/vendors/$vendorId": typeof DashboardDashboardLayoutVendorsVendorIdRoute;
+  "/dashboard/vendors/payments": typeof DashboardDashboardLayoutVendorsPaymentsRoute;
   "/dashboard/cash-closing": typeof DashboardDashboardLayoutCashClosingIndexRoute;
   "/dashboard/customers": typeof DashboardDashboardLayoutCustomersIndexRoute;
   "/dashboard/purchases": typeof DashboardDashboardLayoutPurchasesIndexRoute;
@@ -328,6 +337,7 @@ export interface FileRoutesById {
   "/dashboard/_dashboardLayout/settings/_settingsLayout": typeof DashboardDashboardLayoutSettingsSettingsLayoutRouteWithChildren;
   "/dashboard/_dashboardLayout/users/$userId": typeof DashboardDashboardLayoutUsersUserIdRoute;
   "/dashboard/_dashboardLayout/vendors/$vendorId": typeof DashboardDashboardLayoutVendorsVendorIdRoute;
+  "/dashboard/_dashboardLayout/vendors/payments": typeof DashboardDashboardLayoutVendorsPaymentsRoute;
   "/dashboard/_dashboardLayout/cash-closing/": typeof DashboardDashboardLayoutCashClosingIndexRoute;
   "/dashboard/_dashboardLayout/customers/": typeof DashboardDashboardLayoutCustomersIndexRoute;
   "/dashboard/_dashboardLayout/purchases/": typeof DashboardDashboardLayoutPurchasesIndexRoute;
@@ -364,6 +374,7 @@ export interface FileRouteTypes {
     | "/dashboard/settings"
     | "/dashboard/users/$userId"
     | "/dashboard/vendors/$vendorId"
+    | "/dashboard/vendors/payments"
     | "/dashboard/cash-closing/"
     | "/dashboard/customers/"
     | "/dashboard/purchases/"
@@ -396,6 +407,7 @@ export interface FileRouteTypes {
     | "/dashboard/purchases/new"
     | "/dashboard/users/$userId"
     | "/dashboard/vendors/$vendorId"
+    | "/dashboard/vendors/payments"
     | "/dashboard/cash-closing"
     | "/dashboard/customers"
     | "/dashboard/purchases"
@@ -431,6 +443,7 @@ export interface FileRouteTypes {
     | "/dashboard/_dashboardLayout/settings/_settingsLayout"
     | "/dashboard/_dashboardLayout/users/$userId"
     | "/dashboard/_dashboardLayout/vendors/$vendorId"
+    | "/dashboard/_dashboardLayout/vendors/payments"
     | "/dashboard/_dashboardLayout/cash-closing/"
     | "/dashboard/_dashboardLayout/customers/"
     | "/dashboard/_dashboardLayout/purchases/"
@@ -649,6 +662,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof DashboardDashboardLayoutVendorsVendorIdRouteImport;
       parentRoute: typeof DashboardDashboardLayoutRoute;
     };
+    "/dashboard/_dashboardLayout/vendors/payments": {
+      id: "/dashboard/_dashboardLayout/vendors/payments";
+      path: "/vendors/payments";
+      fullPath: "/dashboard/vendors/payments";
+      preLoaderRoute: typeof DashboardDashboardLayoutVendorsPaymentsRouteImport;
+      parentRoute: typeof DashboardDashboardLayoutRoute;
+    };
     "/dashboard/_dashboardLayout/settings/_settingsLayout/": {
       id: "/dashboard/_dashboardLayout/settings/_settingsLayout/";
       path: "/";
@@ -748,6 +768,7 @@ interface DashboardDashboardLayoutRouteChildren {
   DashboardDashboardLayoutSettingsSettingsLayoutRoute: typeof DashboardDashboardLayoutSettingsSettingsLayoutRouteWithChildren;
   DashboardDashboardLayoutUsersUserIdRoute: typeof DashboardDashboardLayoutUsersUserIdRoute;
   DashboardDashboardLayoutVendorsVendorIdRoute: typeof DashboardDashboardLayoutVendorsVendorIdRoute;
+  DashboardDashboardLayoutVendorsPaymentsRoute: typeof DashboardDashboardLayoutVendorsPaymentsRoute;
   DashboardDashboardLayoutCashClosingIndexRoute: typeof DashboardDashboardLayoutCashClosingIndexRoute;
   DashboardDashboardLayoutCustomersIndexRoute: typeof DashboardDashboardLayoutCustomersIndexRoute;
   DashboardDashboardLayoutPurchasesIndexRoute: typeof DashboardDashboardLayoutPurchasesIndexRoute;
@@ -779,6 +800,8 @@ const DashboardDashboardLayoutRouteChildren: DashboardDashboardLayoutRouteChildr
       DashboardDashboardLayoutUsersUserIdRoute,
     DashboardDashboardLayoutVendorsVendorIdRoute:
       DashboardDashboardLayoutVendorsVendorIdRoute,
+    DashboardDashboardLayoutVendorsPaymentsRoute:
+      DashboardDashboardLayoutVendorsPaymentsRoute,
     DashboardDashboardLayoutCashClosingIndexRoute:
       DashboardDashboardLayoutCashClosingIndexRoute,
     DashboardDashboardLayoutCustomersIndexRoute:

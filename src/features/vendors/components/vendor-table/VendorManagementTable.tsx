@@ -66,7 +66,7 @@ export function VendorManagementTable({
           {isAllowCreate && (
             <Button onClick={() => setOpenCreateDialog(true)}>
               <Plus />
-              <span>Create vendor</span>
+              <span>Create company</span>
             </Button>
           )}
         </DataTableGlobalSearch>
